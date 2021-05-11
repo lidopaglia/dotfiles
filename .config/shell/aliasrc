@@ -1,0 +1,60 @@
+#!/bin/sh
+
+# Use neovim for vim if present
+[ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
+
+# Use $XINITRC variable if file exists
+[ -f "$XINITRC" ] && alias startx="startx $XINITRC"
+
+# ls 
+alias ls='LC_ALL=C ls -Fh --color=auto --group-directories-first'
+alias lsa='ls -A'
+alias la='ls -Al'
+alias ll='ls -al'
+alias l='ls -l'
+alias lt='\ls -ltFh --color=auto'
+alias lat='\ls -AltFh --color=auto'
+
+# colors
+alias grep='grep --color=auto'
+alias diff='diff --color=auto'
+alias ccat='highlight --out-format=ansi'
+
+# dotfiles
+alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dots='dot status'
+alias dotls='dot ls-tree --full-tree -r --name-only HEAD'
+alias dotlsu='dot ls-files . --exclude-standard --others'
+
+# youtube-dl
+alias yt="youtube-dl --add-metadata -i -o '%(upload_date)s-%(title)s.%(ext)s'"
+alias yta="yt -x -f bestaudio/best"
+alias ytf="ytp --audio-format flac"
+alias ytm="ytp --audio-format mp3"
+alias ytp="youtube-dl --add-metadata -i -o '%(playlist_index)s - %(title)s.%(ext)s' -x -f bestaudio/best"
+
+# be verbose
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias rm='rm -v'
+alias mkdir='mkdir -pv'
+
+# defaults 
+alias ffmpeg="ffmpeg -hide_banner"
+alias df='df -h -x tmpfs -x devtmpfs'
+alias tree='tree -ChN'
+alias dir="tree -L2 --dirsfirst --du $1 | bat"
+alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf"
+alias tls="tmux ls"
+
+# jekyll/bundler
+alias bej='bundle exec jekyll'
+alias bejs='bej serve --livereload'
+alias bejp='bej post'
+alias bejd='bej draft'
+alias bpub='bej publish'
+alias bi='bundle install'
+alias bu='bundle update'
+
+# editor shortcuts
+alias cfv="$EDITOR $XDG_CONFIG_HOME/nvim/init.vim"
