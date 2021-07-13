@@ -64,4 +64,5 @@ zle -N self-insert url-quote-magic
 # bindkey -M menuselect '^[[Z' reverse-menu-complete
 
 # Load zsh-syntax-highlighting; should be last.
-# source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+# https://github.com/zsh-users/zsh-syntax-highlighting
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null

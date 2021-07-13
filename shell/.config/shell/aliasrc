@@ -6,6 +6,8 @@
 # Use $XINITRC variable if file exists
 [ -f "$XINITRC" ] && alias startx="startx $XINITRC"
 
+alias v='nvim'
+
 # ls 
 alias ls='LC_ALL=C ls -Fh --color=auto --group-directories-first'
 alias lsa='ls -A'
@@ -14,6 +16,14 @@ alias ll='ls -al'
 alias l='ls -l'
 alias lt='\ls -ltFh --color=auto'
 alias lat='\ls -AltFh --color=auto'
+
+# tmux
+alias                                               \
+  tmux="tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf"    \
+  tt="nvim $XDG_CONFIG_HOME/tmux/tmux.conf"         \
+  tn="tmux new"                                     \
+  ta="tmux attach"                                  \
+  tls="tmux ls"                                     \
 
 # colors
 alias grep='grep --color=auto'
@@ -44,8 +54,7 @@ alias ffmpeg="ffmpeg -hide_banner"
 alias df='df -h -x tmpfs -x devtmpfs'
 alias tree='tree -ChN'
 alias dir="tree -L2 --dirsfirst --du $1 | bat"
-alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf"
-alias tls="tmux ls"
+
 
 # jekyll/bundler
 alias bej='bundle exec jekyll'

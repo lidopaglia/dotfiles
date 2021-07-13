@@ -17,5 +17,5 @@ fi
 #xrdb -merge "$XDG_CONFIG_HOME/x11/Xresources"
 #xrandr --dpi 192
 #exec startxfce4
-
-ssh-agent dwm
+#ssh-agent dwm
+#exec i3

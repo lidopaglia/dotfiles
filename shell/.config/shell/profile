@@ -26,6 +26,7 @@ export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export DICS="/usr/share/stardict/dic/"
 export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
 export MANWIDTH=80
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 # export SUDO_ASKPASS="$XDG_BIN_HOME/dmenupass"
 
 # Rust

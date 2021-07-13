@@ -21,6 +21,8 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
 Plug 'tpope/vim-fugitive'
+Plug 'godlygeek/tabular'
+Plug 'junegunn/vim-easy-align'
 
 call plug#end()
 
@@ -30,6 +32,12 @@ colorscheme gruvbox
 highlight Normal guibg=none
 
 filetype plugin indent on
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
 " Goyo Stuffs
 function! s:goyo_enter()
