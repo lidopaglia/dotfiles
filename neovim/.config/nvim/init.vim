@@ -10,57 +10,31 @@ endif
 
 call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"'))
 
-Plug 'mbbill/undotree'
 Plug 'gruvbox-community/gruvbox'
-Plug 'junegunn/goyo.vim'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'tpope/vim-fugitive'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
 
 " telescope
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzy-native.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
-Plug 'tpope/vim-fugitive'
-Plug 'godlygeek/tabular'
-Plug 'junegunn/vim-easy-align'
+"Plug 'godlygeek/tabular'
+"Plug 'junegunn/goyo.vim'
+"Plug 'junegunn/vim-easy-align'
+"Plug 'mbbill/undotree'
 
 call plug#end()
 
 let mapleader =" "
 
 colorscheme gruvbox
+
 highlight Normal guibg=none
 
 filetype plugin indent on
-
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
-" Goyo Stuffs
-function! s:goyo_enter()
-  let b:quitting = 0
-  let b:quitting_bang = 0
-  autocmd QuitPre <buffer> let b:quitting = 1
-  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
-endfunction
-
-function! s:goyo_leave()
-  " Quit Vim if this is the only remaining buffer
-  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
-    if b:quitting_bang
-      qa!
-    else
-      qa
-    endif
-  endif
-endfunction
-
-autocmd! User GoyoEnter call <SID>goyo_enter()
-autocmd! User GoyoLeave call <SID>goyo_leave()
-nnoremap <Leader>g :Goyo \| set linebreak<CR>
 
 nnoremap <Leader>N :tab new<CR>
 nnoremap <Leader>W :q<CR>
@@ -71,6 +45,42 @@ nnoremap <Leader>o :setlocal spell! spelllang=en_us<CR>
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
+lua require("lido")
+
+nnoremap <C-_> :Telescope current_buffer_fuzzy_find sorting_strategy=ascending <CR>
+
+
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+"xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+"nmap ga <Plug>(EasyAlign)
+
+
+
+" Goyo Stuffs
+"function! s:goyo_enter()
+"  let b:quitting = 0
+"  let b:quitting_bang = 0
+"  autocmd QuitPre <buffer> let b:quitting = 1
+"  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
+"endfunction
+"
+"function! s:goyo_leave()
+"  " Quit Vim if this is the only remaining buffer
+"  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+"    if b:quitting_bang
+"      qa!
+"    else
+"      qa
+"    endif
+"  endif
+"endfunction
+
+"autocmd! User GoyoEnter call <SID>goyo_enter()
+"autocmd! User GoyoLeave call <SID>goyo_leave()
+"nnoremap <Leader>g :Goyo \| set linebreak<CR>
 
 " Do I want this? 
 " usefule when editing .md with wrap on...
@@ -119,3 +129,5 @@ vnoremap K :m '<-2<CR>gv=gv
 "   endif
 " endfunction
 "
+"
+
