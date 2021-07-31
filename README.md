@@ -14,6 +14,26 @@ $ git clone git@github.com:lidopaglia/dotfiles.git ~/.dotfiles && cd .dotfiles
 $ stow neovim tmux ssh git # plus whatever else
 ```
 
+We want these apps/fonts/things installed.
+
+- bat
+- curl
+- git
+- gruvbox
+- neovim
+- Sauce Code Pro nerd font 
+- pass
+- ripgrep
+- ssh
+- stow
+- tmux
+- tree
+- wget
+
+`wget https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/SourceCodePro/Regular/complete/Sauce%20Code%20Pro%20Nerd%20Font%20Complete.ttf`
+
+
+
 ## Usage
 
 To install the neovim config:
@@ -42,3 +62,5 @@ alwasy [more learning][5] to do.
 [3]: https://www.computerhope.com/jargon/u/unix-like.htm
 [4]: https://www.gnu.org/licenses/gpl-3.0.html
 [5]: https://zsh.sourceforge.io/Intro/intro_3.html
+[6]: https://github.com/morhetz/gruvbox
+[7]: https://github.com/ryanoasis/nerd-fonts
