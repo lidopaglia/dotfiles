@@ -2,11 +2,11 @@
 
 # Use neovim for vim if present
 [ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
+alias v='nvim'
+alias nv='nvim'
 
 # Use $XINITRC variable if file exists
 [ -f "$XINITRC" ] && alias startx="startx $XINITRC"
-
-alias v='nvim'
 
 # ls 
 alias ls='LC_ALL=C ls -Fh --color=auto --group-directories-first'
@@ -16,6 +16,17 @@ alias ll='ls -al'
 alias l='ls -l'
 alias lt='\ls -ltFh --color=auto'
 alias lat='\ls -AltFh --color=auto'
+alias lsl='ls -nph' #: As 'ls', but with lots of information.
+alias lsla='ls -Anph' #: As 'lsl', but also show all files.
+
+# git
+alias log="git --no-pager log --reverse --pretty=format:'%CredCommit %Cgreen%h%Cred pushed %ar by %Cgreen%an%Creset%Cred:%Creset%n\"%s\"%n' 2> /dev/null"
+alias show="git --no-pager show --pretty=format:'%CredCommit %Cgreen%h%Cred pushed %ar by %Cgreen%an%Creset%Cred:%Creset%n\"%s\"%n'"
+alias status='git status -s'
+
+# tfl quality of life improvements
+alias lsblkid='lsblk -o name,label,fstype,size,uuid --noheadings' #: A more descriptive, yet concise lsblk.
+alias jbp='journalctl -b -p 0..4 --no-pager' #: Use journalctl(1) to display anything from 'emerg' to 'warning' since boot.
 
 # tmux
 alias                                               \
@@ -54,7 +65,7 @@ alias ffmpeg="ffmpeg -hide_banner"
 alias df='df -h -x tmpfs -x devtmpfs'
 alias tree='tree -ChN'
 alias dir="tree -L2 --dirsfirst --du $1 | bat"
-
+alias bat="batcat"
 
 # jekyll/bundler
 alias bej='bundle exec jekyll'
