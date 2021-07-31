@@ -36,19 +36,59 @@ highlight Normal guibg=none
 
 filetype plugin indent on
 
-nnoremap <Leader>N :tab new<CR>
-nnoremap <Leader>W :q<CR>
-nnoremap <Leader><CR> :so ~/.config/nvim/init.vim<CR>
-nnoremap <Leader>o :setlocal spell! spelllang=en_us<CR>
+"nnoremap <silent> Q <nop>
+nnoremap <leader>N :tab new<CR>
+nnoremap <leader>W :q<CR>
+nnoremap <leader>o :setlocal spell! spelllang=en_us<CR>
+nnoremap <leader><CR> :so ~/.config/nvim/init.vim<CR>
 
 " moves lines up and down
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
+inoremap <C-j> <esc>:m .+1<CR>==
+inoremap <C-k> <esc>:m .-2<CR>==
+nnoremap <leader>j :m .+1<CR>==
+nnoremap <leader>k :m .-2<CR>==
+
+" undo break points
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ! !<c-g>u
+inoremap ? ?<c-g>u
+
+" keep it centered
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap J mzJ`z
+
+" yank to end of line. u not like the others?
+nnoremap Y y$
+
+" yank to sys clipboard
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+nnoremap <leader>Y gg"+yG
+
+" jumplist action
+nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
+nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
+
+
+
+" wtf is this?
+vnoremap <leader>p "_dP
+
+
 
 lua require("lido")
 
 nnoremap <C-_> :Telescope current_buffer_fuzzy_find sorting_strategy=ascending <CR>
 
+
+augroup highlight_yank
+    autocmd!
+    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 40})
+augroup END
 
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
