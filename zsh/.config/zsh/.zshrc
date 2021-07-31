@@ -61,7 +61,7 @@ zle -N self-insert url-quote-magic
 # bindkey '^r' history-incremental-pattern-search-backward
 
 # allow shift+tab to navigate backwards
-# bindkey -M menuselect '^[[Z' reverse-menu-complete
+bindkey -M menuselect '^[[Z' reverse-menu-complete
 
 # Load zsh-syntax-highlighting; should be last.
 # https://github.com/zsh-users/zsh-syntax-highlighting
