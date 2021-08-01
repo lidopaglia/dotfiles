@@ -9,7 +9,48 @@ stty stop undef
 setopt interactive_comments
 
 # Configure Prompt
+
+
+BLUE=$'%{\e[1;34m%}'
+RED=$'%{\e[1;31m%}'
+GREEN=$'%{\e[1;32m%}'
+CYAN=$'%{\e[1;36m%}'
+WHITE=$'%{\e[1;37m%}'
+MAGENTA=$'%{\e[1;35m%}'
+YELLOW=$'%{\e[1;33m%}'
+NO_COLOR=$'%{\e[0m%}'
+
+
+# secondary prompt, printed when the shell needs more information to complete a
+# command.
+PS2='\`%_> '
+# selection prompt used within a select loop.
+PS3='?# '
+# the execution trace prompt (setopt xtrace). default: '+%N:%i>'
+PS4='+%N:%i:%_> '
+
 #PS1="%{$fg[magenta]%}[%~] %{$reset_color%}%b"
+
+# Prompt. Using single quotes around the PROMPT is very important, otherwise
+# the git branch will always be empty. Using single quotes delays the
+# evaluation of the prompt. Also PROMPT is an alias to PS1.
+git_prompt() {
+    local branch="$(git symbolic-ref HEAD 2> /dev/null | cut -d'/' -f3)"
+    local branch_truncated="${branch:0:30}"
+    if (( ${#branch} > ${#branch_truncated} )); then
+        branch="${branch_truncated}..."
+    fi
+
+    [ -n "${branch}" ] && echo " (${branch})"
+}
+setopt PROMPT_SUBST
+PROMPT='%B%{$fg[green]%}%n@%{$fg[green]%}%M %{$fg[blue]%}%~%{$fg[yellow]%}$(git_prompt)%{$reset_color%} %(?.$.%{$fg[red]%}$)%b '
+
+
+
+
+
+
 
 # Create required dirs
 [ -d "${XDG_CACHE_HOME}/zsh" ] || \
@@ -36,10 +77,11 @@ zstyle ':completion:*' group-name ''
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/funcsrc" ] && \
     source "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/funcsrc"
 
+# Dirstack handling
+DIRSTACKFILE="$XDG_CACHE_HOME/zsh/zdirs"
 setopt auto_cd
 setopt auto_pushd
 setopt pushd_ignore_dups
-setopt nobeep
 
 # History Config
 HISTFILE="$XDG_CACHE_HOME/zsh/history"
@@ -59,6 +101,7 @@ setopt HIST_SAVE_NO_DUPS        # Don't write duplicate entries in the history f
 setopt HIST_REDUCE_BLANKS       # Remove superfluous blanks before recording entry.
 setopt HIST_VERIFY              # Don't execute immediately upon history expansion.
 
+setopt nobeep
 
  # auto quote URLS
 autoload -Uz bracketed-paste-magic
