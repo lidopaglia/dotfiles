@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 export EDITOR="nvim"
-export TERMINAL="alacritty"
+export TERMINAL="gnome-terminal"
 export BROWSER="brave"
 
 #export GDK_SCALE=1

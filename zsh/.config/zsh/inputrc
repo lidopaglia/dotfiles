@@ -1,0 +1,21 @@
+# turn off bell
+set bell-style none
+
+set colored-stats On
+set completion-ignore-case On
+set completion-prefix-display-length 3
+set mark-symlinked-directories On
+set menu-complete-display-prefix On
+set show-all-if-ambiguous On
+set show-all-if-unmodified On
+set visible-stats On
+
+# tab lists completions & selects the first.
+# consecutive tabs cycles through available completions.
+TAB: menu-complete
+
+# shift+tab cycles completions backward.
+"\e[Z": menu-complete-backward
+
+# https://vim.fandom.com/wiki/Use_vi_shortcuts_in_terminal
+# https://www.topbug.net/blog/2017/07/31/inputrc-for-humans/
