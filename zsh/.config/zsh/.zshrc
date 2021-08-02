@@ -5,21 +5,9 @@ autoload -U colors && colors
 # Disable CTRL-s from freezing your terminal's output.
 stty stop undef
 
-# Enable comments when working in an interactive shell.
-setopt interactive_comments
-
-# Configure Prompt
-
-
-BLUE=$'%{\e[1;34m%}'
-RED=$'%{\e[1;31m%}'
-GREEN=$'%{\e[1;32m%}'
-CYAN=$'%{\e[1;36m%}'
-WHITE=$'%{\e[1;37m%}'
-MAGENTA=$'%{\e[1;35m%}'
-YELLOW=$'%{\e[1;33m%}'
-NO_COLOR=$'%{\e[0m%}'
-
+# 
+# Configure Prompts
+# -----------------
 
 # secondary prompt, printed when the shell needs more information to complete a
 # command.
@@ -29,6 +17,7 @@ PS3='?# '
 # the execution trace prompt (setopt xtrace). default: '+%N:%i>'
 PS4='+%N:%i:%_> '
 
+# minimal prompt
 #PS1="%{$fg[magenta]%}[%~] %{$reset_color%}%b"
 
 # Prompt. Using single quotes around the PROMPT is very important, otherwise
@@ -46,12 +35,6 @@ git_prompt() {
 setopt PROMPT_SUBST
 PROMPT='%B%{$fg[green]%}%n@%{$fg[green]%}%M %{$fg[blue]%}%~%{$fg[yellow]%}$(git_prompt)%{$reset_color%} %(?.$.%{$fg[red]%}$)%b '
 
-
-
-
-
-
-
 # Create required dirs
 [ -d "${XDG_CACHE_HOME}/zsh" ] || \
     mkdir -p "${XDG_CACHE_HOME}/zsh"
@@ -60,7 +43,7 @@ PROMPT='%B%{$fg[green]%}%n@%{$fg[green]%}%M %{$fg[blue]%}%~%{$fg[yellow]%}$(git_
 # hidden files, these ares values in the default generated zsh config.
 autoload -Uz compinit
 zmodload zsh/complist # make sure module is loaded before the call to compinit.
-compinit -d $XDG_CACHE_HOME/.zcompdump-$ZSH_VERSION
+compinit -d $XDG_CACHE_HOME/zsh/.zcompdump-$ZSH_VERSION
 # Include hidden files in autocomplete
 _comp_options+=(globdots)
 zstyle ':completion:*' menu select=2
@@ -77,17 +60,20 @@ zstyle ':completion:*' group-name ''
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/funcsrc" ] && \
     source "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/funcsrc"
 
-# Dirstack handling
-DIRSTACKFILE="$XDG_CACHE_HOME/zsh/zdirs"
-setopt auto_cd
-setopt auto_pushd
-setopt pushd_ignore_dups
+# DIRSTACK
+# --------
+DIRSTACKFILE="$XDG_CACHE_HOME/zsh/.zdirs"
+setopt auto_cd # cd based on dirname alone.
+setopt auto_pushd # make cd push the old dir onto the dir stack.
+setopt pushd_ignore_dups # don't push the same dir twice.
 
-# History Config
+# HISTORY
+# -------
 HISTFILE="$XDG_CACHE_HOME/zsh/history"
 HISTTIMEFORMAT="%Y/%m/%d %H:%M:%S:   "
 HISTSIZE=1000000                # History lines stored in memory.
 SAVEHIST=1000000                # History lines stored on disk.
+setopt append_history           # Default but let's lock it in.
 setopt BANG_HIST                # Treat the '!' character specially during expansion.
 setopt EXTENDED_HISTORY         # Write the history file in the ":start:elapsed;command" format.
 setopt INC_APPEND_HISTORY       # Write to the history file immediately, not when the shell exits.
@@ -101,17 +87,39 @@ setopt HIST_SAVE_NO_DUPS        # Don't write duplicate entries in the history f
 setopt HIST_REDUCE_BLANKS       # Remove superfluous blanks before recording entry.
 setopt HIST_VERIFY              # Don't execute immediately upon history expansion.
 
-setopt nobeep
+setopt nobeep                   # Make it stop!
+setopt nohup                    # Don't send SIGHUP to background processes when the shell exits.
+setopt notify                   # report background job status immediately.
+setopt noglobdots               # * shouldn't match dotfiles. ever.
+setopt extendedglob
+setopt completeinword           # not just at the end
+setopt noshwordsplit            # use zsh style word splitting
+setopt interactive_comments     # Enable comments when in an interactive shell.
+setopt unset                    # don't error out when unset parameters are used.
 
- # auto quote URLS
-autoload -Uz bracketed-paste-magic
+# whenever a command completion is attempted, make sure the entire command path
+# is hashed first.
+setopt hash_list_all
+
+# Use emacs-like key bindings by default:
+bindkey -e
+
+# only slash should be considered as a word separator:
+function slash-backward-kill-word () {
+    local WORDCHARS="${WORDCHARS:s@/@}"
+    # zle backward-word
+    zle backward-kill-word
+}
+zle -N slash-backward-kill-word
+
+# alt+backspace deletes backward.
+# Run `showkey -a` for key codes: '^[^?'
+bindkey '^[^?' slash-backward-kill-word
+
+# auto quote/escape URLs
+autoload -Uz bracketed-paste-magic url-quote-magic
 zle -N bracketed-paste bracketed-paste-magic
-autoload -Uz url-quote-magic
 zle -N self-insert url-quote-magic
-
-
-# whenever a command completion is attempted, make sure the entire command path is hashed first.
-# setopt hash_list_all
 
 # support forward delete (fn + delete) in macOS
 # bindkey "\e[3~" delete-char
