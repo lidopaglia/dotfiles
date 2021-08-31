@@ -13,6 +13,7 @@ call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"
 Plug 'gruvbox-community/gruvbox'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
 
 " telescope
@@ -35,6 +36,7 @@ colorscheme gruvbox
 highlight Normal guibg=none
 
 filetype plugin indent on
+
 
 "nnoremap <silent> Q <nop>
 nnoremap <leader>N :tab new<CR>
@@ -64,10 +66,12 @@ nnoremap J mzJ`z
 " yank to end of line. u not like the others?
 nnoremap Y y$
 
-" yank to sys clipboard
-nnoremap <leader>y "+y
-vnoremap <leader>y "+y
-nnoremap <leader>Y gg"+yG
+" copy to system clipboard
+nnoremap <leader>c "+y
+vnoremap <leader>c "+y
+nnoremap <leader>C gg"+yG
+" default copy to system clipboard
+vnoremap y "+y
 
 " jumplist action
 nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
