@@ -63,7 +63,7 @@ alias mkdir='mkdir -pv'
 # defaults 
 alias ffmpeg="ffmpeg -hide_banner"
 alias df='df -h -x tmpfs -x devtmpfs'
-alias tree='tree -ChN'
+alias tree='tree -aChN --dirsfirst'
 alias dir="tree -L2 --dirsfirst --du $1 | bat"
 alias bat="batcat"
 
