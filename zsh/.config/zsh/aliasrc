@@ -52,7 +52,7 @@ alias yt="youtube-dl --add-metadata -i -o '%(upload_date)s-%(title)s.%(ext)s'"
 alias yta="yt -x -f bestaudio/best"
 alias ytf="ytp --audio-format flac"
 alias ytm="ytp --audio-format mp3"
-alias ytp="youtube-dl --add-metadata -i -o '%(playlist_index)s - %(title)s.%(ext)s' -x -f bestaudio/best"
+alias ytp="youtube-dl --add-metadata -i -o '%(playlist_index)s - %(title)s.%(ext)s'"
 
 # be verbose
 alias cp='cp -iv'
