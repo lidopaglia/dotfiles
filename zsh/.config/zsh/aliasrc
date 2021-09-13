@@ -41,6 +41,12 @@ alias grep='grep --color=auto'
 alias diff='diff --color=auto'
 alias ccat='highlight --out-format=ansi'
 
+# alias for batcat on ubuntu
+os=$(grep '^ID' /etc/os-release | cut -d'=' -f2)
+if [ $os = 'ubuntu' -o $os = "pop" ]; then
+    alias bat="batcat"
+fi
+
 # dotfiles
 alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias dots='dot status'
@@ -65,7 +71,6 @@ alias ffmpeg="ffmpeg -hide_banner"
 alias df='df -h -x tmpfs -x devtmpfs'
 alias tree='tree -aChN --dirsfirst'
 alias dir="tree -L2 --dirsfirst --du $1 | bat"
-alias bat="batcat"
 
 # jekyll/bundler
 alias bej='bundle exec jekyll'
