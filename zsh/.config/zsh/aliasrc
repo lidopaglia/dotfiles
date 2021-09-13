@@ -42,7 +42,7 @@ alias diff='diff --color=auto'
 alias ccat='highlight --out-format=ansi'
 
 # alias for batcat on ubuntu
-os=$(grep '^ID' /etc/os-release | cut -d'=' -f2)
+os=$(grep '^ID=' /etc/os-release | cut -d'=' -f2)
 if [ $os = 'ubuntu' -o $os = "pop" ]; then
     alias bat="batcat"
 fi
