@@ -72,7 +72,7 @@ alias mkdir='mkdir -pv'
 # defaults 
 alias ffmpeg="ffmpeg -hide_banner"
 alias df='df -h -x tmpfs -x devtmpfs'
-alias tree='tree -aChN --dirsfirst'
+alias tree='tree -aChN --dirsfirst -I .git'
 alias dir="tree -L2 --dirsfirst --du $1 | bat"
 
 # jekyll/bundler
