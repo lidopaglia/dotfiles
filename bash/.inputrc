@@ -1,0 +1,56 @@
+# turn off bell
+set bell-style none
+
+# Immediately list matches instead of ringing the bell upon completion
+set show-all-if-ambiguous on
+
+# Immediately list matches for words which have more than one possible
+# completion without any possible partial completion (the possible completions
+# don't share a common prefix)
+set show-all-if-unmodified On
+
+# Perform filename matching and completion in a case-insensitive fashion
+set completion-ignore-case on
+
+# The length in characters of the common prefix of a list of possible
+# completions that is displayed without modification.  When set to a value
+# greater than zero, common prefixes longer than this value are replaced with
+# an ellipsis when displaying possible completions
+set completion-prefix-display-length 3
+
+# Color files by types. Note that this may cause completion text blink in some
+# terminals (e.g. xterm)
+set colored-stats on
+
+# Append characater to indicate file type when listing possible completions
+set visible-stats on
+
+# Mark symlinked directories
+set mark-symlinked-directories on
+
+# Color the common prefix
+set colored-completion-prefix on
+
+# Color the common prefix in menu-complete
+set menu-complete-display-prefix on
+
+# Treat each paste into the editing buffer as a single string of characters,
+# instead of treating each character as if it had been read from the keyboard.
+# Prevents pasted characters from being interpreted as editing commands.
+set enable-bracketed-paste on
+
+# tab lists completions & selects the first.
+# consecutive tabs cycles through available completions.
+TAB: menu-complete
+
+# shift+tab cycles completions backward.
+"\e[Z": menu-complete-backward
+
+# https://vim.fandom.com/wiki/Use_vi_shortcuts_in_terminal
+# https://www.topbug.net/blog/2017/07/31/inputrc-for-humans/
+
+
+# bind ctrl+n to back up one dir
+'\C-n':'cd ..\n'
+
+'\C-e':'echo '
