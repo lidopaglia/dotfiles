@@ -29,8 +29,12 @@ fi
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # alias definitions
-if [ -f ~/.config/aliasrc ]; then
-    . ~/.config/aliasrc
+if [ -f ~/.config/shell/aliasrc ]; then
+    . ~/.config/shell/aliasrc
+fi
+
+if [ -f ~/.config/shell/funcsrc ]; then
+    . ~/.config/shell/funcsrc
 fi
 
 # enable programmable completion features (you don't need to enable

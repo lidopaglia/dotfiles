@@ -9,7 +9,7 @@ alias nv='nvim'
 [ -f "$XINITRC" ] && alias startx="startx $XINITRC"
 
 # ls 
-alias ls='LC_ALL=C ls -Fh --color=auto --group-directories-first'
+alias ls='LC_ALL=C.UTF-8 ls -Fh --color=auto --group-directories-first'
 alias lsa='ls -A'
 alias la='ls -Al'
 alias ll='ls -al'
@@ -38,8 +38,16 @@ alias                                               \
 
 # colors
 alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
 alias diff='diff --color=auto'
 alias ccat='highlight --out-format=ansi'
+
+# alias for batcat on ubuntu
+os=$(grep '^ID=' /etc/os-release | cut -d'=' -f2)
+if [ $os = 'ubuntu' -o $os = "pop" ]; then
+    alias bat="batcat"
+fi
 
 # dotfiles
 alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
@@ -51,8 +59,9 @@ alias dotlsu='dot ls-files . --exclude-standard --others'
 alias yt="youtube-dl --add-metadata -i -o '%(upload_date)s-%(title)s.%(ext)s'"
 alias yta="yt -x -f bestaudio/best"
 alias ytf="ytp --audio-format flac"
-alias ytm="ytp --audio-format mp3"
-alias ytp="youtube-dl --add-metadata -i -o '%(playlist_index)s - %(title)s.%(ext)s' -x -f bestaudio/best"
+alias ytp="youtube-dl --add-metadata -i -o '%(playlist_index)s - %(title)s.%(ext)s'"
+
+alias ytm="yt-dlp --add-metadata -i -x --audio-format mp3 --audio-quality 0 -o '%(playlist_index)s - %(title)s.%(ext)s'"
 
 # be verbose
 alias cp='cp -iv'
@@ -63,9 +72,8 @@ alias mkdir='mkdir -pv'
 # defaults 
 alias ffmpeg="ffmpeg -hide_banner"
 alias df='df -h -x tmpfs -x devtmpfs'
-alias tree='tree -ChN'
+alias tree='tree -aChN --dirsfirst'
 alias dir="tree -L2 --dirsfirst --du $1 | bat"
-alias bat="batcat"
 
 # jekyll/bundler
 alias bej='bundle exec jekyll'
@@ -78,3 +86,8 @@ alias bu='bundle update'
 
 # editor shortcuts
 alias cfv="$EDITOR $XDG_CONFIG_HOME/nvim/init.vim"
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
