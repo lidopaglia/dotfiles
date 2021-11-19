@@ -4,9 +4,6 @@ export EDITOR="nvim"
 export TERMINAL="gnome-terminal"
 export BROWSER="brave"
 
-#export GDK_SCALE=1
-#export GDK_DPI_SCALE=0.75
-
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_BIN_HOME="$HOME/.local/bin"
@@ -27,7 +24,6 @@ export DICS="/usr/share/stardict/dic/"
 export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
 export MANWIDTH=80
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-# export SUDO_ASKPASS="$XDG_BIN_HOME/dmenupass"
 
 # Rust
 [ ! -d $XDG_CACHE_HOME/rust/cargo ] && mkdir -p $XDG_CACHE_HOME/rust/cargo
@@ -41,22 +37,5 @@ export GEM_HOME="$XDG_DATA_HOME/gems"
 # OpenSSL .rnd file
 export RANDFILE="$XDG_CACHE_HOME/.rnd"
 
-# macOS
-# homebrew symlink binaries in `/usr/local/Cellar/'
-# export PATH="/usr/local/sbin:$PATH"
-#
-# prevent creation of ~/.CFUserTextEncoding on macOS
-# export __CF_USER_TEXT_ENCODING="0x0:0x0"
-#
-# include calibre cli on $PATH
-# export PATH="/Applications/calibre.app/Contents/MacOS:$PATH"
-#
-# Ruby bin path macOS specific?
-# export PATH="/usr/local/opt/ruby/bin:$PATH"
-
-# set PATH
-export XDG_BIN_DIRS="$(du "$XDG_BIN_HOME" --exclude='.git' | \
-    cut -f2 | sort | tr '\n' ':' | sed 's/:*$//')"
-export XDG_BIN_DIRS="$XDG_BIN_DIRS:$CARGO_HOME/bin"
-export XDG_BIN_DIRS="$XDG_BIN_DIRS:$GEM_HOME/bin"
-export PATH="$PATH:$XDG_BIN_DIRS"
+# PATH
+export PATH="$XDG_BIN_HOME:$PATH"
