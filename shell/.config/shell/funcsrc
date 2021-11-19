@@ -109,3 +109,8 @@ fk () {
 function dps () {
     docker ps -a --format 'table {{ .ID }}\t{{.Names}}\t{{ .Status }}\t{{ .Image }}' | awk 'NR<2{print $0;next}{print $0 | "sort --key=2"}'
 }
+
+function pkglist () {
+    dpkg -l | awk '/^ii/ {print($2)}'
+}
+
