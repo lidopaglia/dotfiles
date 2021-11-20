@@ -32,7 +32,19 @@ We want these apps/fonts/things installed.
 
 `wget https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/SourceCodePro/Regular/complete/Sauce%20Code%20Pro%20Nerd%20Font%20Complete.ttf`
 
+## Install
 
+Clone the repo locally:
+
+```sh
+git clone https://github.com/lidopaglia/dotfiles .dotfiles
+```
+
+Call stow on the desired configuration:
+
+```sh
+stow bash git neovim shell ssh tmux
+```
 
 ## Usage
 
