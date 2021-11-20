@@ -18,8 +18,8 @@ export MANWIDTH=80
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # https://wiki.archlinux.org/title/Sdcv
-export STARDICT_DATA_DIR=$XDG_DATA_HOME
-export SDCV_PAGER='less --quit-if-one-screen -RX'
+export STARDICT_DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}"
+export SDCV_PAGER='batcat -p --pager "less --quit-if-one-screen -RX"'
 
 # Rust
 [ ! -d $XDG_CACHE_HOME/rust/cargo ] && mkdir -p $XDG_CACHE_HOME/rust/cargo
