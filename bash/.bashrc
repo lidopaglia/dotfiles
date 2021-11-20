@@ -7,11 +7,18 @@ case $- in
       *) return;;
 esac
 
-HISTFILE=$HOME/.config/bash/.bash_history
+# git prompt
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+export -f parse_git_branch
+export PS1="\u@\h \[\e[32m\]\w \[\e[94m\]\$(parse_git_branch)\[\e[00m\]$ "
+
+# BASH History
+HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/bash_history"
 HISTSIZE=100000
 HISTFILESIZE=2000000
 HISTCONTROL=ignoreboth  # no dupes or lines starting with space
-
 shopt -s histappend     # append, don't overwrite it
 shopt -s autocd
 shopt -s checkwinsize
@@ -25,14 +32,12 @@ if [ -x /usr/bin/dircolors ]; then
         || eval "$(dircolors -b)"
 fi
 
-# colored GCC warnings and errors
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# alias definitions
+# load alias definitions
 if [ -f ~/.config/shell/aliasrc ]; then
     . ~/.config/shell/aliasrc
 fi
 
+# load function definitions
 if [ -f ~/.config/shell/funcsrc ]; then
     . ~/.config/shell/funcsrc
 fi
