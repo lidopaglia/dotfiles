@@ -1,4 +1,4 @@
-set number relativenumber
+set number
 set nohlsearch
 set hidden
 set noerrorbells
