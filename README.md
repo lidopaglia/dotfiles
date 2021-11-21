@@ -3,6 +3,10 @@
 These are my dotfiles, a collection of user-specific [configuration
 files][1] for [UNIX-like][3] systems.
 
+![](screenshot.jpg)
+
+This is infinite work in progress.
+
 ## Requirements
 
 The `stow` branch of this repository is configured for use with [GNU Stow][2].
@@ -29,6 +33,8 @@ We want these apps/fonts/things installed.
 - tmux
 - tree
 - wget
+- ncal
+- imagemagick, ffmpeg, mp4grep, mpv, mpd, ncmpcpp
 
 `wget https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/SourceCodePro/Regular/complete/Sauce%20Code%20Pro%20Nerd%20Font%20Complete.ttf`
 
