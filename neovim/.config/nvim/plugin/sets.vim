@@ -21,11 +21,14 @@ set colorcolumn=80
 set signcolumn=yes
 "set isfname+=@-@
 
+set list
+set listchars=tab:➤\ ,trail:·
+
 " Give more space for messages.
 set cmdheight=1
 
-" Having longer updatetime (default is 40000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
+" default is 40000 (in ms = 4s)
+" reduce time for highlighting other references
 set updatetime=50
 
 " Don't pass messages to |ins-completion-menu|.

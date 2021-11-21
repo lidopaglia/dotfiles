@@ -16,30 +16,29 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
 
-" telescope
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/lightline.vim'
+Plug 'junegunn/vim-easy-align'
+
 "Plug 'godlygeek/tabular'
-"Plug 'junegunn/goyo.vim'
-"Plug 'junegunn/vim-easy-align'
 "Plug 'mbbill/undotree'
 
 call plug#end()
 
-let mapleader =" "
+let mapleader ="\<space>"
 
 colorscheme gruvbox
-
 highlight Normal guibg=none
-
 filetype plugin indent on
 
 
-"nnoremap <silent> Q <nop>
 nnoremap <leader>N :tab new<CR>
+nnoremap <leader>Q :bufdo bdelete<cr>
 nnoremap <leader>W :q<CR>
 nnoremap <leader>o :setlocal spell! spelllang=en_us<CR>
 nnoremap <leader><CR> :so ~/.config/nvim/init.vim<CR>
@@ -77,17 +76,12 @@ vnoremap y "+y
 nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
 nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
 
-
-
 " wtf is this?
 vnoremap <leader>p "_dP
-
-
 
 lua require("lido")
 
 nnoremap <C-_> :Telescope current_buffer_fuzzy_find sorting_strategy=ascending <CR>
-
 
 augroup highlight_yank
     autocmd!
@@ -100,8 +94,6 @@ augroup END
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 "nmap ga <Plug>(EasyAlign)
-
-
 
 " Goyo Stuffs
 "function! s:goyo_enter()
