@@ -3,15 +3,11 @@
 These are my dotfiles, a collection of user-specific [configuration
 files][1] for [UNIX-like][3] systems.
 
-![](screenshot.jpg)
-
-This is infinite work in progress.
-
 ## Requirements
 
-The `stow` branch of this repository is configured for use with [GNU Stow][2].
-To get started, clone the repo locally and use to stow to create symlinks for
-the desired configuration.
+The `stow` branch of this repository is configured for use with [GNU
+Stow][2]. To get started, clone the repo locally and use to stow to create
+symlinks for the desired configuration.
 
 ```bash
 $ git clone git@github.com:lidopaglia/dotfiles.git ~/.dotfiles && cd .dotfiles
@@ -24,7 +20,7 @@ We want these apps/fonts/things installed.
 - curl
 - git
 - gruvbox
-- neovim
+- neovim 0.5.0
 - Sauce Code Pro nerd font 
 - pass
 - ripgrep
@@ -46,15 +42,13 @@ Clone the repo locally:
 git clone https://github.com/lidopaglia/dotfiles .dotfiles
 ```
 
-Call stow on the desired configuration:
+Call stow on the desired configuration(s):
 
 ```sh
 stow bash git neovim shell ssh tmux
 ```
 
-## Usage
-
-To install the neovim config:
+To install just the neovim config:
 
 ```bash
 $ git clone git@github.com:lidopaglia/dotfiles.git ~/.dotfiles && cd .dotfiles
@@ -64,12 +58,11 @@ $ stow neovim
 With neovim installed and the config stowed, luanch neovim and then run
 `:PlugInstall`. After all plugins install quit `nvim` and relaunch.
 
-Note: The current config requires neovim 0.5.0
+Alternatively run:
 
-## Zsh
-
-A `.zshenv` in `$HOME` is needed on debian/ubunutu/pop? There is no doubt
-alwasy [more learning][5] to do.
+```sh
+nvim --headless +PlugInstall +qall
+```
 
 ## License
 
