@@ -22,8 +22,9 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 Plug 'junegunn/goyo.vim'
-Plug 'junegunn/lightline.vim'
+Plug 'junegunn/limelight.vim'
 Plug 'junegunn/vim-easy-align'
+Plug 'preservim/vim-pencil'
 
 "Plug 'godlygeek/tabular'
 "Plug 'mbbill/undotree'
@@ -36,7 +37,10 @@ colorscheme gruvbox
 highlight Normal guibg=none
 filetype plugin indent on
 
-
+" Allow gf to open non-existent files
+map gf :edit <cfile><cr>
+nnoremap <leader>e :edit ~/.config/nvim/init.vim<cr>
+nnoremap <leader>T :tab new<CR>
 nnoremap <leader>N :tab new<CR>
 nnoremap <leader>Q :bufdo bdelete<cr>
 nnoremap <leader>W :q<CR>
@@ -68,16 +72,13 @@ nnoremap Y y$
 " copy to system clipboard
 nnoremap <leader>c "+y
 vnoremap <leader>c "+y
-nnoremap <leader>C gg"+yG
 " default copy to system clipboard
+nnoremap <leader>C gg"+yG
 vnoremap y "+y
 
 " jumplist action
 nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
 nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
-
-" wtf is this?
-vnoremap <leader>p "_dP
 
 lua require("lido")
 
