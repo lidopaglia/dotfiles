@@ -36,6 +36,8 @@ use {
     config = get_config("telescope")
 }
 
+use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+
 use { "gruvbox-community/gruvbox", config = get_config("gruvbox") }
 
 -- plugins todo
