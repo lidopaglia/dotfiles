@@ -56,12 +56,12 @@ $ stow neovim
 ```
 
 With neovim installed and the config stowed, luanch neovim and then run
-`:PlugInstall`. After all plugins install quit `nvim` and relaunch.
+`:PackerSync`. After all plugins install quit `nvim` and relaunch.
 
 Alternatively run:
 
 ```sh
-nvim --headless +PlugInstall +qall
+nvim --headless +PackerSync +qall
 ```
 
 ## License
