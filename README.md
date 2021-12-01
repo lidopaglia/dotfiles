@@ -31,6 +31,7 @@ We want these apps/fonts/things installed.
 - wget
 - ncal
 - imagemagick, ffmpeg, mp4grep, mpv, mpd, ncmpcpp
+- viddy
 
 `wget https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/SourceCodePro/Regular/complete/Sauce%20Code%20Pro%20Nerd%20Font%20Complete.ttf`
 
@@ -75,3 +76,4 @@ nvim --headless +PackerSync +qall
 [5]: https://zsh.sourceforge.io/Intro/intro_3.html
 [6]: https://github.com/morhetz/gruvbox
 [7]: https://github.com/ryanoasis/nerd-fonts
+[8]: https://github.com/sachaos/viddy
