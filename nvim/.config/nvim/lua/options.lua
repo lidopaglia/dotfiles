@@ -1,7 +1,6 @@
 vim.cmd("filetype indent plugin on")
 vim.cmd("highlight Normal guibg=none")
 vim.cmd("au TextYankPost * lua vim.highlight.on_yank {on_visual = true}")
-vim.cmd("colorscheme gruvbox")
 
 vim.opt.number        = true -- enable numbered lines
 vim.opt.hidden        = true -- allow switching from unsaved buffer
