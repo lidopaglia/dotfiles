@@ -7,7 +7,7 @@ vim.api.nvim_set_keymap("n", "<Space>", "<NOP>", default_options)
 vim.g.mapleader = " "
 
 map("n", "gf", ":edit <cfile><cr>", default_options) -- Allow gf to open non-existent files
--- nnoremap <leader>e :edit ~/.config/nvim/init.vim<cr>
+map("n", "<leader>e", ":edit ~/.config/nvim/init.lua<cr>", default_options)
 -- nnoremap <leader>T :tab new<CR>
 -- nnoremap <leader>N :tab new<CR>
 -- nnoremap <leader>Q :bufdo bdelete<cr>
@@ -49,5 +49,22 @@ map("v", "y", "\"+y", default_options)
 --nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
 --nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
 
-
+-- Telescope
+map("n", "<leader>p", '<cmd>lua require("telescope.builtin").find_files()<cr>', default_options)
+--map("n", "<leader>r", '<cmd>lua require("telescope.builtin").registers()<cr>')
+--map("n", "<leader>g", '<cmd>lua require("telescope.builtin").live_grep()<cr>')
+--map("n", "<leader>b", '<cmd>lua require("telescope.builtin").buffers()<cr>')
+--map("n", "<leader>j", '<cmd>lua require("telescope.builtin").help_tags()<cr>')
+--map("n", "<leader>h", '<cmd>lua require("telescope.builtin").git_bcommits()<cr>')
+--map("n", "<leader>f", '<cmd>lua require("telescope").extensions.file_browser.file_browser()<CR>')
+--map("n", "<leader>s", '<cmd>lua require("telescope.builtin").spell_suggest()<cr>')
+--map("n", "<leader>i", '<cmd>lua require("telescope.builtin").git_status()<cr>', default_options)
+--map("n", "<leader>ca", '<cmd>lua require("telescope.builtin").lsp_code_actions()<cr>')
+--map("n", "<leader>cs", '<cmd>lua require("telescope.builtin").lsp_document_symbols()<cr>')
+--map("n", "<leader>cd", '<cmd>lua require("telescope.builtin").lsp_document_diagnostics()<cr>')
+--map("n", "<leader>cr", '<cmd>lua require("telescope.builtin").lsp_references()<cr>')
+--map("i", "<F2>", '<cmd>lua require("renamer").rename()<cr>', { noremap = true, silent = true })
+--map("n", "<leader>cn", '<cmd>lua require("renamer").rename()<cr>', { noremap = true, silent = true })
+--map("v", "<leader>cn", '<cmd>lua require("renamer").rename()<cr>', { noremap = true, silent = true })
+--map("n", "<leader>ci", "<cmd> lua vim.lsp.diagnostic.show_line_diagnostics()<cr>")
 

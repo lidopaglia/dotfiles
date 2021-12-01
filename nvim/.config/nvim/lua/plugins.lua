@@ -27,17 +27,24 @@ packer.init {
 local use = packer.use
 packer.reset()
 
--- actual plugins list
+-- Begin plugins
 use "wbthomason/packer.nvim"
 
-use {
-    "nvim-telescope/telescope.nvim",
-    requires = {{"nvim-lua/popup.nvim"}, {"nvim-lua/plenary.nvim"}},
-    config = get_config("telescope")
-}
+-- Telescope
+use({
+  "nvim-telescope/telescope.nvim",
+  module = "telescope",
+  cmd = "Telescope",
+  requires = {
+    { "nvim-lua/popup.nvim" },
+    { "nvim-lua/plenary.nvim" },
+    { "nvim-telescope/telescope-fzy-native.nvim" },
+  },
+  config = get_config("telescope"),
+})
+use({ "nvim-telescope/telescope-file-browser.nvim" })
 
-use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-
+-- Gruvbox
 use { "gruvbox-community/gruvbox", config = get_config("gruvbox") }
 
 -- plugins todo
@@ -46,10 +53,6 @@ use { "gruvbox-community/gruvbox", config = get_config("gruvbox") }
 -- 'junegunn/limelight.vim'
 -- 'junegunn/vim-easy-align'
 -- 'kyazdani42/nvim-web-devicons'
--- 'nvim-lua/plenary.nvim'
--- 'nvim-lua/popup.nvim'
--- 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
--- 'nvim-telescope/telescope.nvim'
 -- 'preservim/vim-pencil'
 -- 'tpope/vim-fugitive'
 -- 'tpope/vim-surround'
