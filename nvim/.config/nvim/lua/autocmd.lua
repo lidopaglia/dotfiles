@@ -1,0 +1,2 @@
+-- Remove all trailing whitespace on save
+-- Prevent new line to also start with a comment
