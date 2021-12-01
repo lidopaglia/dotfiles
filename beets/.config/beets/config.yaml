@@ -1,4 +1,4 @@
-plugins: fetchart embedart fromfilename chroma
+plugins: fetchart embedart fromfilename chroma check
 directory: "/home/lido/Music/beets/media"
 library: "/home/lido/Music/beets/beets.db"
 threaded: yes
