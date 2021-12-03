@@ -1,9 +1,11 @@
 #!/bin/sh
 
 # Use neovim for vim if present
-[ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
-alias v='nvim'
-alias nv='nvim'
+[ -x "$(command -v nvim)" ] && \
+  alias vim="nvim"    \
+    vimdiff="nvim -d" \
+    v='nvim'          \
+    nv='nvim'         \
 
 # Use $XINITRC variable if file exists
 [ -f "$XINITRC" ] && alias startx="startx $XINITRC"
@@ -43,12 +45,6 @@ alias egrep='egrep --color=auto'
 alias diff='diff --color=auto'
 alias ccat='highlight --out-format=ansi'
 
-# alias for batcat on ubuntu
-os=$(grep '^ID=' /etc/os-release | cut -d'=' -f2)
-if [ $os = 'ubuntu' -o $os = "pop" ]; then
-    alias bat="batcat"
-fi
-
 # dotfiles
 alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias dots='dot status'
@@ -83,9 +79,6 @@ alias bejd='bej draft'
 alias bpub='bej publish'
 alias bi='bundle install'
 alias bu='bundle update'
-
-# editor shortcuts
-alias cfv="$EDITOR $XDG_CONFIG_HOME/nvim/init.vim"
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
