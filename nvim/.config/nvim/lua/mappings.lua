@@ -8,6 +8,10 @@ vim.g.mapleader = " "
 
 map("n", "gf", ":edit <cfile><cr>", default_options) -- Allow gf to open non-existent files
 map("n", "<leader>e", ":edit ~/.config/nvim/init.lua<cr>", default_options)
+
+-- Switch Session
+map("n", "<leader>1", ":Telescope sessions [save_current=true]<CR>", default_options)
+
 -- nnoremap <leader>T :tab new<CR>
 -- nnoremap <leader>N :tab new<CR>
 -- nnoremap <leader>Q :bufdo bdelete<cr>
