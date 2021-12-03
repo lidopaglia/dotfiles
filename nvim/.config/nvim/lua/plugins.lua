@@ -48,7 +48,10 @@ use({ "nvim-telescope/telescope-file-browser.nvim" })
 use({ "gruvbox-community/gruvbox", config = get_config("gruvbox") })
 
 -- Sessions
-use({ "shatur/neovim-session-manager", config = get_config("session") })
+use({ "shatur/neovim-session-manager",
+  config = get_config("session"),
+  requires = { "nvim-telescope/telescope.nvim" }
+})
 
 -- plugins todo
 -- 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
