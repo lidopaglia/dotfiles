@@ -43,6 +43,7 @@ use({
   config = get_config("telescope"),
 })
 use({ "nvim-telescope/telescope-file-browser.nvim" })
+use 'cljoly/telescope-repo.nvim'
 
 -- Gruvbox
 use({ "gruvbox-community/gruvbox", config = get_config("gruvbox") })
