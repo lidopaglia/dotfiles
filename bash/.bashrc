@@ -42,6 +42,16 @@ if [ -f ~/.config/shell/funcsrc ]; then
     . ~/.config/shell/funcsrc
 fi
 
+# create symlink for fd on Ubuntu
+if [ -x "$(command -v 'fdfind')" ]; then
+  ln -sf $(which fdfind) ~/.local/bin/fd
+fi
+
+# create symlink for bat on Ubuntu
+if [ -x "$(command -v 'batcat')" ]; then
+  ln -sf $(which batcat) ~/.local/bin/bat
+fi
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc)
