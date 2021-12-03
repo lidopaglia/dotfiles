@@ -53,6 +53,16 @@ use({ "shatur/neovim-session-manager",
   requires = { "nvim-telescope/telescope.nvim" }
 })
 
+-- gitsigns
+use {
+  'lewis6991/gitsigns.nvim',
+  requires = { 'nvim-lua/plenary.nvim' },
+  event = "BufReadPre",
+  config = get_config("gitsigns"),
+  -- tag = 'release' -- To use the latest release
+}
+
+
 -- plugins todo
 -- 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
 -- 'junegunn/goyo.vim'

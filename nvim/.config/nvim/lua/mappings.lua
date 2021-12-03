@@ -72,3 +72,5 @@ map("n", "<leader>p", '<cmd>lua require("telescope.builtin").find_files()<cr>', 
 --map("v", "<leader>cn", '<cmd>lua require("renamer").rename()<cr>', { noremap = true, silent = true })
 --map("n", "<leader>ci", "<cmd> lua vim.lsp.diagnostic.show_line_diagnostics()<cr>")
 
+-- gitsigns
+map("n", "<leader>tb", [[<Cmd>lua require'gitsigns'.toggle_current_line_blame()<CR>]], default_options)
