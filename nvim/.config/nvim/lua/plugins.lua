@@ -63,6 +63,12 @@ use {
   -- tag = 'release' -- To use the latest release
 }
 
+-- Comment
+use {
+  'numToStr/Comment.nvim',
+  config = get_config("comment"),
+}
+
 
 -- plugins todo
 -- 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
