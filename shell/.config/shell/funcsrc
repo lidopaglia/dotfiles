@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# show me jump aliases
+function j() {
+  grep '^alias j.*' ~/.config/shell/aliasrc \
+    | awk '{ FS="(alias )";print $2 }' \
+    | tail -n +2 \
+    | bat -l sh --style=grid,numbers
+}
+
 # tmux stuff
 # ==========
 
