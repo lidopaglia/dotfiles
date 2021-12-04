@@ -9,33 +9,35 @@ The `stow` branch of this repository is configured for use with [GNU
 Stow][2]. To get started, clone the repo locally and use to stow to create
 symlinks for the desired configuration.
 
-```bash
-$ git clone git@github.com:lidopaglia/dotfiles.git ~/.dotfiles && cd .dotfiles
-$ stow neovim tmux ssh git # plus whatever else
-```
+- Neovim >= 0.5.0
+- Newish version of `git`.
 
-We want these apps/fonts/things installed.
+We also want these apps/fonts/things installed.
 
 - bat
 - curl
-- git
+- delta
+- fd
+- glow
 - gruvbox
-- neovim 0.5.0
-- Sauce Code Pro nerd font 
+- imagemagick, ffmpeg, mp4grep, mpv, mpd, ncmpcpp
+- ncal
 - pass
 - ripgrep
+- sauce code pro (nerd font)
 - ssh
 - stow
 - tmux
 - tree
-- wget
-- ncal
-- imagemagick, ffmpeg, mp4grep, mpv, mpd, ncmpcpp
 - viddy
-
-`wget https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/SourceCodePro/Regular/complete/Sauce%20Code%20Pro%20Nerd%20Font%20Complete.ttf`
+- wget
 
 ## Install
+
+```bash
+$ git clone git@github.com:lidopaglia/dotfiles.git ~/.dotfiles && cd .dotfiles
+$ stow nvim tmux ssh git # plus whatever else
+```
 
 Clone the repo locally:
 
@@ -46,17 +48,17 @@ git clone https://github.com/lidopaglia/dotfiles .dotfiles
 Call stow on the desired configuration(s):
 
 ```sh
-stow bash git neovim shell ssh tmux
+stow bash git nvim shell ssh tmux
 ```
 
 To install just the neovim config:
 
 ```bash
 $ git clone git@github.com:lidopaglia/dotfiles.git ~/.dotfiles && cd .dotfiles
-$ stow neovim
+$ stow nvim
 ```
 
-With neovim installed and the config stowed, luanch neovim and then run
+With neovim installed and the config stowed, launch neovim and then run
 `:PackerSync`. After all plugins install quit `nvim` and relaunch.
 
 Alternatively run:
@@ -77,3 +79,4 @@ nvim --headless +PackerSync +qall
 [6]: https://github.com/morhetz/gruvbox
 [7]: https://github.com/ryanoasis/nerd-fonts
 [8]: https://github.com/sachaos/viddy
+[9]: https://www.nerdfonts.com/
