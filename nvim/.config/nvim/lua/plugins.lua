@@ -69,13 +69,13 @@ use {
   config = get_config("comment"),
 }
 
+use {'junegunn/goyo.vim'}
+use {'junegunn/limelight.vim'}
+use {'preservim/vim-pencil'}
 
 -- plugins todo
 -- 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
--- 'junegunn/goyo.vim'
--- 'junegunn/limelight.vim'
 -- 'junegunn/vim-easy-align'
 -- 'kyazdani42/nvim-web-devicons'
--- 'preservim/vim-pencil'
 -- 'tpope/vim-fugitive'
 -- 'tpope/vim-surround'
