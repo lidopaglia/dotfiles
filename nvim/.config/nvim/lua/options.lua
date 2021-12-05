@@ -35,10 +35,10 @@ vim.opt.swapfile = false                                   -- Control swapfile c
 vim.opt.scrolloff     = 24 -- Minimal number of screen lines to keep above and below the cursor
 vim.opt.sidescrolloff = 12 -- Minimal number of columns to scroll horizontally
 vim.wo.colorcolumn    = '80'
---vim.opt.signcolumn = true --err: invalid should be a string?
-vim.opt.list = true
---vim.opt.listchars = "tab:➤\ ,trail:·"
-vim.opt.cmdheight = 1 -- give more space for messages.
+vim.opt.signcolumn    = 'yes'
+vim.opt.list          = true
+vim.opt.cmdheight     = 1 -- give more space for messages.
+--vim.opt.listchars   = "tab:➤\ ,trail:·"
 
 vim.opt.updatetime = 50  -- default 4000 (in ms = 4s). reduce time for highlighting other refs.
 vim.opt.timeoutlen = 400 -- time to wait for a mapped sequence to complete (in milliseconds)
