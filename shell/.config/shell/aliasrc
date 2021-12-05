@@ -21,18 +21,23 @@ alias lat='\ls -AltFh --color=auto'
 alias lsl='ls -nph' #: As 'ls', but with lots of information.
 alias lsla='ls -Anph' #: As 'lsl', but also show all files.
 
-# jump around
+# jump around - inspect with `j`
+
+# top-level
 alias jb='pushd ~/.local/bin;clear'
 alias jc='pushd ~/.config;clear'
 alias jd='pushd ~/.dotfiles;clear'
-alias ji='pushd ~/Music/inbox;clear; l'
-alias jn='pushd ~/Documents/notes;clear'
+alias jm='pushd ~/media;clear'
+alias jn='pushd ~/notes;clear'
 alias jp='pushd ~/projects;clear'
-alias jv='pushd ~/.config/nvim; clear'
+
+# media
+alias jmi='pushd ~/media/inbox;clear; l'
+
+# dotfiles
 alias jda='pushd ~/.config/shell/ && nvim ~/.config/shell/aliasrc'
 alias jdf='pushd ~/.config/shell/ && nvim ~/.config/shell/funcsrc'
-alias jdd='cd ~/Documents'
-alias jcv='cd ~/.config/nvim'
+alias jdn='pushd ~/.config/nvim; clear'
 
 # git
 alias log="git --no-pager log --reverse --pretty=format:'%CredCommit %Cgreen%h%Cred pushed %ar by %Cgreen%an%Creset%Cred:%Creset%n\"%s\"%n' 2> /dev/null"
