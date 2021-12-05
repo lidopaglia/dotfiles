@@ -1,6 +1,6 @@
 plugins: fetchart embedart fromfilename chroma check
-directory: "/home/lido/Music/beets/media"
-library: "/home/lido/Music/beets/beets.db"
+directory: "/home/lido/media/music/beets/media"
+library: "/home/lido/media/music/beets/beets.db"
 threaded: yes
 original_date: no
 per_disc_numbering: no
@@ -16,7 +16,7 @@ import:
   incremental: yes
   quiet_fallback: skip
   timid: no
-  log: "/home/lido/Music/beets/beets.log"
+  log: "/home/lido/media/music/beets/beets.log"
 
 embedart:
   auto: yes
