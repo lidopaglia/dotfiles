@@ -62,3 +62,11 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+# load nix env
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
+  . $HOME/.nix-profile/etc/profile.d/nix.sh;
+fi
+
+# init zoxide
+eval "$(zoxide init bash)"
