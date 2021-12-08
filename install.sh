@@ -10,6 +10,7 @@ nix-env -iA \
     nixpkgs.curl \
     nixpkgs.delta \
     nixpkgs.direnv \
+    nixpkgs.fd \
     nixpkgs.fzf \
     nixpkgs.gcc \
     nixpkgs.git \
