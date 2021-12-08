@@ -43,6 +43,9 @@ export XDG_BIN_DIRS="$XDG_BIN_DIRS:$CARGO_HOME/bin"
 export XDG_BIN_DIRS="$XDG_BIN_DIRS:$GEM_HOME/bin"
 export PATH="$PATH:$XDG_BIN_DIRS"
 
+# Disable Nix profile modification
+export NIX_INSTALLER_NO_MODIFY_PROFILE="true"
+
 # if running bash, source .bashrc if it exists
 if [ -n "$BASH_VERSION" ]; then
     if [ -f "$HOME/.bashrc" ]; then
