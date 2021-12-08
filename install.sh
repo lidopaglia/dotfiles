@@ -13,7 +13,6 @@ nix-env -iA \
     nixpkgs.fd \
     nixpkgs.fzf \
     nixpkgs.gcc \
-    nixpkgs.git \
     nixpkgs.gnumake \
     nixpkgs.kitty \
     nixpkgs.neovim \
