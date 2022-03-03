@@ -42,17 +42,18 @@ use({
   },
   config = get_config("telescope"),
 })
-use({ "nvim-telescope/telescope-file-browser.nvim" })
-use 'cljoly/telescope-repo.nvim'
+use { "nvim-telescope/telescope-file-browser.nvim" }
+use { 'cljoly/telescope-repo.nvim' }
+use { 'nvim-telescope/telescope-ui-select.nvim' }
 
 -- Gruvbox
 use({ "gruvbox-community/gruvbox", config = get_config("gruvbox") })
 
 -- Sessions
---use({ "shatur/neovim-session-manager",
---  config = get_config("session"),
---  requires = { "nvim-telescope/telescope.nvim" }
---})
+use({ "shatur/neovim-session-manager",
+  config = get_config("session"),
+  requires = { "nvim-telescope/telescope.nvim" }
+})
 
 -- gitsigns
 use {

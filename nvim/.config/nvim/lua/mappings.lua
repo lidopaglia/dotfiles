@@ -31,6 +31,9 @@ map("n", "<leader>k", ":m .-2<CR>==", default_options)
 map("n", "<TAB>", ":bnext<CR>", default_options)
 map("n", "<S-TAB>", ":bprevious<CR>", default_options)
 
+-- close buffer
+map("n", "<C-w>", ":bd<CR>", default_options)
+
 -- undo break points
 --inoremap , ,<c-g>u
 --inoremap . .<c-g>u
