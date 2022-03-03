@@ -80,4 +80,4 @@ require("telescope").setup({
 require("telescope").load_extension("fzy_native")
 
 -- Use neovim-session-manager with Telescope
-require("telescope").load_extension("sessions")
+-- require("telescope").load_extension("sessions")

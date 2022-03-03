@@ -9,7 +9,7 @@ configurations.
 
 ## Requirements
 
-- `git`
+- git
 - bat
 - curl
 - delta
@@ -41,7 +41,21 @@ $ git clone git@github.com:lidopaglia/dotfiles.git ~/.dotfiles && cd .dotfiles
 $ stow bash shell git nvim tmux ssh
 ```
 
-## Neovim Setup
+## Installing Neovim
+
+Follow the steps for [building from source][11]. [Prerequisites][12] for modern
+Debian/Ubuntu are:
+
+```
+sudo apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip curl doxygen
+```
+
+Clone the repository and build:
+
+```
+git clone https://github.com/neovim/neovim && cd neovim && make
+sudo make install
+```
 
 With neovim installed and the config stowed, launch neovim and then run
 `:PackerSync`. After all plugins install quit `nvim` and relaunch.
@@ -65,3 +79,7 @@ nvim --headless +PackerSync +qall
 [7]: https://github.com/ryanoasis/nerd-fonts
 [8]: https://github.com/sachaos/viddy
 [9]: https://www.nerdfonts.com/
+[10]: https://github.com/neovim/neovim
+[11]: https://github.com/neovim/neovim/wiki/Building-Neovim
+[12]: https://github.com/neovim/neovim/wiki/Building-Neovim#build-prerequisites
+[13]: https://github.com/neovim/neovim/wiki/FAQ#build-issues

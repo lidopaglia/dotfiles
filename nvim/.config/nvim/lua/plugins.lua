@@ -49,18 +49,17 @@ use 'cljoly/telescope-repo.nvim'
 use({ "gruvbox-community/gruvbox", config = get_config("gruvbox") })
 
 -- Sessions
-use({ "shatur/neovim-session-manager",
-  config = get_config("session"),
-  requires = { "nvim-telescope/telescope.nvim" }
-})
+--use({ "shatur/neovim-session-manager",
+--  config = get_config("session"),
+--  requires = { "nvim-telescope/telescope.nvim" }
+--})
 
 -- gitsigns
 use {
   'lewis6991/gitsigns.nvim',
   requires = { 'nvim-lua/plenary.nvim' },
-  event = "BufReadPre",
   config = get_config("gitsigns"),
-  -- tag = 'release' -- To use the latest release
+  tag = 'release' -- To use the latest release
 }
 
 -- Comment
@@ -72,10 +71,11 @@ use {
 use {'junegunn/goyo.vim'}
 use {'junegunn/limelight.vim'}
 use {'preservim/vim-pencil'}
+use {'tpope/vim-surround'}
+use {'jiangmiao/auto-pairs'}
 
 -- plugins todo
 -- 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
 -- 'junegunn/vim-easy-align'
 -- 'kyazdani42/nvim-web-devicons'
 -- 'tpope/vim-fugitive'
--- 'tpope/vim-surround'
