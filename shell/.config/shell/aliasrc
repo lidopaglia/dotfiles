@@ -75,7 +75,8 @@ alias yta="yt -x -f bestaudio/best"
 alias ytf="ytp --audio-format flac"
 alias ytp="youtube-dl --add-metadata -i -o '%(playlist_index)s - %(title)s.%(ext)s'"
 
-alias ytm="yt-dlp --add-metadata -i -x --audio-format mp3 --audio-quality 0 -o '%(playlist_index)s - %(title)s.%(ext)s'"
+alias ytm="yt-dlp --add-metadata -i -x --audio-format mp3 --audio-quality 0 -o '%(album)s/%(playlist_index)s - %(title)s.%(ext)s'"
+alias aa="add_album.sh"
 
 # be verbose
 alias cp='cp -iv'
