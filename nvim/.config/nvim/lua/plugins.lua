@@ -45,8 +45,26 @@ use({
 use({ "nvim-telescope/telescope-file-browser.nvim" })
 use 'cljoly/telescope-repo.nvim'
 
+-- Icons
+use({ 'kyazdani42/nvim-web-devicons' })
+
 -- Gruvbox
 use({ "gruvbox-community/gruvbox", config = get_config("gruvbox") })
+
+-- Lualine
+use {
+  'nvim-lualine/lualine.nvim',
+  requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+  config = get_config('lualine')
+
+}
+
+-- barbar
+use {
+  'romgrk/barbar.nvim',
+  requires = {'kyazdani42/nvim-web-devicons'},
+  config = get_config('barbar')
+}
 
 -- Sessions
 --use({ "shatur/neovim-session-manager",
