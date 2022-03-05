@@ -10,7 +10,7 @@ require("session_manager").setup({
   colon_replacer = '++',
   -- Define what to do when Neovim is started without arguments.
   -- Possible values: Disabled, CurrentDir, LastSession
-  autoload_mode = require('session_manager.config').AutoloadMode.CurrentDir,
+  autoload_mode = require('session_manager.config').AutoloadMode.Disabled,
   -- Automatically save last session on exit and on session switch.
   autosave_last_session = true,
   -- Plugin will not save a session when no buffers are opened, or all of them
