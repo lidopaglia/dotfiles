@@ -1,7 +1,7 @@
-background_opacity: 0.95
 draw_bold_text_with_bright_colors: true
 
 window:
+  opacity: 0.95
   startup_mode: Maximized
   decorations: none
   dynamic_padding: true
