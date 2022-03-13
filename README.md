@@ -4,10 +4,19 @@ These are my [dotfiles][1], a collection of user-specific configuration
 files for [UNIX-like][3] systems.
 
 This repository is configured for use with [GNU Stow][2]. To get started, clone
-the repo locally and use to `stow` to create symlinks for the desired
-configurations.
+the repo and call `stow` to symlink the desired configuration.
 
-## Requirements
+```bash
+git clone https://github.com/lidopaglia/dotfiles.git ~/.dotfiles
+cd .dotfiles
+stow bash shell git nvim tmux ssh
+```
+
+## Install Requirements
+
+```
+ansible-playbook bootstrap.yaml -bK
+```
 
 - git
 - bat
@@ -34,12 +43,6 @@ configurations.
 - viddy
 - wget
 
-## Install
-
-```bash
-$ git clone git@github.com:lidopaglia/dotfiles.git ~/.dotfiles && cd .dotfiles
-$ stow bash shell git nvim tmux ssh
-```
 
 ## Installing Neovim
 

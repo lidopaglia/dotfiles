@@ -1,3 +1,5 @@
 nvim/.config/nvim/plugin/packer_compiled.lua
 **/.zdirs
 **/.zcompdump
+.ansible_galaxy_roles/**
+.ansible_playbook.log

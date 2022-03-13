@@ -1,0 +1,7 @@
+---
+roles:
+  - name: grog.package
+
+collections:
+  - name: ansible.posix
+  - name: community.general

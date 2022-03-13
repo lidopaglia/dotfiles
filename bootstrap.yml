@@ -1,0 +1,70 @@
+---
+- hosts: localhost
+  become: true
+  pre_tasks:
+
+    - name: update all debian packages
+      ansible.builtin.apt:
+        name: '*'
+        state: latest
+        only_upgrade: yes
+        update_cache: yes
+      when: ansible_os_family == 'Debian'
+
+    - name: update all fedora packages
+      become: true
+      ansible.builtin.dnf:
+        name: '*'
+        state: latest
+        update_cache: yes
+        update_only: yes
+      when: ansible_os_family == 'RedHat'
+
+- hosts: localhost
+  tasks:
+    - name: Set timezone to America/New_York
+      community.general.timezone:
+        name: America/New_York
+
+    - name: Import keys from GitHub
+      ansible.posix.authorized_key:
+        user: "{{ ansible_user | default('lido') }}"
+        state: present
+        key: https://github.com/lidopaglia.keys
+
+    - name: Install core packages
+      become: true
+      ansible.builtin.package:
+        name:
+          - curl
+          - git
+          - mpd
+          - mpv
+          - pass
+          - stow
+          - tmux
+          - tree
+          - unzip
+          - wget
+        state: latest
+
+    - name: Install Teraform
+      become: true
+      ansible.builtin.unarchive:
+        src: https://releases.hashicorp.com/terraform/1.1.7/terraform_1.1.7_linux_amd64.zip
+        dest: /usr/local/bin
+        remote_src: yes
+        mode: 0755
+        owner: root
+        group: root
+
+    - name: Install Bat
+      become: true
+      ansible.builtin.unarchive:
+        src: https://github.com/sharkdp/bat/releases/download/v0.20.0/bat-v0.20.0-x86_64-unknown-linux-gnu.tar.gz 
+        dest: /usr/local/bin
+        remote_src: yes
+        mode: 0755
+        owner: root
+        group: root
+
