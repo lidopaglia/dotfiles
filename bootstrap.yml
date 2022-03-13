@@ -1,6 +1,47 @@
 ---
 - hosts: localhost
   become: true
+  vars:
+    dir_home: "{{ lookup('env', 'HOME') }}"
+    dir_src: "{{ dir_home }}/.local/src"
+    # grog.package
+    package_list:
+      - name: bat
+      - name: curl
+      - name: fd-find
+      - name: ffmpeg
+      - name: git
+      - name: htop
+      - name: imagemagick
+        dnf: ImageMagick
+      - name: iotop
+      - name: iperf
+      - name: irssi
+      - name: jq
+      - name: mediainfo
+      - name: mkvtoolnix
+      - name: mpc
+      - name: mpd
+      - name: mpv
+      - name: ncmpcpp
+      - name: netcat
+      - name: newsboat
+      - name: nmap
+      - name: nvme-cli
+      - name: pass
+      - name: proxychains
+        dnf: proxychains-ng
+      - name: ripgrep
+      - name: stow
+      - name: tcpdump
+      - name: tmux
+      - name: tree
+      - name: unzip
+      - name: vim
+      - name: wget
+      - name: whois
+  roles:
+    - role: grog.package
   pre_tasks:
 
     - name: update all debian packages
@@ -9,10 +50,10 @@
         state: latest
         only_upgrade: yes
         update_cache: yes
+        cache_valid_time: 3600
       when: ansible_os_family == 'Debian'
 
     - name: update all fedora packages
-      become: true
       ansible.builtin.dnf:
         name: '*'
         state: latest
@@ -20,8 +61,8 @@
         update_only: yes
       when: ansible_os_family == 'RedHat'
 
-- hosts: localhost
   tasks:
+
     - name: Set timezone to America/New_York
       community.general.timezone:
         name: America/New_York
@@ -32,23 +73,75 @@
         state: present
         key: https://github.com/lidopaglia.keys
 
-    - name: Install core packages
-      become: true
-      ansible.builtin.package:
-        name:
-          - curl
-          - git
-          - mpd
-          - mpv
-          - pass
-          - stow
-          - tmux
-          - tree
-          - unzip
-          - wget
-        state: latest
+    - name: Ensure local src folder is present
+      ansible.builtin.file:
+        path: "{{ dir_home }}/.local/src"
+        state: directory
+        mode: '0755'
 
-    - name: Install Teraform
+
+    # INSTALLING NEOVIM
+    - name: Install neovim build dependencies (ubuntu)
+      ansible.builtin.apt:
+        name:
+          - autoconf
+          - automake
+          - cmake
+          - curl
+          - doxygen
+          - g++
+          - gettext
+          - libtool
+          - libtool-bin
+          - ninja-build
+          - pkg-config
+          - unzip
+        state: latest
+      when: ansible_os_family == 'Debian'
+
+    - name: Install neovim build dependencies (fedora)
+      ansible.builtin.dnf:
+        name:
+          - autoconf
+          - automake
+          - cmake
+          - curl
+          - gcc
+          - gcc-c++
+          - gettext
+          - libtool
+          - make
+          - ninja-build
+          - patch
+          - pkgconfig
+          - unzip
+        state: latest
+      when: ansible_os_family == 'RedHat'
+
+    - name: Download neovim source from GitHub
+      ansible.builtin.git:
+        repo: "https://github.com/neovim/neovim.git"
+        dest: "{{ dir_src }}/neovim"
+
+    - name: Clean neovim build and deps dirs before building 
+      ansible.builtin.shell:
+        cmd: "make distclean"
+        chdir: "{{ dir_src }}/neovim"
+
+    - name: Build neovim from source
+      ansible.builtin.shell:
+        cmd: "make"
+        chdir: "{{ dir_src }}/neovim"
+
+    - name: Install neovim
+      become: true
+      ansible.builtin.shell:
+        cmd: "sudo make install"
+        chdir: "{{ dir_src }}/neovim"
+
+
+    # INSTALLING TERRAFORM
+    - name: Install Terraform
       become: true
       ansible.builtin.unarchive:
         src: https://releases.hashicorp.com/terraform/1.1.7/terraform_1.1.7_linux_amd64.zip
@@ -58,13 +151,32 @@
         owner: root
         group: root
 
-    - name: Install Bat
-      become: true
-      ansible.builtin.unarchive:
-        src: https://github.com/sharkdp/bat/releases/download/v0.20.0/bat-v0.20.0-x86_64-unknown-linux-gnu.tar.gz 
-        dest: /usr/local/bin
-        remote_src: yes
-        mode: 0755
-        owner: root
-        group: root
 
+    # PREPARE TO RUN STOW
+    - name: Check for existing bashrc files
+      ansible.builtin.stat:
+        path: "{{ bash_files }}"
+      loop:
+        - "{{ dir_home }}/.bashrc" 
+        - "{{ dir_home }}/.bash_history" 
+        - "{{ dir_home }}/.bash_profile" 
+        - "{{ dir_home }}/.bash_logout" 
+        - "{{ dir_home }}/.profile" 
+        - "{{ dir_home }}/.inputrc" 
+      loop_control:
+        loop_var: bash_files
+      register: bash
+
+    - name: Make a backup of any existing bashrc regular files
+      ansible.builtin.copy:
+        src: "{{ item.bash_files }}"
+        dest: "{{ dir_home }}/.dotfiles_backup/"
+        follow: no
+      loop: "{{ bash.results }}"
+      when: item.stat.isreg is defined and item.stat.islnk == false
+
+    - name: Remove any existing bashrc files or symlinks
+      ansible.builtin.file:
+        path: "{{ item.bash_files }}"
+        state: absent
+      loop: "{{ bash.results }}"

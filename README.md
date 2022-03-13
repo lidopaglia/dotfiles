@@ -18,30 +18,17 @@ stow bash shell git nvim tmux ssh
 ansible-playbook bootstrap.yaml -bK
 ```
 
-- git
-- bat
-- curl
-- delta
-- fd
-- ffmpeg
-- glow
-- gruvbox
-- imagemagick
-- mp4grep
-- mpd
-- mpv
-- ncal
-- ncmpcpp
-- neovim >= 0.5.0
-- pass
-- ripgrep
-- sauce code pro (nerd font)
-- ssh
-- stow
-- tmux
-- tree
-- viddy
-- wget
+- [x] [bat](https://github.com/sharkdp/bat)
+- [ ] [delta](https://github.com/dandavison/delta)
+- [ ] [glow](https://github.com/charmbracelet/glow)
+- [ ] [mp4grep](https://github.com/o-oconnell/mp4grep)
+- [ ] [neovim](https://github.com/neovim/neovim)
+- [ ] [viddy](https://github.com/sachaos/viddy)
+
+# Graphical Apps
+
+- [ ] [alacritty](https://github.com/alacritty/alacritty)
+- [ ] [kitty](https://github.com/kovidgoyal/kitty)
 
 
 ## Installing Neovim
@@ -68,6 +55,14 @@ Alternatively run:
 ```sh
 nvim --headless +PackerSync +qall
 ```
+
+# Ansible steps
+
+installing ansible on ubuntu first had to install `python-is-python3` then
+when I successfully install ansible I had to quit the shell and login
+again for it to pickup the newly install ansible command via pip.
+
+
 
 ## License
 
