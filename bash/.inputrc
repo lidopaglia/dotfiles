@@ -52,5 +52,3 @@ TAB: menu-complete
 
 # bind ctrl+n to back up one dir
 '\C-n':'cd ..\n'
-
-'\C-e':'echo '

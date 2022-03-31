@@ -92,7 +92,9 @@ use {'junegunn/limelight.vim'}
 use {'preservim/vim-pencil'}
 use {'tpope/vim-surround'}
 use {'jiangmiao/auto-pairs'}
-use {'pprovost/vim-ps1'}
+use {'hashivim/vim-terraform'}
+--use {'pprovost/vim-ps1'}
+--use {'jeffkreeftmeijer/vim-numbertoggle'}
 
 -- plugins todo
 -- 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
