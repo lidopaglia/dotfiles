@@ -32,7 +32,14 @@ map("n", "<TAB>", ":bnext<CR>", default_options)
 map("n", "<S-TAB>", ":bprevious<CR>", default_options)
 
 -- close buffer
-map("n", "<C-w>", ":bd<CR>", default_options)
+map("n", "<leader>d", ":bd<CR>", default_options)
+map("n", "<leader><leader>d", ":bd!<CR>", default_options)
+
+-- easier moving between splits
+map('n', '<C-j>', '<C-w><C-j>', default_options)
+map('n', '<C-K>', '<C-W><C-K>', default_options)
+map('n', '<C-L>', '<C-W><C-L>', default_options)
+map('n', '<C-H>', '<C-W><C-H>', default_options)
 
 -- undo break points
 --inoremap , ,<c-g>u
