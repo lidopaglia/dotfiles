@@ -1,3 +1,5 @@
 [user]
-    email = lido@paglia.org
-    name = Lido Paglia
+  email = lido@paglia.org
+  name = Lido Paglia
+[init]
+  defaultBranch = master

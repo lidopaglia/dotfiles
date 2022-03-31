@@ -90,6 +90,10 @@ alias df='df -h -x tmpfs -x devtmpfs'
 alias tree='tree -aChN --dirsfirst -I .git'
 alias dir="tree -L2 --dirsfirst --du $1 | bat"
 
+# docker
+alias dils='docker images --format "table {{.Repository}}:{{.Tag}}\t{{.Size}}\t{{.ID}}"'
+alias dcls='docker container ls --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.ID}}" -a'
+
 # jekyll/bundler
 alias bej='bundle exec jekyll'
 alias bejs='bej serve --livereload'
