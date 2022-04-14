@@ -50,3 +50,5 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
+# github cli completion
+eval "$(gh completion -s bash)"
