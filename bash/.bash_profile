@@ -9,7 +9,7 @@ export XDG_BIN_HOME="$HOME/.local/bin"
 export XDG_CACHE_HOME="$HOME/.cache"
 
 export EDITOR="nvim"
-export BROWSER="brave"
+export BROWSER="brave-browser"
 export TERMINAL="gnome-terminal"
 
 export LESSHISTFILE="$XDG_CACHE_HOME/.lesshst"
