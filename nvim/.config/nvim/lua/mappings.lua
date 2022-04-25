@@ -6,6 +6,16 @@ expr_options = {noremap = true, expr = true, silent = true}
 vim.api.nvim_set_keymap("n", "<Space>", "<NOP>", default_options)
 vim.g.mapleader = " "
 
+-- REPLACE: cut inner word to "r & replace with last yanked (including system)
+-- Or, visually select and p
+map("n", ",r", '"rdiwhp', { noremap = true })
+
+-- toggle bool word - true/false
+map( "n", "gtb",
+  ":lua require('functions').toggle_bool({word=vim.fn.expand('<cword>')})<CR>",
+  { noremap = true, silent = true }
+)
+
 map("n", "gf", ":edit <cfile><cr>", default_options) -- Allow gf to open non-existent files
 map("n", "<leader>T", ":tab new<CR>", default_options)
 map("n", "<leader>Q", ":bufdo bdelete<CR>", default_options)
@@ -100,3 +110,6 @@ map("n", "<leader>2", ":Telescope repo list<CR>", default_options)
 
 -- gitsigns
 map("n", "<leader>tb", [[<Cmd>lua require'gitsigns'.toggle_current_line_blame()<CR>]], default_options)
+
+-- markdown
+map("v", "<leader>l", [[c[<c-r>"]()<esc>]], { noremap = false })

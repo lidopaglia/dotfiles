@@ -46,6 +46,12 @@ use { "nvim-telescope/telescope-file-browser.nvim" }
 use { 'cljoly/telescope-repo.nvim' }
 use { 'nvim-telescope/telescope-ui-select.nvim' }
 
+-- Zen Mode
+use {
+  "folke/zen-mode.nvim",
+  config = get_config("zen-mode")
+}
+
 -- Icons
 use({ 'kyazdani42/nvim-web-devicons' })
 
