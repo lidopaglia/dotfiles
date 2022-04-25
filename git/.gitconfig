@@ -3,3 +3,5 @@
   name = Lido Paglia
 [init]
   defaultBranch = master
+[advice]
+  detachedHead = false
