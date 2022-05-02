@@ -16,8 +16,10 @@ alias lsa='ls -A'
 alias l='ls -l'
 alias la='ls -Al'
 alias ll='ls -al'
-alias lt='\ls -AltFh --color=auto'
-alias ltr='\ls -AltrFh --color=auto'
+alias lt='\ls -ltFh --color=auto'
+alias lta='\ls -AltFh --color=auto'
+alias ltr='\ls -ltrFh --color=auto'
+alias ltra='\ls -AltrFh --color=auto'
 
 # jump around - inspect with `j`
 
