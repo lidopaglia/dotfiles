@@ -13,13 +13,11 @@
 # ls 
 alias ls='LC_ALL=C.UTF-8 ls -Fh --color=auto --group-directories-first'
 alias lsa='ls -A'
+alias l='ls -l'
 alias la='ls -Al'
 alias ll='ls -al'
-alias l='ls -l'
-alias lt='\ls -ltFh --color=auto'
-alias lat='\ls -AltFh --color=auto'
-alias lsl='ls -nph' #: As 'ls', but with lots of information.
-alias lsla='ls -Anph' #: As 'lsl', but also show all files.
+alias lt='\ls -AltFh --color=auto'
+alias ltr='\ls -AltrFh --color=auto'
 
 # jump around - inspect with `j`
 

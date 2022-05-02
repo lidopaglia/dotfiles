@@ -19,6 +19,7 @@ export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
 export MANWIDTH=80
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+export GREP_OPTIONS='--color=auto'
 
 # https://wiki.archlinux.org/title/Sdcv
 export STARDICT_DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}"
