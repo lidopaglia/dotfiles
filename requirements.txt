@@ -1,0 +1,7 @@
+ansible>=5.7.0
+ansible-core>=2.12.5
+beets>=1.6.0
+Chroma>=0.2.0
+musicbrainzngs>=0.7.1
+pyacoustid>=1.2.2
+requests>=2.25.1
