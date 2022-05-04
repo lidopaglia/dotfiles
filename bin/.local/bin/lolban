@@ -1,0 +1,12 @@
+#!/bin/sh
+
+toilet -f pagga "$1" | lolcat
+
+
+#fonts=$(ls /usr/share/figlet)
+
+#for f in $fonts; do
+#  echo $f
+#  toilet -f $f "$1" | lolcat
+#done
+
