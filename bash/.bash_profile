@@ -10,7 +10,7 @@ export XDG_CACHE_HOME="$HOME/.cache"
 
 export EDITOR="nvim"
 export BROWSER="brave-browser"
-export TERMINAL="gnome-terminal"
+export TERMINAL="kitty"
 
 export LESSHISTFILE="$XDG_CACHE_HOME/.lesshst"
 export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
