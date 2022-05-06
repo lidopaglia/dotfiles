@@ -6,6 +6,8 @@
 exec --no-startup-id autotiling
 exec nm-applet --indicator
 
+default_border none
+
 ### Variables
 #
 # Logo key. Use Mod1 for Alt, Mod4 for meta.
@@ -33,6 +35,10 @@ for_window [class=".*"] border pixel 0
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg /usr/share/backgrounds/default.png fill
+
+# HiDPI Scaling
+output * scale 1.4
+
 
 # Example configuration:
 #
@@ -69,8 +75,12 @@ output * bg /usr/share/backgrounds/default.png fill
 
 # Faster and more responsive keys.
 input type:keyboard {
-    repeat_delay 300
-    repeat_rate 50
+  repeat_delay 300
+  repeat_rate 50
+}
+
+input type:touchpad {
+  tap enabled
 }
 
 ### Key bindings
@@ -211,6 +221,9 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
+
+bindsym XF86MonBrightnessUp exec --no-startup-id light -A 1
+bindsym XF86MonBrightnessDown exec --no-startup-id light -U 1
 
 #
 # Status Bar:
