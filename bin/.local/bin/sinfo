@@ -1,0 +1,77 @@
+#!/usr/bin/bash
+
+# a simple info script
+
+# todo:
+#   - include make/model?
+#     cat /sys/devices/virtual/dmi/id/product_version
+#   - support more distros?
+#     source /etc/os-release for systemd-based distros
+
+for dep in hostnamectl toilet; do
+  if ! command -v "$dep" 1> /dev/null 2>&1; then
+    echo "Dependency '$dep' not found"
+    exit 1
+  fi
+done
+
+hostinfo=hostnamectl
+
+# `hostnamectl hostname` now available as of v249
+# https://github.com/systemd/systemd/releases/tag/v249
+# host_name=$($hostinfo | awk -F": " '/Static hostname/ { print $2 }')
+
+os=$($hostinfo | awk -F": " '/Operating/ { print $2 }')
+kernel=$($hostinfo | awk -F": " '/Kernel/ { print $2 }')
+cpu=$(lscpu | awk -F": " '/Model name/ { print $2 }')
+
+# Remove un-needed patterns from cpu output.
+cpu="${cpu//(TM)}"
+cpu="${cpu//(tm)}"
+cpu="${cpu//(R)}"
+cpu="${cpu//(r)}"
+cpu="${cpu//CPU}"
+cpu="${cpu//Processor}"
+cpu="${cpu//Dual-Core}"
+cpu="${cpu//Quad-Core}"
+cpu="${cpu//Six-Core}"
+cpu="${cpu//Eight-Core}"
+cpu="${cpu//[1-9][0-9]-Core}"
+cpu="${cpu//[0-9]-Core}"
+cpu="${cpu//, * Compute Cores}"
+cpu="${cpu//Core / }"
+cpu="${cpu//(\"AuthenticAMD\"*)}"
+cpu="${cpu//with Radeon * Graphics}"
+cpu="${cpu//, altivec supported}"
+cpu="${cpu//FPU*}"
+cpu="${cpu//Chip Revision*}"
+cpu="${cpu//Technologies, Inc}"
+cpu="${cpu//Core2/Core 2}"
+
+mem=$(free -h --si | awk '/^Mem:/ {print $3 "/" $2}')
+
+Desktop="${XDG_CURRENT_DESKTOP}"
+Shell="$(basename "$SHELL")"
+Packages="$(dpkg -l | grep -c ^i)"
+
+aptlist="$(apt list --upgradable 2>/dev/null)"
+Updates="$(echo $aptlist | sed 's/] /\n/g' | wc -l)"
+Security="$(echo $aptlist | sed 's/] /\n/g' | grep -i -security | wc -l)"
+
+name=$(uname -n)
+label="$(toilet -f pagga $name)"
+len=$(expr ${#label} / 3)
+
+# print hyphens to match length of $label
+bar=$(printf -- '-%.0s' $(seq 1 $len))
+
+echo
+echo -e "$(toilet -f pagga $name)\n$bar"
+echo -e "\e[1mOS:\e[0m $os \"$(lsb_release -sc)\""
+echo -e "\e[1mKernel:\e[0m $(uname -r) ($(uname -i))"
+echo -e "\e[1mCPU:\e[0m"$cpu" \e[1mMem:\e[0m $mem"
+echo -e "\e[1mDesktop:\e[0m" $Desktop" \e[1mShell:\e[0m" $Shell
+echo -e "\e[1mPackages:\e[0m" $Packages" \e[1mUpdates:\e[0m" $Updates" \e[1mSecurity:\e[0m" $Security
+echo -e "\e[1mUptime:\e[0m$(uptime -p | sed 's/up//')"
+echo
+

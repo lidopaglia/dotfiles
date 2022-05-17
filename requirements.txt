@@ -6,3 +6,4 @@ i3ipc>=2.0.1
 musicbrainzngs>=0.7.1
 pyacoustid>=1.2.2
 requests>=2.25.1
+yt-dlp>=2022.4.8

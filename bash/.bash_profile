@@ -25,6 +25,10 @@ export GREP_OPTIONS='--color=auto'
 export STARDICT_DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}"
 export SDCV_PAGER='batcat -p --pager "less --quit-if-one-screen -RX"'
 
+# Go lang
+[ ! -d $XDG_DATA_HOME/go ] && mkdir -p $XDG_DATA_HOME/go
+export GOPATH="$XDG_DATA_HOME/go"
+
 # Rust
 [ ! -d $XDG_CACHE_HOME/rust/cargo ] && mkdir -p $XDG_CACHE_HOME/rust/cargo
 [ ! -d $XDG_CACHE_HOME/rust/rustup ] && mkdir -p $XDG_CACHE_HOME/rust/rustup
@@ -42,6 +46,7 @@ export XDG_BIN_DIRS="$(du "$XDG_BIN_HOME" --exclude='.git' | \
     cut -f2 | sort | tr '\n' ':' | sed 's/:*$//')"
 export XDG_BIN_DIRS="$XDG_BIN_DIRS:$CARGO_HOME/bin"
 export XDG_BIN_DIRS="$XDG_BIN_DIRS:$GEM_HOME/bin"
+export XDG_BIN_DIRS="$XDG_BIN_DIRS:$GOPATH/bin"
 export PATH="$PATH:$XDG_BIN_DIRS"
 
 # if running bash, source .bashrc if it exists
