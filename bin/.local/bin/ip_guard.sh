@@ -73,11 +73,11 @@ WAN=$(ip_from_dns)
 #WAN=$(ip_from_http)
 
 # Get address(es) registered in DNS
-DNS=$(dig +short "$DOMAIN")
+DNS=$(dig +short @$DNS_SERVER "$DOMAIN")
 
 for RECORD in ${DNS}
 do
-  if [ "$RECORD" == $WAN ]; then
+  if [ "$RECORD" == "$WAN" ]; then
     subject=$(basename "${BASH_SOURCE[0]}")
     message="Your public IP was found in DNS for \"$DOMAIN\""
     send_alert "$subject" "$message"
