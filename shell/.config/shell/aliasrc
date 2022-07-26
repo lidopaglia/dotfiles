@@ -94,6 +94,7 @@ alias dir='du -sh */ | sort -h'
 alias dils='docker images --format "table {{.Repository}}:{{.Tag}}\t{{.Size}}\t{{.ID}}"'
 alias dcls='docker container ls --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.ID}}" -a'
 alias dsa='docker stop $(docker ps -q)'
+alias dcu='docker compose up -d --force-recreate'
 
 # jekyll/bundler
 alias bej='bundle exec jekyll'
