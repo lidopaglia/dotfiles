@@ -79,7 +79,7 @@ map("v", "y", "\"+y", default_options)
 
 -- Telescope
 map("n", "<leader>e", '<cmd>lua require("telescope.builtin").find_files({ search_dirs = {"~/.config/nvim"}, hidden = true })<cr>', default_options)
-map("n", "<leader>a", '<cmd>lua require("telescope.builtin").find_files({ file_ignore_patterns = {".git/"}, hidden = true })<cr>', default_options)
+map("n", "<leader>a", '<cmd>lua require("telescope.builtin").find_files({ file_ignore_patterns = {".git/"}, hidden = true, follow = true })<cr>', default_options)
 map("n", "<leader>p", '<cmd>lua require("telescope.builtin").find_files()<cr>', default_options)
 map("n", "<leader>r", '<cmd>lua require("telescope.builtin").registers()<cr>', default_options)
 map("n", "<leader>b", '<cmd>lua require("telescope.builtin").buffers()<cr>', default_options)
