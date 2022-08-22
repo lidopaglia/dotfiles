@@ -51,12 +51,6 @@ map('n', '<C-K>', '<C-W><C-K>', default_options)
 map('n', '<C-L>', '<C-W><C-L>', default_options)
 map('n', '<C-H>', '<C-W><C-H>', default_options)
 
--- undo break points
---inoremap , ,<c-g>u
---inoremap . .<c-g>u
---inoremap ! !<c-g>u
---inoremap ? ?<c-g>u
-
 -- keep search results centered
 map("n", "n", "nzzzv", default_options)
 map("n", "N", "Nzzzv", default_options)
@@ -84,7 +78,7 @@ map("n", "<leader>p", '<cmd>lua require("telescope.builtin").find_files()<cr>', 
 map("n", "<leader>r", '<cmd>lua require("telescope.builtin").registers()<cr>', default_options)
 map("n", "<leader>b", '<cmd>lua require("telescope.builtin").buffers()<cr>', default_options)
 map("n", "<leader>g", '<cmd>lua require("telescope.builtin").live_grep()<cr>', default_options)
-map("n", "<leader>j", '<cmd>lua require("telescope.builtin").help_tags()<cr>', default_options)
+--map("n", "<leader>j", '<cmd>lua require("telescope.builtin").help_tags()<cr>', default_options)
 map("n", "<leader>h", '<cmd>lua require("telescope.builtin").git_bcommits()<cr>', default_options)
 map("n", "<leader>i", '<cmd>lua require("telescope.builtin").git_status()<cr>', default_options)
 map("n", "<leader>f", '<cmd>lua require("telescope").extensions.file_browser.file_browser()<CR>', default_options)
@@ -113,3 +107,7 @@ map("n", "<leader>tb", [[<Cmd>lua require'gitsigns'.toggle_current_line_blame()<
 
 -- markdown
 map("v", "<leader>l", [[c[<c-r>"]()<esc>]], { noremap = false })
+
+
+-- NvimTree
+map("n", "<leader>tt", ":NvimTreeToggle<CR>", default_options)
