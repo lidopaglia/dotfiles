@@ -22,13 +22,25 @@ end
 local packer = require("packer")
 packer.init {
     enable = true, -- enable profiling via :PackerCompile profile=true
-    threshold = 0 -- the amount in ms that a plugins load time must be over for it to be included in the profile
+    threshold = 0  -- the amount in ms that a plugins load time must be over for
+                   -- it to be included in the profile
 }
 local use = packer.use
 packer.reset()
 
 -- Begin plugins
 use "wbthomason/packer.nvim"
+
+-------------------------------------------------------------------------------
+-- NAVIGATION
+-------------------------------------------------------------------------------
+
+-- File Tree
+use({
+  "kyazdani42/nvim-tree.lua",
+  requires = 'kyazdani42/nvim-web-devicons',
+  config = get_config("nvim-tree")
+})
 
 -- Telescope
 use({
@@ -42,15 +54,20 @@ use({
   },
   config = get_config("telescope"),
 })
-use { "nvim-telescope/telescope-file-browser.nvim" }
-use { 'cljoly/telescope-repo.nvim' }
-use { 'nvim-telescope/telescope-ui-select.nvim' }
 
--- Zen Mode
-use {
-  "folke/zen-mode.nvim",
-  config = get_config("zen-mode")
-}
+
+use { "nvim-telescope/telescope-file-browser.nvim" }
+use { 'nvim-telescope/telescope-ui-select.nvim' }
+use { 'cljoly/telescope-repo.nvim' }
+
+-------------------------------------------------------------------------------
+-- LSP
+-------------------------------------------------------------------------------
+use "neovim/nvim-lspconfig"
+
+-------------------------------------------------------------------------------
+-- THEME
+-------------------------------------------------------------------------------
 
 -- Icons
 use({ 'kyazdani42/nvim-web-devicons' })
@@ -58,12 +75,21 @@ use({ 'kyazdani42/nvim-web-devicons' })
 -- Gruvbox
 use({ "gruvbox-community/gruvbox", config = get_config("gruvbox") })
 
+-------------------------------------------------------------------------------
+-- LAYOUT
+-------------------------------------------------------------------------------
+
+-- Zen Mode
+use {
+  "folke/zen-mode.nvim",
+  config = get_config("zen-mode")
+}
+
 -- Lualine
 use {
   'nvim-lualine/lualine.nvim',
   requires = { 'kyazdani42/nvim-web-devicons', opt = true },
   config = get_config('lualine')
-
 }
 
 -- barbar
@@ -92,6 +118,8 @@ use {
   'numToStr/Comment.nvim',
   config = get_config("comment"),
 }
+
+use 'ap/vim-css-color'
 
 use {'junegunn/goyo.vim'}
 use {'junegunn/limelight.vim'}
