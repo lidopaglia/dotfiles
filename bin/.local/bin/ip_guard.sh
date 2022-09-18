@@ -15,8 +15,7 @@ CONFIG="$HOME/.config/private.env"
   Err 1 "Could not parse '$CONFIG' file!"
 
 DOMAIN="${DOMAIN}"                  # Domain to monitor
-ID="${DISCORD_WEBHOOK_ID}"          # Webhook ID
-TOKEN="${DISCORD_WEBHOOK_TOKEN}"    # Webhook Token
+NOTIFY_URL="${APPRISE_URL}"         # Apprise Notification URL
 DNS_SERVER="${DNS_SERVER:=1.1.1.1}" # Default to Cloudflare
 
 Err(){
@@ -58,7 +57,7 @@ ip_from_http(){
 
 send_alert(){
   apprise -t "$1" -b "$2" \
-    discord://${ID}/${TOKEN}/?avatar=No
+    ${NOTIFY_URL}
 }
 
 ## Dependency check
