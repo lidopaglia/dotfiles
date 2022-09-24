@@ -21,6 +21,8 @@ alias lta='\ls -AltFh --color=auto'
 alias ltr='\ls -ltrFh --color=auto'
 alias ltra='\ls -AltrFh --color=auto'
 
+alias lsd='lsd --group-dirs first'
+
 # jump around - inspect with `j`
 
 # top-level
@@ -92,9 +94,10 @@ alias dir='du -sh */ | sort -h'
 
 # docker
 alias dils='docker images --format "table {{.Repository}}:{{.Tag}}\t{{.Size}}\t{{.ID}}"'
-alias dcls='docker container ls --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.ID}}" -a'
+alias dcls='docker container ls --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.ID}}" -a | tail -n +2 | sort -k1 -h'
 alias dsa='docker stop $(docker ps -q)'
 alias dcu='docker compose up -d --force-recreate'
+alias dcd='docker compose down'
 
 # jekyll/bundler
 alias bej='bundle exec jekyll'
