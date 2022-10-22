@@ -35,6 +35,8 @@ fi
 # load alias definitions
 if [ -f ~/.config/shell/aliasrc ]; then
     . ~/.config/shell/aliasrc
+elif [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
 fi
 
 # load function definitions
