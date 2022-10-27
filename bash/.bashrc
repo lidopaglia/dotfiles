@@ -19,8 +19,18 @@ HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/bash_history"
 HISTSIZE=100000
 HISTFILESIZE=2000000
 HISTCONTROL=ignoreboth  # no dupes or lines starting with space
-shopt -s histappend     # append, don't overwrite it
-shopt -s autocd
+
+# shopt
+# https://www.gnu.org/software/bash/manual/html_node/The-Shopt-Builtin.html
+shopt -s cmdhist      # save multi-line commands in history as single line
+shopt -s histappend   # append history, don't overwrite it
+shopt -s autocd       # change to named directory automatically
+shopt -s direxpand    # expand dir names on completion
+
+# Checks the window size after each external (non-builtin) command and, if
+# necessary, updates the values of LINES and COLUMNS.
+# Enabled by default as of Bash 5.0 beta 2.
+# https://wiki.bash-hackers.org/scripting/bashchanges
 shopt -s checkwinsize
 
 # make less more friendly for non-text input files, see lesspipe(1)
@@ -33,15 +43,13 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # load alias definitions
-if [ -f ~/.config/shell/aliasrc ]; then
-    . ~/.config/shell/aliasrc
-elif [ -f ~/.bash_aliases ]; then
+if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
 # load function definitions
-if [ -f ~/.config/shell/funcsrc ]; then
-    . ~/.config/shell/funcsrc
+if [ -f ~/.bash_functions ]; then
+    . ~/.bash_functions
 fi
 
 # create symlink for fd on Ubuntu
@@ -52,6 +60,11 @@ fi
 # create symlink for bat on Ubuntu
 if [ -x "$(command -v 'batcat')" ]; then
   ln -sf $(which batcat) ~/.local/bin/bat
+fi
+
+# include github cli completion if installed
+if [ -x "$(command -v 'gh')" ]; then
+  eval "$(gh completion -s bash)"
 fi
 
 # enable programmable completion features (you don't need to enable
