@@ -15,10 +15,11 @@ export -f parse_git_branch
 export PS1="\u@\h \[\e[32m\]\w \[\e[94m\]\$(parse_git_branch)\[\e[00m\]$ "
 
 # BASH History
-HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/bash_history"
+HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/bash_history"
 HISTSIZE=100000
 HISTFILESIZE=2000000
 HISTCONTROL=ignoreboth  # no dupes or lines starting with space
+HISTTIMEFORMAT="%F %T "
 
 # shopt
 # https://www.gnu.org/software/bash/manual/html_node/The-Shopt-Builtin.html
