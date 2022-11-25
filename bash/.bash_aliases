@@ -58,6 +58,7 @@ alias dcls='docker container ls --format "table {{.Names}}\t{{.Image}}\t{{.Statu
 alias dsa='docker stop $(docker ps -q)'
 alias dcu='docker compose up -d --force-recreate'
 alias dcd='docker compose down'
+alias dcp='docker compose pull'
 
 # A more descriptive, yet concise lsblk.
 alias lsblkid='lsblk -o name,label,fstype,size,uuid --noheadings'
