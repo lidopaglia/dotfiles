@@ -7,6 +7,9 @@ case $- in
       *) return;;
 esac
 
+# disable XON/XOFF flow control
+stty -ixon
+
 # git prompt
 parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
@@ -79,3 +82,5 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# enable fzf keybinds and completions
+[ -f ~/.config/fzf/fzf.bash ] && source ~/.config/fzf/fzf.bash

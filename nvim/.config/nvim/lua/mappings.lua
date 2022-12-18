@@ -37,9 +37,13 @@ map("i", "<C-k>", "<esc>:m .-2<CR>==", default_options)
 map("n", "<leader>j", ":m .+1<CR>==", default_options)
 map("n", "<leader>k", ":m .-2<CR>==", default_options)
 
+-- BUFFERS
 -- Tab switch buffer
 map("n", "<TAB>", ":bnext<CR>", default_options)
 map("n", "<S-TAB>", ":bprevious<CR>", default_options)
+-- Shift h & l
+map("n", "<S-l>", ":bnext<CR>", default_options)
+map("n", "<S-h>", ":bprevious<CR>", default_options)
 
 -- close buffer
 map("n", "<leader>d", ":bd<CR>", default_options)

@@ -23,8 +23,10 @@ vim.opt.startofline = false   -- Don't position cursor on line start after certa
 vim.opt.breakindent = true    -- Indent wrapped lines to match line start
 
 -- Search
-vim.opt.incsearch = true  -- Show search results while typing
-vim.opt.hlsearch  = false
+vim.opt.incsearch  = true  -- Show search results while typing
+vim.opt.hlsearch   = false -- Highlight search matches
+vim.opt.ignorecase = true  -- Ignore case when searching
+vim.opt.smartcase  = true  -- Except when search string contains uppercase
 
 -- History / Undo
 vim.opt.undofile = true                                    -- Enable persistent undo

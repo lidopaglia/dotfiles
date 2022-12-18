@@ -1,4 +1,9 @@
-# turn off bell
+# ~/.inputrc
+#
+# https://vim.fandom.com/wiki/Use_vi_shortcuts_in_terminal
+# https://www.topbug.net/blog/2017/07/31/inputrc-for-humans/
+
+# do not bell on tab-completion
 set bell-style none
 
 # Immediately list matches instead of ringing the bell upon completion
@@ -12,11 +17,7 @@ set show-all-if-unmodified On
 # Perform filename matching and completion in a case-insensitive fashion
 set completion-ignore-case on
 
-# The length in characters of the common prefix of a list of possible
-# completions that is displayed without modification.  When set to a value
-# greater than zero, common prefixes longer than this value are replaced with
-# an ellipsis when displaying possible completions
-set completion-prefix-display-length 3
+set print-completions-horizontally on
 
 # Color files by types. Note that this may cause completion text blink in some
 # terminals (e.g. xterm)
@@ -46,9 +47,8 @@ TAB: menu-complete
 # shift+tab cycles completions backward.
 "\e[Z": menu-complete-backward
 
-# https://vim.fandom.com/wiki/Use_vi_shortcuts_in_terminal
-# https://www.topbug.net/blog/2017/07/31/inputrc-for-humans/
-
-
-# bind ctrl+n to back up one dir
+# bind C-n to back up one dir
 '\C-n':'cd ..\n'
+
+"\e\C-f": dump-functions
+"\e\C-v": dump-variables

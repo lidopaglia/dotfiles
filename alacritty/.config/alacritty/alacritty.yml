@@ -1,6 +1,26 @@
+
+# Import fonts, colors, etc.
+import:
+  - ~/.config/alacritty/fonts.yml
+  - ~/.config/alacritty/gruvbox.yml
+
+env:
+  TERM: alacritty
+  WINIT_X11_SCALE_FACTOR: '1.0'
+
+cursor:
+  style:
+    shape: Beam
+    blinking: On
+  unfocused_hollow: true
+
 draw_bold_text_with_bright_colors: true
 
+live_config_reload: true
+
 window:
+  history: 10000
+  multiplier: 3
   opacity: 0.95
   startup_mode: Maximized
   decorations: none
@@ -14,35 +34,9 @@ font:
     family: SauceCodePro NF
     style: Regular
   bold:
-    family: "SauceCodePro NF"
+    family: SauceCodePro NF
     style: Bold
   italic:
-    family: "SauceCodePro NF"
+    family: SauceCodePro NF
     style: Italic
   size: 16
-
-# Gruvbox 
-colors:
-  primary:
-    hard contrast: background = '0x1d2021'
-    background: "0x282828"
-    soft contrast: background = '0x32302f'
-    foreground: "0xebdbb2"
-  normal:
-    black: "0x282828"
-    red: "0xcc241d"
-    green: "0x98971a"
-    yellow: "0xd79921"
-    blue: "0x458588"
-    magenta: "0xb16286"
-    cyan: "0x689d6a"
-    white: "0xa89984"
-  bright:
-    black: "0x928374"
-    red: "0xfb4934"
-    green: "0xb8bb26"
-    yellow: "0xfabd2f"
-    blue: "0x83a598"
-    magenta: "0xd3869b"
-    cyan: "0x8ec07c"
-    white: "0xebdbb2"

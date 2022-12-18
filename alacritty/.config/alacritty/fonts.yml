@@ -1,0 +1,11 @@
+font:
+  normal:
+    family: SauceCodePro NF
+    style: Regular
+  bold:
+    family: SauceCodePro NF
+    style: Bold
+  italic:
+    family: SauceCodePro NF
+    style: Italic
+  size: 16
