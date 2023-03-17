@@ -1,11 +1,20 @@
 #!/bin/sh
 
-# Use neovim for vim if present
+# basename because of apps like gnome-terminal and console (kgx)
+alias showterm="basename $(ps -o 'cmd=' -p $(ps -o 'ppid=' -p $$))"
+
+# Use neovim if present
 [ -x "$(command -v nvim)" ] &&  \
-  alias vim="nvim"              \
-    vimdiff="nvim -d"           \
-    v='nvim'                    \
-    nv='nvim'                   \
+  alias                 \
+    v='nvim'            \
+    vi='nvim'           \
+    vim="nvim"          \
+    vd='nvim -d'        \
+    vimdiff="nvim -d"   \
+
+# shortcuts
+alias g='git'
+alias n='nvim'
 
 # Use $XINITRC variable if file exists
 [ -f "$XINITRC" ] && alias startx="startx $XINITRC"
@@ -32,11 +41,6 @@ alias                                     \
   jmi='pushd ~/media/music/inbox;clear;'  \
   jpp='pushd ~/projects/personal;clear'   \
   jpw='pushd ~/projects/work;clear'       \
-
-# git
-alias gl="git --no-pager log --reverse --pretty=format:'%CredCommit %Cgreen%h%Cred pushed %ar by %Cgreen%an%Creset%Cred:%Creset%n\"%s\"%n' 2> /dev/null"
-alias gss="git --no-pager show --pretty=format:'%CredCommit %Cgreen%h%Cred pushed %ar by %Cgreen%an%Creset%Cred:%Creset%n\"%s\"%n'"
-alias gs='git status -s'
 
 # be verbose
 alias cp='cp -iv'
@@ -98,7 +102,7 @@ alias yt="yt-dlp --add-metadata -i -o '%(upload_date)s-%(title)s.%(ext)s'"
 alias yta="yt -x -f bestaudio/best"
 alias ytp="yt-dlp --add-metadata -i -o '%(playlist_index)s - %(title)s.%(ext)s'"
 alias ytf="ytp --audio-format flac"
-alias ytm="yt-dlp --add-metadata -i -x --audio-format mp3 --audio-quality 0 -o '%(album)s/%(playlist_index)s - %(title)s.%(ext)s'"
+alias ytm="/usr/bin/yt-dlp --add-metadata -i -x --audio-format mp3 --audio-quality 0 -o '%(album)s/%(playlist_index)s - %(title)s.%(ext)s'"
 
 # jekyll/bundler
 alias bej='bundle exec jekyll'
@@ -111,5 +115,5 @@ alias bu='bundle update'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+alias alert='notify-send "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 

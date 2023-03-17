@@ -1,5 +1,39 @@
 #!/bin/bash
 
+# Truncate each line of the input to X characters
+# flag -s STRING (optional): add STRING when truncated
+# switch -l (optional): truncate from left instead of right
+# param 1: (optional, default 70) length to truncate to
+# https://brettterpstra.com/2016/04/27/shell-tricks-shorten-every-line-of-output/
+shorten () {
+	local helpstring="Truncate each line of the input to X characters\n\t-l  Shorten from left side\n\t-s STRING         replace truncated characters with STRING\n\n\t$ ls | shorten -s ... 15"
+	local ellip="" left=false
+	OPTIND=1
+	while getopts "hls:" opt; do
+		case $opt in
+			l) left=true ;;
+			s) ellip=$OPTARG ;;
+			h) echo -e $helpstring; return;;
+			*) return 1;;
+		esac
+	done
+	shift $((OPTIND-1))
+
+  if ! test -t 0; then
+    echo "Something was passed from stdin"
+  else
+    echo "Nothing was passed from stdin"
+    echo -e $helpstring;
+    return 1;
+  fi
+
+	if $left; then
+		cat | sed -E "s/.*(.{${1-70}})$/${ellip}\1/"
+	else
+		cat | sed -E "s/(.{${1-70}}).*$/\1${ellip}/"
+	fi
+}
+
 # show me jump aliases
 function j() {
   grep '^alias j.*' ~/.config/shell/aliasrc \
@@ -114,6 +148,17 @@ fk () {
 
 # docker stuff
 # ============
+function rg_docker_images() {
+  if ! command -v rg &> /dev/null; then
+    echo "Error: ripgrep (rg) is not installed."
+    return 1
+  fi
+  path=${1:-.}
+  rg -i --glob '**/docker-compose.yml' --max-depth 2 --sort path -e 'image:' "$path" \
+    | cut -d':' -f1,3,4 --output-delimiter=" " \
+    | column -t -N FILE,IMAGE,TAG
+}
+
 function dps () {
     docker ps -a --format 'table {{ .ID }}\t{{.Names}}\t{{ .Status }}\t{{ .Image }}' | awk 'NR<2{print $0;next}{print $0 | "sort --key=2"}'
 }
