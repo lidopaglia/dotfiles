@@ -115,10 +115,10 @@ lips() {
 
   [ "$ip" != "" ] && locip=$ip || locip="inactive"
 
-  ip=`dig +short myip.opendns.com @resolver1.opendns.com`
+  ip=$(dig +short myip.opendns.com @resolver1.opendns.com)
   [ "$ip" != "" ] && extip=$ip || extip="inactive"
 
-  printf '%11s: %s\n%11s: %s\n' "loc" $locip "ext" $extip
+  printf '%11s: %s\n%11s: %s\n' "loc" "$locip" "ext" "$extip"
 }
 
 # ----------------------------------------------------
@@ -130,40 +130,58 @@ lips() {
 # ----------------------------------------------------
 fp () {
     # find and list processes matching a case-insensitive partial-match string
-    ps Ao pid,comm|awk '{match($0,/[^\/]+$/); print substr($0,RSTART,RLENGTH)": "$1}'|grep -i $1|grep -v grep
+    ps Ao pid,comm\
+      | awk '{match($0,/[^\/]+$/); print substr($0,RSTART,RLENGTH)": "$1}' \
+      | grep -i "$1" \
+      | grep -v grep
 }
 
 fk () {
   # find and kill
   IFS=$'\n'
   PS3='Kill which process? (1 to cancel): '
-  select OPT in "Cancel" $(fp $1); do
-    if [ $OPT != "Cancel" ]; then
-      kill $(echo $OPT|awk '{print $NF}')
+  select OPT in "Cancel" $(fp "$1"); do
+    if [ "$OPT" != "Cancel" ]; then
+      kill $(echo "$OPT" | awk '{print $NF}')
     fi
     break
   done
   unset IFS
 }
 
-# docker stuff
-# ============
-function rg_docker_images() {
-  if ! command -v rg &> /dev/null; then
-    echo "Error: ripgrep (rg) is not installed."
-    return 1
-  fi
+function check_programs() {
+  for program in "$@"; do
+    if ! command -v "$program" &> /dev/null; then
+      echo "Error: '$program' is not installed."
+      return 1
+    fi
+  done
+}
+
+function dig_cf(){
+  check_programs dig || return 1
+  dig @1.1.1.1 whoami.cloudflare -c ch -t txt +short +timeout=1 \
+    | tr -d '"'
+}
+
+# =============
+# DOCKER THINGS
+# =============
+function docker_rg_images() {
+  check_programs rg || return 1
   path=${1:-.}
   rg -i --glob '**/docker-compose.yml' --max-depth 2 --sort path -e 'image:' "$path" \
     | cut -d':' -f1,3,4 --output-delimiter=" " \
     | column -t -N FILE,IMAGE,TAG
 }
 
-function dps () {
-    docker ps -a --format 'table {{ .ID }}\t{{.Names}}\t{{ .Status }}\t{{ .Image }}' | awk 'NR<2{print $0;next}{print $0 | "sort --key=2"}'
+function docker_ps_format() {
+  check_programs docker || return 1
+  docker ps -a --format 'table {{ .ID }}\t{{.Names}}\t{{ .Status }}\t{{ .Image }}' \
+    | awk 'NR<2{print $0;next}{print $0 | "sort --key=2"}'
 }
 
-function pkglist () {
-    dpkg -l | awk '/^ii/ {print($2)}'
+function pkglist() {
+  dpkg -l | awk '/^ii/ {print($2)}'
 }
 

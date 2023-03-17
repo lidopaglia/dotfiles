@@ -63,6 +63,8 @@ alias dsa='docker stop $(docker ps -q)'
 alias dcu='docker compose up -d --force-recreate'
 alias dcd='docker compose down'
 alias dcp='docker compose pull'
+alias dps='docker_ps_format'
+alias dri='docker_rg_images'
 
 # A more descriptive, yet concise lsblk.
 alias lsblkid='lsblk -o name,label,fstype,size,uuid --noheadings'
