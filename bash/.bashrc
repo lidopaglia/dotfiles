@@ -155,6 +155,12 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# enable completions for alias g='git'
+# https://stackoverflow.com/a/39507158
+source /usr/share/bash-completion/completions/git
+__git_complete g __git_main
+
+
 # enable fzf keybinds and completions
 [ -f ~/.config/fzf/fzf.bash ] && source ~/.config/fzf/fzf.bash
 
