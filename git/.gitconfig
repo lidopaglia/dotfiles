@@ -5,3 +5,7 @@
   defaultBranch = master
 [advice]
   detachedHead = false
+[alias]
+  s = status
+  ss = status -s
+  unstage = reset HEAD --
