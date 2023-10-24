@@ -1,29 +1,28 @@
 #!/bin/sh
 
-# basename because of apps like gnome-terminal and console (kgx)
-alias showterm="basename $(ps -o 'cmd=' -p $(ps -o 'ppid=' -p $$))"
-
 # Use neovim if present
-[ -x "$(command -v nvim)" ] &&  \
-  alias                 \
-    v='nvim'            \
-    vi='nvim'           \
-    vim="nvim"          \
-    vd='nvim -d'        \
-    vimdiff="nvim -d"   \
-
-# shortcuts
-alias g='git'
-alias n='nvim'
+[ -x "$(command -v nvim)" ] && \
+    alias vi='nvim' && \
+    alias vim='nvim' vimdiff='nvim -d'
 
 # Use $XINITRC variable if file exists
-[ -f "$XINITRC" ] && alias startx="startx $XINITRC"
+[ -f "$XINITRC" ] && alias startx='startx $XINITRC'
+
+# shortcuts
+alias d='docker'
+alias g='git'
+alias p='podman'
+alias e='$EDITOR'
+alias v='vim'
+
+# exa
+alias exa='exa --group-directories-first'
+alias et='exa --tree --icons'
 
 # ls
 alias ls='LC_ALL=C.UTF-8 ls -Fh --color=auto --group-directories-first'
-alias lsa='ls -A'
 alias l='ls -l'
-alias la='ls -Al'
+alias la='ls -A'
 alias ll='ls -al'
 alias lt='\ls -ltFh --color=auto'
 alias lta='\ls -AltFh --color=auto'
@@ -32,39 +31,45 @@ alias ltra='\ls -AltrFh --color=auto'
 
 alias lsd='lsd -l --group-dirs first'
 
-# jump around
-alias                                     \
-  jb='pushd ~/.local/bin;clear'           \
-  jc='pushd ~/.config;clear'              \
-  jd='pushd ~/.dotfiles;clear'            \
-  jm='pushd ~/media;clear'                \
-  jmi='pushd ~/media/music/inbox;clear;'  \
-  jpp='pushd ~/projects/personal;clear'   \
-  jpw='pushd ~/projects/work;clear'       \
-
-# be verbose
+# verbose & defaults
 alias cp='cp -iv'
 alias mv='mv -iv'
-alias rm='rm -v'
+alias rm='rm -vI'
 alias mkdir='mkdir -pv'
-
-# defaults 
+alias bc='bc -ql'
 alias ffmpeg="ffmpeg -hide_banner"
 alias df='df -h -x tmpfs -x devtmpfs'
 alias dir='du -sh */ | sort -h'
 alias free='free -h'
 alias rg="rg --sort path"
 alias tree='tree -aChN --dirsfirst -I .git'
+alias ip='ip -c'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias diff='diff --color=auto'
+alias ccat='highlight --out-format=ansi'
+
+# podman
+alias pils='podman images --format "table {{.Repository}}:{{.Tag}}\t{{.Size}}\t{{.ID}}"'
+alias pcls='podman container ls --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.ID}}" -a | tail -n +2 | sort -k1 -h'
+alias psa='podman stop $(podman ps -q)'
+alias pcu='podman compose up -d --force-recreate'
+alias pcd='podman compose down'
+alias pcp='podman compose pull'
 
 # docker
+alias dstop='docker stop $(docker ps -q)'
+alias dtail="docker logs -tf --tail=50"
 alias dils='docker images --format "table {{.Repository}}:{{.Tag}}\t{{.Size}}\t{{.ID}}"'
 alias dcls='docker container ls --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.ID}}" -a | tail -n +2 | sort -k1 -h'
-alias dsa='docker stop $(docker ps -q)'
 alias dcu='docker compose up -d --force-recreate'
 alias dcd='docker compose down'
 alias dcp='docker compose pull'
+alias dip='docker image prune'
 alias dps='docker_ps_format'
 alias dri='docker_rg_images'
+alias dsp='docker system prune --all'
 
 # A more descriptive, yet concise lsblk.
 alias lsblkid='lsblk -o name,label,fstype,size,uuid --noheadings'
@@ -79,32 +84,18 @@ alias userlist="cut -d: -f1 /etc/passwd"
 alias microcode='grep . /sys/devices/system/cpu/vulnerabilities/*'
 
 # tmux
-alias                                               \
-  tmux="tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf"    \
-  tt="nvim $XDG_CONFIG_HOME/tmux/tmux.conf"         \
-  tn="tmux new"                                     \
-  ta="tmux attach"                                  \
-  tls="tmux ls"                                     \
-
-# colors
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
-alias diff='diff --color=auto'
-alias ccat='highlight --out-format=ansi'
-
-# bare git dotfiles
-#alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-#alias dots='dot status'
-#alias dotls='dot ls-tree --full-tree -r --name-only HEAD'
-#alias dotlsu='dot ls-files . --exclude-standard --others'
+# 't' is mapped to t-smart-tmux-session-manager
+ alias                                               \
+   ta="tmux attach"                                  \
+   tls="tmux ls"                                     \
 
 # yt-dlp
-alias yt="yt-dlp --add-metadata -i -o '%(upload_date)s-%(title)s.%(ext)s'"
+alias yt="yt-dlp --embed-metadata -i -o '%(upload_date)s-%(title)s.%(ext)s'"
 alias yta="yt -x -f bestaudio/best"
-alias ytp="yt-dlp --add-metadata -i -o '%(playlist_index)s - %(title)s.%(ext)s'"
-alias ytf="ytp --audio-format flac"
-alias ytm="/usr/bin/yt-dlp --add-metadata -i -x --audio-format mp3 --audio-quality 0 -o '%(album)s/%(playlist_index)s - %(title)s.%(ext)s'"
+alias ytt="yt --skip-download --write-thumbnail"
+alias ytp="yt-dlp --embed-metadata -i -o '%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s'"
+alias ytmp="ytp -x --audio-format mp3 --audio-quality 0"
+alias ytm="yt-dlp --embed-metadata -i -x --audio-format mp3 --audio-quality 0 -o '%(album)s/%(playlist_index)s - %(title)s.%(ext)s'"
 
 # jekyll/bundler
 alias bej='bundle exec jekyll'
@@ -119,3 +110,4 @@ alias bu='bundle update'
 #   sleep 10; alert
 alias alert='notify-send "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
+alias cava="TERM=rxvt-unicode-256color cava"

@@ -1,31 +1,75 @@
 #!/bin/bash
 
+# git show log - git commit browser
+# https://gist.github.com/junegunn/f4fca918e937e6bf5bad
+gsl() {
+  git log --graph --color=always \
+      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+  fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
+      --bind "ctrl-m:execute:
+                (grep -o '[a-f0-9]\{7\}' | head -1 |
+                xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
+                {}
+FZF-EOF"
+}
+
+# find-&-edit
+fe() {
+    check_progs fd fzf-tmux || return 1
+    IFS=$'\n'
+    files=$(fd -H . | fzf-tmux --query="$1" --multi --select-1 --exit-0)
+    [ -n "$files" ] && ${EDITOR:-nvim} "${files[@]}"
+}
+
+# simple calculator
+# https://github.com/jessfraz/dotfiles
+calc() {
+    local result=""
+    result="$(printf "scale=10;%s\\n" "$*" | bc --mathlib | tr -d '\\\n')"
+    #						└─ default (when `--mathlib` is used) is 20
+
+    if [[ "$result" == *.* ]]; then
+        # improve the output for decimal numbers
+        # add "0" for cases like ".5"
+        # add "0" for cases like "-.5"
+        # remove trailing zeros
+        printf "%s" "$result" |
+            sed -e 's/^\./0./'  \
+            -e 's/^-\./-0./' \
+            -e 's/0*$//;s/\.$//'
+                else
+                    printf "%s" "$result"
+    fi
+    printf "\\n"
+}
+
 # Truncate each line of the input to X characters
 # flag -s STRING (optional): add STRING when truncated
 # switch -l (optional): truncate from left instead of right
 # param 1: (optional, default 70) length to truncate to
 # https://brettterpstra.com/2016/04/27/shell-tricks-shorten-every-line-of-output/
-shorten () {
-	local helpstring="Truncate each line of the input to X characters\n\t-l  Shorten from left side\n\t-s STRING         replace truncated characters with STRING\n\n\t$ ls | shorten -s ... 15"
-	local ellip="" left=false
+shorten() {
+    local helpstring ellip
+    helpstring=$(
+cat <<'EOF'
+Truncate each line of the input to X characters
+    -l          Shorten from left side
+    -s STRING   Replace truncated characters with STRING
+
+    $ ls | shorten -s ... 15
+EOF
+)
+	ellip="" left=false
 	OPTIND=1
 	while getopts "hls:" opt; do
 		case $opt in
 			l) left=true ;;
 			s) ellip=$OPTARG ;;
-			h) echo -e $helpstring; return;;
+			h) echo -e "$helpstring"; return;;
 			*) return 1;;
 		esac
 	done
 	shift $((OPTIND-1))
-
-  if ! test -t 0; then
-    echo "Something was passed from stdin"
-  else
-    echo "Nothing was passed from stdin"
-    echo -e $helpstring;
-    return 1;
-  fi
 
 	if $left; then
 		cat | sed -E "s/.*(.{${1-70}})$/${ellip}\1/"
@@ -34,27 +78,29 @@ shorten () {
 	fi
 }
 
-# show me jump aliases
-function j() {
-  grep '^alias j.*' ~/.config/shell/aliasrc \
-    | awk '{ FS="(alias )";print $2 }' \
-    | tail -n +2 \
-    | bat -l sh --style=grid,numbers
+
+showalias() {
+  alias | sed 's/alias //' | fzf | eval "$(cut -d'=' -f1)"
 }
 
-# tmux stuff
-# ==========
-
-function ta () {
-    if [ -z "$1" ]; then
-        tmux attach
-    else
-        tmux attach -t $1
-    fi
+which-term() {
+  # basename because of apps like gnome-terminal and console (kgx)
+  ps -o 'cmd=' -p "$(ps -o 'ppid=' -p $$|tr -d ' ')" | cut -d' ' -f1
 }
 
-function tk () { tmux kill-session -t $1; }
-function tc () { tmux new -s $1; }
+# TODO remove?
+#
+# tmux
+#ta() {
+#    if [ -z "$1" ]; then
+#        tmux attach
+#    else
+#        tmux attach -t "$1"
+#    fi
+#}
+#
+#tk() { tmux kill-session -t "$1"; }
+#tc() { tmux new -s "$1"; }
 
 # ----------------------
 # base16-shell colors
@@ -65,25 +111,25 @@ function tc () { tmux new -s $1; }
 # ----------------------
 
 # Set color scheme
-function color () {
-    export THEME=$1
-    BASE16_SHELL="$HOME/.config/base16-shell/scripts/base16-$1.sh"
-    source $BASE16_SHELL
-}
+#function color () {
+#    export THEME=$1
+#    BASE16_SHELL="$HOME/.config/base16-shell/scripts/base16-$1.sh"
+#    source $BASE16_SHELL
+#}
+#
+## Set random color scheme
+#function rndcolor () {
+#    SELECTED=$(ls ~/.config/base16-shell/scripts/ | grep -v light | gshuf -n 1 | cut -d . -f 1 | awk -F "base16-" '{print $2}')
+#    color $SELECTED
+#    echo "Color scheme is $SELECTED"
+#}
+#
+## List available colors
+#function lscolor () {
+#    ls ~/.config/base16-shell/scripts/ | grep -v light
+#}
 
-# Set random color scheme
-function rndcolor () {
-    SELECTED=$(ls ~/.config/base16-shell/scripts/ | grep -v light | gshuf -n 1 | cut -d . -f 1 | awk -F "base16-" '{print $2}')
-    color $SELECTED
-    echo "Color scheme is $SELECTED"
-}
-
-# List available colors
-function lscolor () {
-    ls ~/.config/base16-shell/scripts/ | grep -v light
-}
-
-# Colorize man page output
+# colorize man pages
 function man() {
     env \
     LESS_TERMCAP_mb="$(printf "\e[1;31m")" \
@@ -96,30 +142,6 @@ function man() {
     man "$@"
 }
 
-# --------------------------------------------------------------
-# l(ist)ips Get local and WAN IP adddresses
-# Updated based on comments from Keith Rollin and Daniel Whicker
-# http://brettterpstra.com/2017/10/30/a-few-new-shell-tricks/
-# $ lips
-#    Local IP: 10.0.1.4
-# External IP: 41.32.11.102
-# --------------------------------------------------------------
-lips() {
-  local interface ip
-  for interface in $(networksetup -listallhardwareports | awk '/^Device: /{print $2}'); do
-    ip=$(ipconfig getifaddr $interface)
-    [ "$ip" != "" ] && break
-  done
-
-  local locip extip
-
-  [ "$ip" != "" ] && locip=$ip || locip="inactive"
-
-  ip=$(dig +short myip.opendns.com @resolver1.opendns.com)
-  [ "$ip" != "" ] && extip=$ip || extip="inactive"
-
-  printf '%11s: %s\n%11s: %s\n' "loc" "$locip" "ext" "$extip"
-}
 
 # ----------------------------------------------------
 # Find and Kill
@@ -128,7 +150,7 @@ lips() {
 # parameter passed to it.
 # http://brettterpstra.com/2010/03/06/fk-redux/
 # ----------------------------------------------------
-fp () {
+fp() {
     # find and list processes matching a case-insensitive partial-match string
     ps Ao pid,comm\
       | awk '{match($0,/[^\/]+$/); print substr($0,RSTART,RLENGTH)": "$1}' \
@@ -136,52 +158,83 @@ fp () {
       | grep -v grep
 }
 
-fk () {
-  # find and kill
+# find and kill
+fk() {
   IFS=$'\n'
   PS3='Kill which process? (1 to cancel): '
   select OPT in "Cancel" $(fp "$1"); do
     if [ "$OPT" != "Cancel" ]; then
-      kill $(echo "$OPT" | awk '{print $NF}')
+      kill "$(echo "$OPT" | awk '{print $NF}')"
     fi
     break
   done
   unset IFS
 }
 
-function check_programs() {
+check_progs() {
   for program in "$@"; do
     if ! command -v "$program" &> /dev/null; then
-      echo "Error: '$program' is not installed."
+      echo "ERROR: '$program' is not installed."
       return 1
     fi
   done
 }
 
-function dig_cf(){
-  check_programs dig || return 1
+# The version.bind TXT response is supported by a handful of common DNS
+# implementations, including ISC BIND, and returns the name and version number
+# of the service.
+vbind(){
+    check_progs dig || return 1
+    dig version.bind txt chaos @"$1" +short +timeout=1 \
+        | tr -d '"'
+}
+
+# get wan address via cloudflare dns
+wan(){
+  check_progs dig || return 1
   dig @1.1.1.1 whoami.cloudflare -c ch -t txt +short +timeout=1 \
     | tr -d '"'
 }
 
-# =============
-# DOCKER THINGS
-# =============
-function docker_rg_images() {
-  check_programs rg || return 1
-  path=${1:-.}
-  rg -i --glob '**/docker-compose.yml' --max-depth 2 --sort path -e 'image:' "$path" \
-    | cut -d':' -f1,3,4 --output-delimiter=" " \
-    | column -t -N FILE,IMAGE,TAG
+# get ip things. omit loopback
+gip(){
+  case "$1" in
+    down)
+      ip -br -c -0 address | grep DOWN;;
+    mac)
+      ip -br -c -0 address | grep -v UNKNOWN;;
+    4)
+      ip -br -c -4 address | grep -v lo;;
+    6)
+      ip -br -c -6 address | grep -v lo;;
+    *)
+      ip -br -c address | grep -Ev 'lo|DOWN';;
+  esac
 }
 
-function docker_ps_format() {
-  check_programs docker || return 1
+# i think i wanted a list of all images specified in yaml currently broken.
+# needs work. and the version of column across distros is not guaranteed to
+# have the `-N` e.g. not available on Ubuntu 20.04
+docker_rg_images() {
+  check_progs rg || return 1
+  path=${1:-.}
+  #| cut -d':' -f1,3,4 --output-delimiter=" " \
+  rg -i --glob '**/docker-compose.yml' --max-depth 2 --sort path -e 'image:' "$path" \
+    | sed 's/://;s/image:/\t/' \
+    | column -t -N FILE_PATH,IMAGE
+}
+
+docker_ps_format() {
+  # drops the command, created, and ports columns.
+  check_progs docker || return 1
   docker ps -a --format 'table {{ .ID }}\t{{.Names}}\t{{ .Status }}\t{{ .Image }}' \
     | awk 'NR<2{print $0;next}{print $0 | "sort --key=2"}'
 }
 
-function pkglist() {
-  dpkg -l | awk '/^ii/ {print($2)}'
+plist() {
+  # TODO support more package managers/patforms
+  dpkg -l \
+    | awk '/^ii/ {a=$2;b=$5; for(i=6;i<=NF;i++){b=b" "$i};print a "\t" b}' \
+    | column -ts $'\t' -N NAME,DESCRIPTION
 }
 
