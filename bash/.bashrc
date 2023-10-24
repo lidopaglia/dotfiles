@@ -158,6 +158,11 @@ fi
 # enable fzf keybinds and completions
 [ -f ~/.config/fzf/fzf.bash ] && source ~/.config/fzf/fzf.bash
 
+# enable zoxide
+if [ -x "$(command -v 'zoxide')" ]; then
+    eval "$(zoxide init bash)"
+fi
+
 # load starship prompt
 [ -x "$(command -v starship)" ] && eval "$(starship init bash)"
 
