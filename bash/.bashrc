@@ -158,6 +158,12 @@ fi
 # enable fzf keybinds and completions
 [ -f ~/.config/fzf/fzf.bash ] && source ~/.config/fzf/fzf.bash
 
+# load nix
+if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
+  . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+  export XDG_DATA_DIRS="$HOME/.nix-profile/share:${XDG_DATA_DIRS}"
+fi
+
 # load starship prompt
 [ -x "$(command -v starship)" ] && eval "$(starship init bash)"
 
