@@ -167,6 +167,11 @@ __git_complete g __git_main
 # enable zoxide
 if [ -x "$(command -v 'zoxide')" ]; then
     eval "$(zoxide init bash)"
+
+# load nix
+if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
+  . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+  export XDG_DATA_DIRS="$HOME/.nix-profile/share:${XDG_DATA_DIRS}"
 fi
 
 # load starship prompt
