@@ -165,8 +165,7 @@ __git_complete g __git_main
 [ -f ~/.config/fzf/fzf.bash ] && source ~/.config/fzf/fzf.bash
 
 # enable zoxide
-if [ -x "$(command -v 'zoxide')" ]; then
-    eval "$(zoxide init bash)"
+[ -x "$(command -v 'zoxide')" ] && eval "$(zoxide init bash)"
 
 # load nix
 if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
