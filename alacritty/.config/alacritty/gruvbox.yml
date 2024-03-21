@@ -4,7 +4,7 @@ color_schemes:
 
     # Default colors
     primary:
-      background: '#282828' # base
+      background: '#1d2021' # base
       foreground: '#ebdbb2' # text
       # Bright and dim foreground colors
       dim_foreground: '#ebdbb2' # text
