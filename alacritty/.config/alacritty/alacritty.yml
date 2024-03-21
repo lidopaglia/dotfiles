@@ -1,7 +1,7 @@
 
 # Import fonts, colors, etc.
 import:
-  - ~/.config/alacritty/fonts.yml
+  - ~/.config/alacritty/font.ubuntu.yml
   - ~/.config/alacritty/gruvbox.yml
 
 env:
@@ -21,22 +21,25 @@ live_config_reload: true
 window:
   history: 10000
   multiplier: 3
-  opacity: 0.95
+  opacity: 0.69
   startup_mode: Maximized
   decorations: none
   dynamic_padding: true
   padding:
-    x: 10
+    x: 25
     y: 10
 
 font:
   normal:
-    family: SauceCodePro NF
+    family: UbuntuMono Nerd Font Mono
     style: Regular
   bold:
-    family: SauceCodePro NF
+    family: UbuntuMono Nerd Font Mono
     style: Bold
   italic:
-    family: SauceCodePro NF
+    family: UbuntuMono Nerd Font Mono
     style: Italic
   size: 16
+
+key_bindings:
+  - { key: N,  mods: Shift|Control, action: CreateNewWindow }
