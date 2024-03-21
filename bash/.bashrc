@@ -38,8 +38,8 @@ mkdir -p $XDG_BIN_HOME \
          $XDG_STATE_HOME
 
 export EDITOR="vim"
-export BROWSER="brave-browser"
-export TERMINAL="kitty"
+export BROWSER="firefox"
+export TERMINAL="alacritty"
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export LESSHISTFILE="$XDG_CACHE_HOME/.lesshst"
 export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"

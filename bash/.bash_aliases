@@ -43,6 +43,7 @@ alias dir='du -sh */ | sort -h'
 alias free='free -h'
 alias rg="rg --sort path"
 alias tree='tree -aChN --dirsfirst -I .git'
+alias rename='rename -v'
 alias ip='ip -c'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
