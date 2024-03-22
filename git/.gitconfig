@@ -2,7 +2,7 @@
   email = lido@paglia.org
   name = Lido Paglia
 [init]
-  defaultBranch = master
+  defaultBranch = main
 [advice]
   detachedHead = false
 [alias]
