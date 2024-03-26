@@ -1,7 +1,6 @@
 
 # Import fonts, colors, etc.
 import:
-  - ~/.config/alacritty/font.ubuntu.yml
   - ~/.config/alacritty/gruvbox.yml
 
 env:
