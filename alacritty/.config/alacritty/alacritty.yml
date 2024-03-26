@@ -9,7 +9,7 @@ env:
 
 cursor:
   style:
-    shape: Beam
+    shape: Block
     blinking: On
   unfocused_hollow: true
 
