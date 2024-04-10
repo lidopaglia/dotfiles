@@ -173,5 +173,5 @@ fi
 [ -x "$(command -v 'zoxide')" ] && eval "$(zoxide init bash)"
 
 # load starship prompt
-[ -x "$(command -v starship)" ] && eval "$(starship init bash)"
+# [ -x "$(command -v starship)" ] && eval "$(starship init bash)"
 

@@ -1,7 +1,8 @@
 
 # Import fonts, colors, etc.
-import:
-  - ~/.config/alacritty/gruvbox.yml
+# import:
+  # - ~/.config/alacritty/gruvbox.yml
+  # - ~/.config/alacritty/rose-pine.yml
 
 env:
   TERM: alacritty
@@ -13,14 +14,15 @@ cursor:
     blinking: On
   unfocused_hollow: true
 
-draw_bold_text_with_bright_colors: true
+# draw_bold_text_with_bright_colors: true
 
 live_config_reload: true
 
 window:
-  history: 10000
-  multiplier: 3
+  # history: 10000
+  # multiplier: 3
   opacity: 0.69
+  # opacity: 1
   startup_mode: Maximized
   decorations: none
   dynamic_padding: true
