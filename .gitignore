@@ -4,3 +4,4 @@ nvim/.config/nvim/plugin/packer_compiled.lua
 **/.zcompdump
 **/.uuid
 state.pickle
+**/tmux/plugins/
