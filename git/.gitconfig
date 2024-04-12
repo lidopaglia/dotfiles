@@ -6,6 +6,7 @@
 [advice]
   detachedHead = false
 [alias]
+  co = checkout
   s = status
   ss = status -s
   unstage = reset HEAD --
