@@ -14,6 +14,14 @@ cursor:
     blinking: On
   unfocused_hollow: true
 
+colors:
+  cursor:
+    text: '#282828' # base
+    cursor: '#d3869b' # purple
+  vi_mode_cursor:
+    text: '#282828' # base
+    cursor: '#fe8019' # orange
+
 # draw_bold_text_with_bright_colors: true
 
 live_config_reload: true
@@ -27,7 +35,7 @@ window:
   decorations: none
   dynamic_padding: true
   padding:
-    x: 25
+    x: 15
     y: 10
 
 font:
