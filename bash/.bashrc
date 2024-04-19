@@ -47,7 +47,6 @@ export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
 export FZF_DEFAULT_OPTS="--layout=reverse --height 20%"
 export MANWIDTH=80
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-export GREP_OPTIONS='--color=auto'
 export STARDICT_DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}"
 export SDCV_PAGER='batcat -p --pager "less --quit-if-one-screen -RX"'
 
