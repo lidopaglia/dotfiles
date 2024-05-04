@@ -261,10 +261,43 @@ plist() {
     | column -ts $'\t' -N NAME,DESCRIPTION
 }
 
+
 # Add an "alert" alias for long running commands.
 # sleep 10; alert
 alert() {
   notify-send \
     "$([ $? = 0 ] && echo "command complete"|| echo "command error")" \
     "$(fc -l|tail -n1|awk '{$1="";split($0,a,";");print substr(a[1],2)}')"
+
+clear-ls-all() {
+  clear
+  eza -al
+}
+
+clear-tree2() {
+  clear
+  tree -L 2
+}
+
+clear-tree3() {
+  clear
+  tree -L 3
+}
+
+clear-git-status() {
+  clear
+  git status
+}
+
+clear-fastfetch() {
+  clear
+  fastfetch
+}
+
+print-current-date() {
+  printf $(date -I)
+}
+
+print-unix-timestamp() {
+  printf $(date +%s)
 }
