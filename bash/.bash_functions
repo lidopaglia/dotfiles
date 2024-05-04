@@ -238,3 +238,35 @@ plist() {
     | column -ts $'\t' -N NAME,DESCRIPTION
 }
 
+clear-ls-all() {
+  clear
+  eza -al
+}
+
+clear-tree2() {
+  clear
+  tree -L 2
+}
+
+clear-tree3() {
+  clear
+  tree -L 3
+}
+
+clear-git-status() {
+  clear
+  git status
+}
+
+clear-fastfetch() {
+  clear
+  fastfetch
+}
+
+print-current-date() {
+  printf $(date -I)
+}
+
+print-unix-timestamp() {
+  printf $(date +%s)
+}
