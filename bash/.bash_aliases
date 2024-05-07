@@ -15,10 +15,6 @@ alias p='podman'
 alias e='$EDITOR'
 alias v='vim'
 
-# exa
-alias exa='exa --group-directories-first'
-alias et='exa --tree --icons'
-
 # ls
 alias ls='LC_ALL=C.UTF-8 ls -Fh --color=auto --group-directories-first'
 alias l='ls -l'
@@ -29,9 +25,8 @@ alias lta='\ls -AltFh --color=auto'
 alias ltr='\ls -ltrFh --color=auto'
 alias ltra='\ls -AltrFh --color=auto'
 
-alias lsd='lsd -l --group-dirs first'
-
 # verbose & defaults
+alias cd='z'
 alias cp='cp -iv'
 alias mv='mv -iv'
 alias rm='rm -vI'
@@ -51,26 +46,19 @@ alias egrep='egrep --color=auto'
 alias diff='diff --color=auto'
 alias ccat='highlight --out-format=ansi'
 
-# podman
-alias pils='podman images --format "table {{.Repository}}:{{.Tag}}\t{{.Size}}\t{{.ID}}"'
-alias pcls='podman container ls --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.ID}}" -a | tail -n +2 | sort -k1 -h'
-alias psa='podman stop $(podman ps -q)'
-alias pcu='podman compose up -d --force-recreate'
-alias pcd='podman compose down'
-alias pcp='podman compose pull'
-
 # docker
 alias dstop='docker stop $(docker ps -q)'
 alias dtail="docker logs -tf --tail=50"
 alias dils='docker images --format "table {{.Repository}}:{{.Tag}}\t{{.Size}}\t{{.ID}}"'
 alias dcls='docker container ls --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.ID}}" -a | tail -n +2 | sort -k1 -h'
-alias dcu='docker compose up -d --force-recreate'
-alias dcd='docker compose down'
-alias dcp='docker compose pull'
 alias dip='docker image prune'
 alias dps='docker_ps_format'
 alias dri='docker_rg_images'
 alias dsp='docker system prune --all'
+# docker compose
+alias dcu='docker compose up -d --force-recreate'
+alias dcd='docker compose down'
+alias dcp='docker compose pull'
 
 # A more descriptive, yet concise lsblk.
 alias lsblkid='lsblk -o name,label,fstype,size,uuid --noheadings'
@@ -110,5 +98,3 @@ alias bu='bundle update'
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
-alias cava="TERM=rxvt-unicode-256color cava"
