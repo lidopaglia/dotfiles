@@ -22,6 +22,7 @@ alias ltra='\ls -AltrFh --color=auto'
 alias exa='exa --group-directories-first'
 alias et='exa --tree --icons'
 alias lsd='lsd -l --group-dirs first'
+alias cd='z'
 alias cp='cp -iv'
 alias mv='mv -iv'
 alias rm='rm -vI'
@@ -43,27 +44,21 @@ alias ccat='highlight --out-format=ansi'
 alias cava="TERM=rxvt-unicode-256color cava"
 alias lsblk='lsblk -o name,fstype,size,type,uuid'
 
-# podman
-alias pils='podman images --format "table {{.Repository}}:{{.Tag}}\t{{.Size}}\t{{.ID}}"'
-alias pcls='podman container ls --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.ID}}" -a | tail -n +2 | sort -k1 -h'
-alias psa='podman stop $(podman ps -q)'
-alias pcu='podman compose up -d --force-recreate'
-alias pcd='podman compose down'
-alias pcp='podman compose pull'
-
 # docker
 alias dstop='docker stop $(docker ps -q)'
 alias dtail="docker logs -tf --tail=50"
 alias dils='docker images --format "table {{.Repository}}:{{.Tag}}\t{{.Size}}\t{{.ID}}"'
 alias dcls='docker container ls --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.ID}}" -a | tail -n +2 | sort -k1 -h'
-alias dcu='docker compose up -d --force-recreate'
-alias dcd='docker compose down'
-alias dcp='docker compose pull'
 alias dip='docker image prune'
 alias dps='docker_ps_format'
 alias dsp='docker system prune --all'
 alias dcrm='docker container rm $(docker container ls -aq)'
 alias drun='docker run --detach --rm'
+
+# docker compose
+alias dcu='docker compose up -d --force-recreate'
+alias dcd='docker compose down'
+alias dcp='docker compose pull'
 
 # journalctl(1)
 # display anything from 'emerg' to 'warning' since boot.
@@ -89,4 +84,3 @@ alias ytt="yt --skip-download --write-thumbnail"
 alias ytp="yt-dlp --embed-metadata -i -o '%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s'"
 alias ytmp="ytp -x --audio-format mp3 --audio-quality 0"
 alias ytm="yt-dlp --embed-metadata -i -x --audio-format mp3 --audio-quality 0 -o '%(album)s/%(playlist_index)s - %(title)s.%(ext)s'"
-
