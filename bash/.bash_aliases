@@ -13,7 +13,7 @@ alias d='docker'
 alias g='git'
 alias p='podman'
 alias e='$EDITOR'
-alias v='vim'
+alias v='nvim'
 
 # ls
 alias ls='LC_ALL=C.UTF-8 ls -Fh --color=auto --group-directories-first'
