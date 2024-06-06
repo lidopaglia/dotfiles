@@ -37,7 +37,7 @@ mkdir -p $XDG_BIN_HOME \
          $XDG_DATA_HOME \
          $XDG_STATE_HOME
 
-export EDITOR="vim"
+export EDITOR="nvim"
 export BROWSER="firefox"
 export TERMINAL="alacritty"
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
@@ -49,6 +49,7 @@ export MANWIDTH=80
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 export STARDICT_DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}"
 export SDCV_PAGER='batcat -p --pager "less --quit-if-one-screen -RX"'
+export HOMEBREW_NO_ENV_HINTS='true'
 
 # Golang
 [ ! -d $XDG_DATA_HOME/go ] && mkdir -p $XDG_DATA_HOME/go
@@ -219,6 +220,8 @@ fi
 # load starship prompt
 [ -x "$(command -v starship)" ] && eval "$(starship init bash)"
 
-# use linux brew
+# use linux brew when installed
 [ -f /home/linuxbrew/.linuxbrew/bin/brew ] && \
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
