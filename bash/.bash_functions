@@ -231,6 +231,11 @@ docker_ps_format() {
     | awk 'NR<2{print $0;next}{print $0 | "sort --key=2"}'
 }
 
+docker_run_image() {
+  # run an ad-hoc container
+  docker run -dt -i $1
+}
+
 plist() {
   # TODO support more package managers/patforms
   dpkg -l \

@@ -69,8 +69,9 @@ alias dcd='docker compose down'
 alias dcp='docker compose pull'
 alias dip='docker image prune'
 alias dps='docker_ps_format'
-alias dri='docker_rg_images'
 alias dsp='docker system prune --all'
+alias dcrm='docker container rm $(docker container ls -aq)'
+alias drun='docker run --detach --rm'
 
 # A more descriptive, yet concise lsblk.
 alias lsblkid='lsblk -o name,label,fstype,size,uuid --noheadings'
