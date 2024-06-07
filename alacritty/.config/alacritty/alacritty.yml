@@ -1,8 +1,5 @@
 
-# Import fonts, colors, etc.
-# import:
-  # - ~/.config/alacritty/gruvbox.yml
-  # - ~/.config/alacritty/rose-pine.yml
+shell: tmux
 
 env:
   TERM: alacritty
@@ -15,6 +12,8 @@ cursor:
   unfocused_hollow: true
 
 colors:
+  primary:
+    background: '#000000'
   cursor:
     text: '#282828' # base
     cursor: '#d3869b' # purple
@@ -22,18 +21,14 @@ colors:
     text: '#282828' # base
     cursor: '#fe8019' # orange
 
-# draw_bold_text_with_bright_colors: true
+draw_bold_text_with_bright_colors: true
 
 live_config_reload: true
 
 window:
-  # history: 10000
-  # multiplier: 3
-  opacity: 0.69
-  # opacity: 1
-  startup_mode: Maximized
+  opacity: 0.87
   decorations: none
-  dynamic_padding: true
+  dynamic_padding: false
   padding:
     x: 15
     y: 10
