@@ -217,3 +217,7 @@ fi
 
 # load starship prompt
 [ -x "$(command -v starship)" ] && eval "$(starship init bash)"
+
+# use linux brew
+[ -f /home/linuxbrew/.linuxbrew/bin/brew ] && \
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
