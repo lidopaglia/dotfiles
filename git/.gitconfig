@@ -4,6 +4,8 @@
 [init]
   defaultBranch = main
 [advice]
+  addEmptyPathspec = false
+  addIgnoredFile = false
   detachedHead = false
 [alias]
   co = checkout

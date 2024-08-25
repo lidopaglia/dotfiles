@@ -2,7 +2,7 @@
 
 # Use neovim if present
 [ -x "$(command -v nvim)" ] && \
-    alias vi='nvim' && \
+    alias vi='nvim'
     alias vim='nvim' vimdiff='nvim -d'
 
 # Use $XINITRC variable if file exists
@@ -13,7 +13,12 @@ alias d='docker'
 alias g='git'
 alias p='podman'
 alias e='$EDITOR'
-alias v='nvim'
+alias v='vim'
+alias lg='lazygit'
+
+# exa
+alias exa='exa --group-directories-first'
+alias et='exa --tree --icons'
 
 # ls
 alias ls='LC_ALL=C.UTF-8 ls -Fh --color=auto --group-directories-first'
@@ -53,12 +58,15 @@ alias dils='docker images --format "table {{.Repository}}:{{.Tag}}\t{{.Size}}\t{
 alias dcls='docker container ls --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.ID}}" -a | tail -n +2 | sort -k1 -h'
 alias dip='docker image prune'
 alias dps='docker_ps_format'
-alias dri='docker_rg_images'
 alias dsp='docker system prune --all'
+
 # docker compose
 alias dcu='docker compose up -d --force-recreate'
 alias dcd='docker compose down'
 alias dcp='docker compose pull'
+
+alias dcrm='docker container rm $(docker container ls -aq)'
+alias drun='docker run --detach --rm'
 
 # A more descriptive, yet concise lsblk.
 alias lsblkid='lsblk -o name,label,fstype,size,uuid --noheadings'
