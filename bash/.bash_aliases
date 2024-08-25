@@ -2,7 +2,7 @@
 
 # Use neovim if present
 [ -x "$(command -v nvim)" ] && \
-    alias vi='nvim' && \
+    alias vi='nvim'
     alias vim='nvim' vimdiff='nvim -d'
 
 # Use $XINITRC variable if file exists
