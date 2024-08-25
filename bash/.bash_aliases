@@ -14,6 +14,7 @@ alias g='git'
 alias p='podman'
 alias e='$EDITOR'
 alias v='vim'
+alias lg='lazygit'
 
 # exa
 alias exa='exa --group-directories-first'
