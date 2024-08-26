@@ -16,10 +16,6 @@ alias e='$EDITOR'
 alias v='vim'
 alias lg='lazygit'
 
-# exa
-alias exa='exa --group-directories-first'
-alias et='exa --tree --icons'
-
 # ls
 alias ls='LC_ALL=C.UTF-8 ls -Fh --color=auto --group-directories-first'
 alias l='ls -l'
@@ -30,9 +26,10 @@ alias lta='\ls -AltFh --color=auto'
 alias ltr='\ls -ltrFh --color=auto'
 alias ltra='\ls -AltrFh --color=auto'
 
-alias lsd='lsd -l --group-dirs first'
-
 # verbose & defaults
+alias exa='exa --group-directories-first'
+alias et='exa --tree --icons'
+alias lsd='lsd -l --group-dirs first'
 alias cp='cp -iv'
 alias mv='mv -iv'
 alias rm='rm -vI'
