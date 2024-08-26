@@ -213,7 +213,9 @@ fi
 [ -f ~/.config/fzf/fzf.bash ] && source ~/.config/fzf/fzf.bash
 
 # enable zoxide
-[ -x "$(command -v 'zoxide')" ] && eval "$(zoxide init bash)"
+[ -x "$(command -v 'zoxide')" ] && \
+    eval "$(zoxide init bash)"
+    alias cd='z'
 
 # load starship prompt
 [ -x "$(command -v starship)" ] && eval "$(starship init bash)"
