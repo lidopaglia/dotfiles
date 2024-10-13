@@ -9,6 +9,7 @@
   detachedHead = false
 [alias]
   co = checkout
+  go = log --graph --oneline
   s = status
   ss = status -s
   unstage = reset HEAD --
