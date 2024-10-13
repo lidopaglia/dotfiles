@@ -15,6 +15,7 @@ alias p='podman'
 alias e='$EDITOR'
 alias v='vim'
 alias lg='lazygit'
+alias fp='flatpak'
 
 # ls
 alias ls='LC_ALL=C.UTF-8 ls -Fh --color=auto --group-directories-first'

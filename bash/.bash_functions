@@ -1,5 +1,23 @@
 #!/bin/bash
 
+fpr() {
+  # list and remove flatpak
+  flatpak list --app --columns=application,name | \
+    awk '{print $1 " ("substr($0, index($0, $2))")"}' | \
+    fzf | \
+    awk -F ' \\(|\\)' '{print $1}' | \
+    xargs -r flatpak uninstall --noninteractive
+}
+
+fps() {
+  # search for and install flatpak
+  flatpak search $1 --columns=application,name | \
+      awk '{print $1 " ("substr($0, index($0, $2))")"}' | \
+      fzf | \
+      awk -F ' \\(|\\)' '{print $1}' | \
+      xargs -r flatpak install --noninteractive
+}
+
 # git show log - git commit browser
 # https://gist.github.com/junegunn/f4fca918e937e6bf5bad
 gsl() {
