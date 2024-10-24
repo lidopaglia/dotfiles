@@ -214,8 +214,7 @@ fi
 
 # enable zoxide
 [ -x "$(command -v 'zoxide')" ] && \
-    eval "$(zoxide init bash)"
-    alias cd='z'
+    eval "$(zoxide init bash)" && alias cd='z'
 
 # load starship prompt
 [ -x "$(command -v starship)" ] && eval "$(starship init bash)"
