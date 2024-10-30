@@ -168,16 +168,17 @@ function man() {
 # parameter passed to it.
 # http://brettterpstra.com/2010/03/06/fk-redux/
 # ----------------------------------------------------
-fp() {
+find-process() {
     # find and list processes matching a case-insensitive partial-match string
-    ps Ao pid,comm\
+    # using `-Ao` instead of `Ao` to avoid "error: unsupported option (BSD syntax)"
+    ps -Ao pid,comm\
       | awk '{match($0,/[^\/]+$/); print substr($0,RSTART,RLENGTH)": "$1}' \
       | grep -i "$1" \
       | grep -v grep
 }
 
 # find and kill
-fk() {
+find-kill() {
   IFS=$'\n'
   PS3='Kill which process? (1 to cancel): '
   select OPT in "Cancel" $(fp "$1"); do
