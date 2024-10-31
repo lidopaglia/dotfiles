@@ -1,21 +1,12 @@
 #!/bin/sh
 
 # Use neovim if present
-[ -x "$(command -v nvim)" ] && \
-    alias vi='nvim'
-    alias vim='nvim' vimdiff='nvim -d'
-
-# Use $XINITRC variable if file exists
-[ -f "$XINITRC" ] && alias startx='startx $XINITRC'
+[ -x "$(command -v nvim)" ] && alias vi='nvim' vim='nvim' vimdiff='nvim -d'
 
 # shortcuts
-alias d='docker'
-alias g='git'
-alias p='podman'
 alias e='$EDITOR'
+alias g='git'
 alias v='vim'
-alias lg='lazygit'
-alias fp='flatpak'
 
 # ls
 alias ls='LC_ALL=C.UTF-8 ls -Fh --color=auto --group-directories-first'
@@ -49,6 +40,8 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias diff='diff --color=auto'
 alias ccat='highlight --out-format=ansi'
+alias cava="TERM=rxvt-unicode-256color cava"
+alias lsblk='lsblk -o name,fstype,size,type,uuid'
 
 # podman
 alias pils='podman images --format "table {{.Repository}}:{{.Tag}}\t{{.Size}}\t{{.ID}}"'
@@ -72,23 +65,22 @@ alias dsp='docker system prune --all'
 alias dcrm='docker container rm $(docker container ls -aq)'
 alias drun='docker run --detach --rm'
 
-# A more descriptive, yet concise lsblk.
-alias lsblkid='lsblk -o name,label,fstype,size,uuid --noheadings'
-# journalctl(1) - display anything from 'emerg' to 'warning' since boot.
+# journalctl(1)
+# display anything from 'emerg' to 'warning' since boot.
 alias jbp='journalctl -b -p 0..4 --no-pager'
 # show errors with catalog text for the current boot
 alias jrnl='journalctl -p 3 -xb'
+
 # list users
-alias userlist="cut -d: -f1 /etc/passwd"
+alias userls="cut -d: -f1 /etc/passwd"
+
 # list microcode vulns
 # http://kroah.com/log/blog/2018/01/19/meltdown-status-2/
-alias microcode='grep . /sys/devices/system/cpu/vulnerabilities/*'
+alias ucode='grep . /sys/devices/system/cpu/vulnerabilities/*'
 
 # tmux
 # 't' is mapped to t-smart-tmux-session-manager
- alias                                               \
-   ta="tmux attach"                                  \
-   tls="tmux ls"                                     \
+alias ta="tmux attach" tls="tmux ls"
 
 # yt-dlp
 alias yt="yt-dlp --embed-metadata -i -o '%(upload_date)s-%(title)s.%(ext)s'"
@@ -98,17 +90,3 @@ alias ytp="yt-dlp --embed-metadata -i -o '%(playlist)s/%(playlist_index)s - %(ti
 alias ytmp="ytp -x --audio-format mp3 --audio-quality 0"
 alias ytm="yt-dlp --embed-metadata -i -x --audio-format mp3 --audio-quality 0 -o '%(album)s/%(playlist_index)s - %(title)s.%(ext)s'"
 
-# jekyll/bundler
-alias bej='bundle exec jekyll'
-alias bejs='bej serve --livereload'
-alias bejp='bej post'
-alias bejd='bej draft'
-alias bpub='bej publish'
-alias bi='bundle install'
-alias bu='bundle update'
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
-alias cava="TERM=rxvt-unicode-256color cava"

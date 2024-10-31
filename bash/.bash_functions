@@ -168,20 +168,19 @@ function man() {
 # parameter passed to it.
 # http://brettterpstra.com/2010/03/06/fk-redux/
 # ----------------------------------------------------
+# find and list processes matching a case-insensitive partial-match string
 find-process() {
-    # find and list processes matching a case-insensitive partial-match string
-    # using `-Ao` instead of `Ao` to avoid "error: unsupported option (BSD syntax)"
-    ps -Ao pid,comm\
-      | awk '{match($0,/[^\/]+$/); print substr($0,RSTART,RLENGTH)": "$1}' \
-      | grep -i "$1" \
-      | grep -v grep
+  ps -Ao pid,comm\
+    | awk '{match($0,/[^\/]+$/); print substr($0,RSTART,RLENGTH)": "$1}' \
+    | grep -i "$1" \
+    | grep -v grep
 }
 
 # find and kill
 find-kill() {
   IFS=$'\n'
   PS3='Kill which process? (1 to cancel): '
-  select OPT in "Cancel" $(fp "$1"); do
+  select OPT in "Cancel" $(find-process "$1"); do
     if [ "$OPT" != "Cancel" ]; then
       kill "$(echo "$OPT" | awk '{print $NF}')"
     fi
@@ -262,3 +261,10 @@ plist() {
     | column -ts $'\t' -N NAME,DESCRIPTION
 }
 
+# Add an "alert" alias for long running commands.
+# sleep 10; alert
+alert() {
+  notify-send \
+    "$([ $? = 0 ] && echo "command complete"|| echo "command error")" \
+    "$(fc -l|tail -n1|awk '{$1="";split($0,a,";");print substr(a[1],2)}')"
+}
