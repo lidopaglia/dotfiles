@@ -1,5 +1,10 @@
 #!/bin/bash
 
+banner() {
+  clear;
+  printf "\n%s" "$(toilet -f pagga $HOSTNAME)" | dotacat
+}
+
 fpr() {
   # list and remove flatpak
   flatpak list --app --columns=application,name | \
@@ -268,6 +273,7 @@ alert() {
   notify-send \
     "$([ $? = 0 ] && echo "command complete"|| echo "command error")" \
     "$(fc -l|tail -n1|awk '{$1="";split($0,a,";");print substr(a[1],2)}')"
+}
 
 clear-ls-all() {
   clear

@@ -225,3 +225,5 @@ fi
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
+
+clear;printf "\n%s" "$(toilet -f pagga $HOSTNAME)" | dotacat
