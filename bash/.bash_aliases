@@ -7,6 +7,8 @@
 alias e='$EDITOR'
 alias g='git'
 alias v='vim'
+alias j='just'
+alias d='docker'
 
 # ls
 alias ls='LC_ALL=C.UTF-8 ls -Fh --color=auto --group-directories-first'
@@ -19,9 +21,6 @@ alias ltr='\ls -ltrFh --color=auto'
 alias ltra='\ls -AltrFh --color=auto'
 
 # verbose & defaults
-alias exa='exa --group-directories-first'
-alias et='exa --tree --icons'
-alias lsd='lsd -l --group-dirs first'
 alias cp='cp -iv'
 alias mv='mv -iv'
 alias rm='rm -vI'

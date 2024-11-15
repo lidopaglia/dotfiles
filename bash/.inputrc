@@ -26,7 +26,10 @@ set colored-stats on
 # Append characater to indicate file type when listing possible completions
 set visible-stats on
 
-# Mark symlinked directories
+# Append a slash to completed directories
+set mark-directories on
+
+# Append a slash to symlinked directories as well
 set mark-symlinked-directories on
 
 # Color the common prefix
@@ -52,3 +55,20 @@ TAB: menu-complete
 
 "\e\C-f": dump-functions
 "\e\C-v": dump-variables
+
+# new stuff
+# briefly move the cursor to the opening parenthesis
+# set blink-matching-paren on
+# set keyseq-timeout 0
+
+# Turn on vi line editing
+# set editing-mode vi
+#
+# # Set the cursor shape for different modes
+# $if term=linux
+#     set vi-ins-mode-string \1\e[?0c\2
+#     set vi-cmd-mode-string \1\e[?8c\2
+# $else
+#     set vi-ins-mode-string \1\e[6 q\2
+#     set vi-cmd-mode-string \1\e[2 q\2
+# $endif

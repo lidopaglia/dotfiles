@@ -1,8 +1,13 @@
 #!/bin/bash
 
+ls_path() {
+    echo "$PATH" | sed 's/:/\n/g'
+}
+
 banner() {
   clear;
   printf "\n%s" "$(toilet -f pagga $HOSTNAME)" | dotacat
+  uptime -p
 }
 
 fpr() {
