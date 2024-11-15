@@ -101,12 +101,25 @@ mkdir -p "$XDG_DATA_HOME"/{rustup,cargo} && \
     export CARGO_HOME="$XDG_DATA_HOME/cargo" && \
     export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 
+# create dirs for node
+mkdir -p "$XDG_CACHE_HOME"/npm
+mkdir -p "$XDG_CONFIG_HOME"/npm
+mkdir -p "$XDG_DATA_HOME"/npm
+mkdir -p "$XDG_RUNTIME_DIR"/npm
+
+# export npm path vars
+export npm_config_userconfig="$XDG_CONFIG_HOME/npm/config"
+export npm_config_cache="$XDG_CACHE_HOME/npm"
+export npm_config_prefix="$XDG_DATA_HOME/npm"
+export npm_config_tmp="$XDG_RUNTIME_DIR/npm"
+
 # Update $PATH
 bin_dirs="$HOME"/bin
 
 bin_dirs="$bin_dirs:$(du "$XDG_BIN_HOME" --exclude='.git' | \
     cut -f2 | sort | tr '\n' ':' | sed 's/:*$//')"
 
+bin_dirs="$bin_dirs":"$XDG_DATA_HOME"/npm/bin
 bin_dirs="$bin_dirs":"$CARGO_HOME"/bin
 bin_dirs="$bin_dirs":"$GOPATH"/bin
 bin_dirs="$bin_dirs":"$GEM_HOME"/bin
