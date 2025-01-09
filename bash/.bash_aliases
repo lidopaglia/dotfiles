@@ -9,6 +9,11 @@ alias g='git'
 alias v='vim'
 alias j='just'
 alias d='docker'
+alias fp='flatpak'
+
+alias open='xdg-open'
+alias xo='open'
+alias o='open'
 
 # ls
 alias ls='LC_ALL=C.UTF-8 ls -Fh --color=auto --group-directories-first'

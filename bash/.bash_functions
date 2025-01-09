@@ -5,7 +5,7 @@ ls_path() {
 }
 
 banner() {
-  clear;
+  # clear;
   printf "\n%s" "$(toilet -f pagga $HOSTNAME)" | dotacat
   uptime -p
 }
