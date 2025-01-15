@@ -1,0 +1,19 @@
+font-size = 16
+font-family = Ubuntu Mono
+font-family = Symbols Nerd Font Mono
+
+theme = Tomorrow Night Bright
+background-opacity = 1
+
+adjust-cell-height = 5%
+window-decoration = false
+window-padding-balance = true
+
+cursor-style = block
+cursor-style-blink = false
+
+copy-on-select = clipboard
+mouse-hide-while-typing = true
+shell-integration-features = no-cursor,sudo,no-title
+
+keybind = ctrl+m>r=reload_config
