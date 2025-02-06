@@ -56,6 +56,9 @@ TAB: menu-complete
 "\e\C-f": dump-functions
 "\e\C-v": dump-variables
 
+# bind Alt+F to tmux-sessionizer
+'\C-f':'tmux-sessionizer\n'
+
 # new stuff
 # briefly move the cursor to the opening parenthesis
 # set blink-matching-paren on
