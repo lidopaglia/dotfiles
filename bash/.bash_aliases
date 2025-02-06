@@ -10,10 +10,10 @@ alias v='vim'
 alias j='just'
 alias d='docker'
 alias fp='flatpak'
+alias ff='fastfetch'
+alias lg='lazygit'
 
-alias open='xdg-open'
-alias xo='open'
-alias o='open'
+alias open='xdg-open' xo='open' o='open'
 
 # ls
 alias ls='LC_ALL=C.UTF-8 ls -Fh --color=auto --group-directories-first'

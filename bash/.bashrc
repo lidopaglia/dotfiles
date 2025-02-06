@@ -233,7 +233,7 @@ fi
 
 # load fancy colors with vivid if present
 [ -x "$(command -v vivid)" ] && \
-    LS_COLORS="$(vivid generate alabaster_dark)" && \
+    LS_COLORS="$(vivid generate catppuccin-mocha)" && \
     export LS_COLORS
 
 # load starship prompt if present
@@ -246,11 +246,23 @@ fi
     export HOMEBREW_NO_ENV_HINTS='true'
 
 # load nix if present
-if [ -e "$HOME"/.nix-profile/etc/profile.d/nix.sh ]; then
-  source "$HOME"/.nix-profile/etc/profile.d/nix.sh
-  export XDG_DATA_DIRS="$HOME"/.nix-profile/share:"${XDG_DATA_DIRS}"
-fi
+# if [ -e "$HOME"/.nix-profile/etc/profile.d/nix.sh ]; then
+#   source "$HOME"/.nix-profile/etc/profile.d/nix.sh
+#   export XDG_DATA_DIRS="$HOME"/.nix-profile/share:"${XDG_DATA_DIRS}"
+# fi
+
+  # exa is unmaintained, use eza instead
+  # https://github.com/eza-community/eza
+  if command -v eza &>/dev/null; then
+    alias ls='eza -h -F --group-directories-first'
+    # alias ll='eza -lhg'
+    # alias lla='eza -alhg'
+    alias tree='eza --tree'
+    alias t2='tree --level=2'
+    alias t3='tree --level=3'
+  fi
+
 
 
 # print the banner
-banner
+#banner
