@@ -3,6 +3,10 @@ truncation_length = 8
 truncate_to_repo = false
 truncation_symbol = '.../'
 
+[character]
+success_symbol = '[;](bold green) '
+error_symbol = '[;](bold red) '
+
 [palettes.catppuccin_mocha]
 base = "#1e1e2e"
 blue = "#89b4fa"
