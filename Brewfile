@@ -1,3 +1,5 @@
+tap "arl/arl"
+brew "arl/arl/gitmux"
 brew "bat"
 brew "dysk"
 brew "exiftool"
