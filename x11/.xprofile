@@ -1,4 +1,0 @@
-#!/bin/sh
-
-setbg &
-xset r rate 300 50 &
