@@ -19,6 +19,9 @@ set completion-ignore-case on
 
 set print-completions-horizontally on
 
+set completion-prefix-display-length 3
+
+
 # Color files by types. Note that this may cause completion text blink in some
 # terminals (e.g. xterm)
 set colored-stats on
