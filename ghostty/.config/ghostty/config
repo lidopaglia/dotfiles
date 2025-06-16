@@ -1,11 +1,13 @@
-# ░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-# ░█▀▀░█░█░█▀█░█▀▀░▀█▀░▀█▀░█░█
-# ░█░█░█▀█░█░█░▀▀█░░█░░░█░░░█░
-# ░▀▀▀░▀░▀░▀▀▀░▀▀▀░░▀░░░▀░░░▀░
-# ░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
+# ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+# ░█▀▀░█░█░█▀█░█▀▀░▀█▀░▀█▀░█░█░
+# ░█░█░█▀█░█░█░▀▀█░░█░░░█░░░█░░
+# ░▀▀▀░▀░▀░▀▀▀░▀▀▀░░▀░░░▀░░░▀░░
+# ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+#
 # https://ghostty.org/docs/config
-
+#
+# Get default values:
+#   ghostty +show-config --default --docs
 
 command=tmux
 
@@ -15,15 +17,17 @@ gtk-titlebar = false
 cursor-color = #f5c2e7
 
 background = black
+background-opacity = 0.90
 
 font-size = 16
 font-family = Ubuntu Mono
 font-family = Symbols Nerd Font Mono
 
 adjust-cell-height = 10%
-window-padding-balance = true
+window-decoration = false
 window-padding-x = 10
 window-padding-y = 5
+window-padding-balance = true
 
 copy-on-select = clipboard
 mouse-hide-while-typing = true
