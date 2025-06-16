@@ -98,7 +98,14 @@ if [ "$color_prompt" = yes ]; then
     PS1+="\[\e[1;34m\]\w "                # bold blue path
     PS1+="\[\e[0m\]\$(git_prefix)"        # reset 'on '
     PS1+="\[\e[35m\]\$(git_branch)"       # purple git branch
-    PS1+="\[\e[31m\]\$(git_symbols)\n"    # red git status
+    PS1+="\$( \
+      git_sym=\$(git_symbols); \
+      if [[ \"\$git_sym\" == \" ✓\" ]]; then \
+        echo \"${green}\$git_sym\"; \
+      else \
+        echo \"${red}\$git_sym\"; \
+      fi \
+    )${reset}\n"
     PS1+="\$(if [[ \$__last_status -eq 0 ]]; then \
       echo '${white}\$'; \
     else \
