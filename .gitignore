@@ -1,3 +1,4 @@
+.netrwhist
 nvim/.config/nvim/plugin/packer_compiled.lua
 **/node_modules
 **/.zdirs
