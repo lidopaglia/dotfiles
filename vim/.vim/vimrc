@@ -1,6 +1,50 @@
 "
-" -- A Comfy Vimrc ------------------------------------------------------------
+" -- Vimrc --------------------------------------------------------------------
 " 
+
+" -- Plugins ------------------------------------------------------------------
+
+" Install vim-plug if not found
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -sSfLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+
+" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
+
+call plug#begin()
+Plug 'airblade/vim-gitgutter'
+Plug 'dense-analysis/ale'
+Plug 'godlygeek/tabular'
+Plug 'jiangmiao/auto-pairs'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install()  }  }
+Plug 'junegunn/fzf.vim'
+Plug 'machakann/vim-highlightedyank'
+Plug 'preservim/vim-markdown'
+Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+call plug#end()
+
+" set the highlighted yank duration
+let g:highlightedyank_highlight_duration = 200
+
+" Disable markdown auto fold
+let g:vim_markdown_folding_disabled = 1
+
+" Highlight front matter
+let g:vim_markdown_toml_frontmatter = 1
+let g:vim_markdown_json_frontmatter = 1
+let g:vim_markdown_frontmatter = 1
+
+" Format strike-through text (wrapped in `~~`).
+let g:vim_markdown_strikethrough = 1
+
+" -- Options ------------------------------------------------------------------
+
 syntax on
 filetype plugin indent on
 
@@ -9,8 +53,6 @@ let maplocalleader=","
 
 set encoding=utf-8
 scriptencoding utf-8
-
-" -- Options ------------------------------------------------------------------
 
 set nocompatible
 set number relativenumber
@@ -21,6 +63,7 @@ set timeoutlen=400 updatetime=50
 set backspace=indent,eol,start
 set colorcolumn=80 signcolumn=yes
 set mouse=a
+set fillchars+=vert:\▏
 
 if !isdirectory($HOME."/.cache/vim")
     call mkdir($HOME."/.cache/vim", 'p', 0700)
@@ -38,7 +81,13 @@ if has('persistent_undo')
 endif
 set undolevels=100 nobackup nowritebackup noswapfile
 
-" -- Colorscheme & UI ---------------------------------------------------------
+" disable automatic commenting on newline
+if has('autocmd')
+    autocmd FileType * setlocal formatoptions-=cro
+endif
+
+
+" -- Colors -------------------------------------------------------------------
 
 if !empty(globpath(&rtp, "colors/habamax.vim"))
     colorscheme habamax
@@ -59,14 +108,19 @@ if (has("termguicolors"))
     highlight Comment cterm=italic gui=italic
 endif
 
+" -- ABBREVIATIONS ------------------------------------------------------------
 
-" nicer vsplit border
-set fillchars+=vert:\▏
+iab <expr> me@ "Author: Lido Paglia <lido@paglia.org>\n" .
+    \ "Date: " . strftime("%B %d, %Y") . "\n" .
+    \ "License: MIT"
 
-" disable automatic commenting on newline
-if has('autocmd')
-    autocmd FileType * setlocal formatoptions-=cro
-endif
+iab <expr> em@ "lido@paglia.org"
+
+iab <expr> ddate 'date: ' . strftime("%Y-%m-%d %H:%M:%S %z")
+
+inoreab <silent> --@ <Esc>o---<CR>title: <CR>date: <C-R>=strftime(
+    \ "%Y-%m-%d %H:%M:%S %z")<CR><CR>---<Esc>2k0f:a
+
 
 " -- KEYMAPS ------------------------------------------------------------------
 "
@@ -83,15 +137,33 @@ nnoremap <expr> k v:count ? 'k' : 'gk'
 vnoremap J :move '>+1<CR>gv=gv
 vnoremap K :move '<-2<CR>gv=gv
 
-" tab indents
+" keep centered
+nnoremap J mzJ`z
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" tab indent
 xnoremap <Tab> >gv
 xnoremap <S-Tab> <gv
 
-" paste over selected text without yanking it
-xnoremap <leader>p "_dP
-
 " yank to end of line
 nnoremap Y y$
+
+" yank line to system clipboard
+if executable('wl-copy')
+    xnoremap <silent> <leader>Y y:call system('wl-copy', @")<CR>
+elseif executable('xclip')
+    xnoremap <silent> <leader>Y
+        \ y:call system('xclip -selection clipboard', @")<CR>
+endif
+
+" clear search highlight on enter
+nnoremap <silent> <CR> :nohlsearch<CR>
+
+" toggle search highlight
+noremap <silent> <leader>h :set hlsearch! hlsearch?<CR>
 
 " buffer nav & close
 nnoremap <silent> <TAB> :bnext<CR>
@@ -101,19 +173,35 @@ nnoremap <silent> <leader>q :bd<CR>
 " Save file using sudo for files that require it
 cabbrev w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
+" Insert a markdown link around the word under cursor
+nnoremap <Leader>l i[](<C-r>+)<Esc>hhi
+xnoremap <Leader>l s[<C-r>"](<C-r>+)<Esc>
+
+" FZF
+nnoremap <silent> <leader>ff :FZF<cr>
+nnoremap <silent> <leader>fb :Buffers<cr>
+nnoremap <silent> <leader>fg :GFiles -m<cr>
+nnoremap <silent> <leader>fl :Lines<cr>
+
+" Toggle spell check
+map <F5> :setlocal spell!<cr>
+
+" Save file as sudo on files that require root permission
+cabbrev w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
 " -- AUTOCMDS -----------------------------------------------------------------
 
 " Create directories when saving files
-augroup AutoCreateDir
-  autocmd!
-  autocmd BufWritePre * call s:CreateDirIfNeeded()
-augroup END
+if has('autocmd')
+    augroup AutoCreateDir
+      autocmd!
+      autocmd BufWritePre * call s:CreateDirIfNeeded()
+    augroup END
 
-function! s:CreateDirIfNeeded()
-  let dir = expand('<afile>:p:h')
-  if !isdirectory(dir)
-    call mkdir(dir, 'p')
-  endif
-endfunction
-
+    function! s:CreateDirIfNeeded()
+      let dir = expand('<afile>:p:h')
+      if !isdirectory(dir)
+        call mkdir(dir, 'p')
+      endif
+    endfunction
+endif

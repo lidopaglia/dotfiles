@@ -6,3 +6,5 @@ nvim/.config/nvim/plugin/packer_compiled.lua
 **/.uuid
 state.pickle
 **/tmux/plugins/
+plugged
+plug.vim
