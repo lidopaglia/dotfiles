@@ -1,21 +1,77 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+# -- Functions ----------------------------------------------------------------
+
+# print lines over X columns (defaults to 80)
+# $ cat foo | over
+over() {
+	awk -v c="${1:-80}" 'length($0) > c {
+		printf("%4d %s\n", NR, $0);
+	}'
+}
+
+exists() {
+  for cmd in "$@"; do
+    if ! command -v "$cmd" >/dev/null 2>&1; then
+      echo "'$cmd' not found!"
+      return 1
+    fi
+  done
+}
+
+underline() {
+    local input="$*"
+    input=${input//$'\n'/}
+    local len=${#input}
+    printf '%s\n' "$input"
+    for ((i=0; i<len; i++)); do printf '-'; done
+}
+
+banner() {
+    local name=${HOSTNAME^^}
+    if exists toilet; then
+        printf "\n%s\n" "$(toilet -f pagga "$HOSTNAME")"
+    else
+        underline "Welcome to ${HOSTNAME^^}"
+    fi
+}
+
+welcome() {
+    local boot="$(uptime -s)"; local up="$(uptime -p)"
+    printf "\n$(banner)\n"
+    printf "\nOnline at %s (%s)\n" "$boot" "$up"
+}
+
+# Add an "alert" alias for long running commands.
+# sleep 10; alert
+alert() {
+  notify-send \
+    "$([ $? = 0 ] && echo "command complete" || echo "command error")" \
+    "$(fc -l | tail -n1 | awk '{$1="";split($0,a,";");print substr(a[1],2)}')"
+}
+
+# -- $PATH --------------------------------------------------------------------
 
 lspath() {
-  pos=1
+  local pos=1
   for p in $(echo "$PATH" | tr ':' '\n'); do
     printf '%02d  %s\n' "$pos" "$p"
     ((pos++))
   done
 }
 
-banner() {
-  # clear;
-  printf "\n%s" "$(toilet -f pagga "$HOSTNAME")" | dotacat
-  uptime -p
+# -- Dates --------------------------------------------------------------------
+
+# Convert epoch to human readable (print current date if no args)
+epoch() {
+	local num=${1:--1}
+	printf '%(%B %d, %Y %-I:%M:%S %p %Z)T\n' "$num"
 }
 
+# -- Flatpak ------------------------------------------------------------------
+
+# selectively remove flatpaks with fzf
 fpr() {
-  # list and remove flatpak
   flatpak list --app --columns=application,name |
     awk '{print $1 " ("substr($0, index($0, $2))")"}' |
     fzf |
@@ -23,8 +79,8 @@ fpr() {
     xargs -r flatpak uninstall --noninteractive
 }
 
+# search for and install flatpaks with fzf
 fps() {
-  # search for and install flatpak
   flatpak search "$1" --columns=application,name |
     awk '{print $1 " ("substr($0, index($0, $2))")"}' |
     fzf |
@@ -32,22 +88,54 @@ fps() {
     xargs -r flatpak install --noninteractive
 }
 
+# -- Git ----------------------------------------------------------------------
+
 # git show log - git commit browser
 # https://gist.github.com/junegunn/f4fca918e937e6bf5bad
 gsl() {
   git log --graph --color=always \
     --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
     fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
-      --bind "ctrl-m:execute:
-                (grep -o '[a-f0-9]\{7\}' | head -1 |
-                xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
-                {}
+    --bind "ctrl-m:execute:
+            (grep -o '[a-f0-9]\{7\}' | head -1 |
+            xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
+            {}
 FZF-EOF"
 }
 
+# Open the current path or file in GitHub
+gho() {
+	local file=$1
+	local remote=${2:-origin}
+
+	# get the git root dir, branch, and remote URL
+	local gr=$(git rev-parse --show-toplevel)
+	local branch=$(git rev-parse --abbrev-ref HEAD)
+	local url=$(git config --get "remote.$remote.url")
+
+	[[ -n $gr && -n $branch && -n $remote ]] || return 1
+
+	# construct the path
+	local path=${PWD/#$gr/}
+	[[ -n $file ]] && path+=/$file
+
+	# extract the username and repo name
+	local a
+	IFS=:/ read -a a <<< "$url"
+	local len=${#a[@]}
+	local user=${a[len-2]}
+	local repo=${a[len-1]%.git}
+
+	url="https://github.com/$user/$repo/tree/$branch$path"
+	echo "$url"
+	open "$url" >/dev/null 2>&1
+}
+
+# -- Misc -----------------------------------------------------------------------
+
 # find-&-edit
 fe() {
-  check_progs fd fzf-tmux || return 1
+  exists fd fzf-tmux || return 1
   IFS=$'\n'
   files=$(fd -H . | fzf-tmux --query="$1" --multi --select-1 --exit-0)
   [ -n "$files" ] && ${EDITOR:-nvim} "${files[@]}"
@@ -163,19 +251,6 @@ which-term() {
 #    ls ~/.config/base16-shell/scripts/ | grep -v light
 #}
 
-# colorize man pages
-function man() {
-  env \
-    LESS_TERMCAP_mb="$(printf "\e[1;31m")" \
-    LESS_TERMCAP_md="$(printf "\e[1;31m")" \
-    LESS_TERMCAP_me="$(printf "\e[0m")" \
-    LESS_TERMCAP_se="$(printf "\e[0m")" \
-    LESS_TERMCAP_so="$(printf "\e[1;44;33m")" \
-    LESS_TERMCAP_ue="$(printf "\e[0m")" \
-    LESS_TERMCAP_us="$(printf "\e[1;32m")" \
-    man "$@"
-}
-
 # ----------------------------------------------------
 # Find and Kill
 # lets you do a quick search of your running processes
@@ -201,15 +276,6 @@ find-kill() {
     break
   done
   unset IFS
-}
-
-check_progs() {
-  for program in "$@"; do
-    if ! command -v "$program" &>/dev/null; then
-      echo "ERROR: '$program' is not installed."
-      return 1
-    fi
-  done
 }
 
 # The version.bind TXT response is supported by a handful of common DNS
@@ -278,19 +344,6 @@ plist() {
   dpkg -l |
     awk '/^ii/ {a=$2;b=$5; for(i=6;i<=NF;i++){b=b" "$i};print a "\t" b}' |
     column -ts $'\t' -N NAME,DESCRIPTION
-}
-
-# Add an "alert" alias for long running commands.
-# sleep 10; alert
-alert() {
-  notify-send \
-    "$([ $? = 0 ] && echo "command complete" || echo "command error")" \
-    "$(fc -l | tail -n1 | awk '{$1="";split($0,a,";");print substr(a[1],2)}')"
-}
-
-clear-ls-all() {
-  clear
-  eza -al
 }
 
 clear-tree2() {

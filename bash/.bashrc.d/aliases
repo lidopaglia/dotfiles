@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Use neovim if present
-[ -x "$(command -v nvim)" ] && alias vi='nvim' vim='nvim' vimdiff='nvim -d'
+#[ -x "$(command -v nvim)" ] && alias vi='nvim' vim='nvim' vimdiff='nvim -d'
 
 alias g='git'
 alias v='vim'
@@ -45,11 +45,6 @@ alias diff='diff --color=auto'
 alias ccat='highlight --out-format=ansi'
 alias cava="TERM=rxvt-unicode-256color cava"
 alias lsblk='lsblk -o name,fstype,size,type,uuid'
-
-# podman
-alias pps='podman ps'
-alias pils='podman images --format "table {{.Repository}}:{{.Tag}}\t{{.Size}}\t{{.ID}}"'
-alias pcls='podman container ls --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.ID}}"' 
 
 # docker
 alias dstop='docker stop $(docker ps -q)'

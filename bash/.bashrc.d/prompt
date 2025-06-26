@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# -- Git Prompt ---------------------------------------------------------------
+
 git_prefix() {
   git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo -n "on "
 }
@@ -7,11 +9,6 @@ git_prefix() {
 git_branch() {
   git branch 2> /dev/null | \
     sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'
-
-  # Get branch name
-  #branch=$(git symbolic-ref --short HEAD 2>/dev/null || \
-  #    git describe --tags --exact-match 2>/dev/null || echo 'DETACHED')
-  #printf " %s" "$branch"
 }
 
 git_symbols() {
@@ -41,13 +38,6 @@ git_symbols() {
   # Stashed changes
   git rev-parse --verify refs/stash &>/dev/null && stashed='$'
 
-  #local stat insertions_raw deletions_raw
-  #stat=$(git diff --shortstat)
-  #insertions_raw=$(grep -o '[0-9]\+ insertions\?' <<< "$stat" | grep -o '[0-9]\+')
-  #deletions_raw=$(grep -o '[0-9]\+ deletions\?' <<< "$stat" | grep -o '[0-9]\+')
-  #[[ $insertions_raw ]] && insertions=+$insertions_raw
-  #[[ $deletions_raw ]] && deletions=-$deletions_raw
-
   local status_parts=
   [[ $ahead -gt 0 ]] && status_parts+="↑"
   [[ $behind -gt 0 ]] && status_parts+="↓"
@@ -56,8 +46,6 @@ git_symbols() {
   [[ $changed ]] && status_parts+="$changed"
   [[ $untracked ]] && status_parts+="$untracked"
   [[ $stashed ]] && status_parts+="$stashed"
-  # [[ $insertions ]] && status_parts+=" $insertions"
-  # [[ $deletions ]] && status_parts+=" $deletions"
 
   if [[ -n $status_parts ]]; then
     printf " [%s]" "${status_parts}"

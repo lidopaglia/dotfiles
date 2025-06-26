@@ -5,22 +5,27 @@
 # Executed by bash(1) for interactive non-login shells.
 # See: /usr/share/doc/bash/examples/startup-files
 
-# If not running interactively, don't do anything
+# -- If not running interactively, don't do anything --------------------------
+
 case $- in
     *i*) ;;
     *) return;;
 esac
 
-# Source global definitions
+# -- Source configs -----------------------------------------------------------
+
 if [ -f /etc/bashrc ]; then
     source /etc/bashrc
 fi
 
-# -- Functions ----------------------------------------------------------------
-
-exists() {
-    command -v "$1" >/dev/null 2>&1
-}
+if [ -d ~/.bashrc.d ]; then
+  for rc in ~/.bashrc.d/*; do
+    if [ -f "$rc" ]; then
+       source "$rc"
+    fi
+  done
+fi
+unset rc
 
 # -- XDG Base Directory Definitions -------------------------------------------
 
@@ -62,16 +67,13 @@ fi
 #
 # https://www.gnu.org/software/bash/manual/html_node/The-Shopt-Builtin.html
 
-shopt -s cmdhist      # save multi-line commands in history as single line
-shopt -s histappend   # append history, don't overwrite it
-shopt -s autocd       # change to named directory automatically
-shopt -s direxpand    # expand dir names on completion
-
-# Checks the window size after each external (non-builtin) command and, if
-# necessary, updates the values of LINES and COLUMNS.
-# Enabled by default as of Bash 5.0 beta 2.
-# https://wiki.bash-hackers.org/scripting/bashchanges
-shopt -s checkwinsize
+shopt -s autocd        # change to named directory automatically
+shopt -s cdspell       # correct misspelled cd dir names
+shopt -s checkwinsize  # default as of Bash 5.0 beta 2
+shopt -s cmdhist       # save multi-line commands in history as single line
+shopt -s direxpand     # expand dir names on completion
+shopt -s dirspell      # correct misspelled dir names
+shopt -s histappend    # append history, don't overwrite it
 
 # disable XON/XOFF flow control
 stty -ixon
@@ -83,31 +85,56 @@ fi
 
 # -- Exports ------------------------------------------------------------------
 
-export HISTFILE="$XDG_STATE_HOME/bash/history"
-export HISTSIZE=100000
-export HISTFILESIZE=2000000
+export EDITOR="vim"
 export HISTCONTROL=ignoreboth  # exclude dupes or lines starting with space
+export HISTFILE="$XDG_STATE_HOME/bash/history"
+export HISTFILESIZE=5000
+export HISTSIZE=5000
 export HISTTIMEFORMAT="%F %T "
+export LESSHISTFILE="-"
+export PAGER="less"
+export MANWIDTH=80
+export TZ="America/New_York"
+export VISUAL="vim"
 
 # systemctl uses less with 'FRSXMK' parameters as default.
 # Removing 's' to disable folding long lines.
 export SYSTEMD_LESS="FRXMK"
 
-export EDITOR="vim"
-export MANWIDTH=80
-export LESSHISTFILE="-"
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:'\
 'caret=01;32:locus=01:quote=01'
 
-# -- Source rc files (aliases, functions, completions, etc) -------------------
+# -- Enable starship ----------------------------------------------------------
 
-if [ -d ~/.bashrc.d ]; then
-  for rc in ~/.bashrc.d/*; do
-    if [ -f "$rc" ]; then
-       source "$rc"
-    fi
-  done
+if exists starship; then
+    eval "$(starship init bash)"
 fi
-unset rc
+
+# -- Enable zoxide ------------------------------------------------------------
+
+if exists zoxide; then
+    eval "$(zoxide init bash)" && alias cd='z'
+fi
+
+# -- Enable linux brew --------------------------------------------------------
+
+if [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
+
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+    export HOMEBREW_NO_ANALYTICS=1
+    export HOMEBREW_NO_ENV_HINTS='true'
+    export HOMEBREW_PREFIX="$(brew --prefix)"
+
+    # also enable brew completions
+    # https://docs.brew.sh/Shell-Completion
+    if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
+        source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
+    else
+        for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*; do
+            [[ -r "${COMPLETION}" ]] && source "${COMPLETION}"
+        done
+    fi
+fi
 
 # -- End ----------------------------------------------------------------------
