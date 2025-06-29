@@ -79,6 +79,12 @@ alias jrnl='journalctl -p 3 -xb'
 # list users
 alias userls="cut -d: -f1 /etc/passwd"
 
+# grep emoji
+alias ge="rg '[\p{Emoji}--\p{Ascii}]'"
+
+# highlight
+alias hl='rg --passthru'
+
 # list microcode vulns
 # http://kroah.com/log/blog/2018/01/19/meltdown-status-2/
 alias ucode='grep . /sys/devices/system/cpu/vulnerabilities/*'
