@@ -8,9 +8,12 @@ alias v='vim'
 alias j='just'
 alias d='docker'
 alias p='podman'
+alias k='kubectl'
+alias a='ansible'
 alias fp='flatpak'
 alias ff='fastfetch'
 alias lg='lazygit'
+alias tf='terraform'
 
 alias open='xdg-open' xo='open' o='open'
 
@@ -45,6 +48,11 @@ alias diff='diff --color=auto'
 alias ccat='highlight --out-format=ansi'
 alias cava="TERM=rxvt-unicode-256color cava"
 alias lsblk='lsblk -o name,fstype,size,type,uuid'
+
+# ansible
+alias ap='ansible-playbook'
+alias av='ansible-vault'
+alias ag='ansible-galaxy'
 
 # docker
 alias dstop='docker stop $(docker ps -q)'
