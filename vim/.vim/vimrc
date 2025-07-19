@@ -224,7 +224,7 @@ let g:fzf_colors = {
 \ 'header':  ['fg', 'Comment'] }
 
 " Launch fzf 
-nnoremap <silent> <leader>ff :Files -m<CR>
+nnoremap <silent> <leader>ff :Files<CR>
 nnoremap <silent> <leader>fg :GFiles -m<CR>
 nnoremap <silent> <Leader>fb :Buffers<CR>
 nnoremap <silent> <Leader>fl :Lines<CR>
