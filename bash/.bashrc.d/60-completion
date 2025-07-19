@@ -31,5 +31,6 @@ fi
 
 if exists just; then
     eval "$(just --completions bash)"
+    complete -F _just j # also complete for alias 'j'
 fi
 # -- End ----------------------------------------------------------------------
