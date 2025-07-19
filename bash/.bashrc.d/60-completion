@@ -29,4 +29,7 @@ if [ -f ~/.config/fzf/fzf.bash ]; then
         --exclude .git'
 fi
 
+if exists just; then
+    eval "$(just --completions bash)"
+fi
 # -- End ----------------------------------------------------------------------
