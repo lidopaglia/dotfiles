@@ -28,7 +28,6 @@ underline() {
 }
 
 banner() {
-    local name=${HOSTNAME^^}
     if exists toilet; then
         printf "\n%s\n" "$(toilet -f pagga "$HOSTNAME")"
     else
