@@ -36,8 +36,9 @@ banner() {
 }
 
 welcome() {
-    local boot="$(uptime -s)"; local up="$(uptime -p)"
-    printf "\n$(banner)\n"
+    local boot up
+    boot="$(uptime -s)"; up="$(uptime -p)"
+    printf "\n$%s\n" "$(banner)"
     printf "\nOnline at %s (%s)\n" "$boot" "$up"
 }
 
@@ -104,13 +105,15 @@ FZF-EOF"
 
 # Open the current path or file in GitHub
 gho() {
-	local file=$1
-	local remote=${2:-origin}
+    local file remote
+	file=$1
+	remote=${2:-origin}
 
 	# get the git root dir, branch, and remote URL
-	local gr=$(git rev-parse --show-toplevel)
-	local branch=$(git rev-parse --abbrev-ref HEAD)
-	local url=$(git config --get "remote.$remote.url")
+    local gr branch url
+	gr=$(git rev-parse --show-toplevel)
+	branch=$(git rev-parse --abbrev-ref HEAD)
+	url=$(git config --get "remote.$remote.url")
 
 	[[ -n $gr && -n $branch && -n $remote ]] || return 1
 
