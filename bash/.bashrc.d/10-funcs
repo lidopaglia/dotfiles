@@ -105,9 +105,8 @@ FZF-EOF"
 
 # Open the current path or file in GitHub
 gho() {
-    local file remote
-	file=$1
-	remote=${2:-origin}
+	local file=$1
+	local remote=${2:-origin}
 
 	# get the git root dir, branch, and remote URL
     local gr branch url
@@ -123,14 +122,14 @@ gho() {
 
 	# extract the username and repo name
 	local a
-	IFS=:/ read -a a <<< "$url"
+	IFS=:/ read -r -a a <<< "$url"
 	local len=${#a[@]}
 	local user=${a[len-2]}
 	local repo=${a[len-1]%.git}
 
 	url="https://github.com/$user/$repo/tree/$branch$path"
-	echo "$url"
-	open "$url" >/dev/null 2>&1
+
+	xdg-open "$url" > /dev/null 2>&1
 }
 
 # -- Misc -----------------------------------------------------------------------
