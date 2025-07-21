@@ -13,7 +13,6 @@ over() {
 exists() {
   for cmd in "$@"; do
     if ! command -v "$cmd" >/dev/null 2>&1; then
-      echo "'$cmd' not found!"
       return 1
     fi
   done
@@ -48,6 +47,32 @@ alert() {
   notify-send \
     "$([ $? = 0 ] && echo "command complete" || echo "command error")" \
     "$(fc -l | tail -n1 | awk '{$1="";split($0,a,";");print substr(a[1],2)}')"
+}
+
+checkhealth() {
+
+  # Tools to check
+  local tools=( fzf rg zoxide )
+  local state message
+
+  echo
+  echo "=== BASH Healthcheck ==="
+  echo
+
+  for tool in "${tools[@]}"; do
+    if command -v "$tool" >/dev/null 2>&1; then
+      message=$(command -v "$tool")
+      state="✅"
+    else
+        message="$(printf "'%s' is missing!" "$tool")"
+        state="❌"
+    fi
+
+    printf "[%s]  %-10s %s\n" "$state" "$tool" "$message"
+
+  done
+
+
 }
 
 # -- $PATH --------------------------------------------------------------------
