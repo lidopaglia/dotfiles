@@ -26,22 +26,6 @@ return {
 
     require("telescope").setup({
       defaults = {
-        -- path_display = { "smart" },
-        -- sorting_strategy = "descending",
-        -- layout_strategy = "flex",
-        -- layout_config = {
-        --   flex = {
-        --     flip_columns = 140,
-        --   },
-        --   vertical = {
-        --     preview_cutoff = 40,
-        --     prompt_position = "bottom",
-        --   },
-        --   horizontal = {
-        --     width = 0.9,
-        --     height = 0.8,
-        --   },
-        -- },
         mappings = {
           i = {
             ["<esc>"] = actions.close,
@@ -145,10 +129,6 @@ return {
     end, { desc = "[F]ind [/] in Open Files" })
 
     -- Shortcut for searching your Neovim configuration files
-    vim.keymap.set("n", "<leader>fn", function()
-      builtin.find_files({ cwd = vim.fn.stdpath("config") })
-    end, { desc = "[F]ind [N]eovim files" })
-
     vim.keymap.set("n", "<leader>ec", function()
       builtin.find_files({ cwd = vim.fn.stdpath("config"), file_ignore_patterns = { ".git/" }, hidden = true })
     end, { desc = "[E]ditor [C]onfig" })

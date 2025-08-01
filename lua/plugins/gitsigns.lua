@@ -1,10 +1,6 @@
--- ░█▀▀░▀█▀░▀█▀░█▀▀░▀█▀░█▀▀░█▀█░█▀▀
--- ░█░█░░█░░░█░░▀▀█░░█░░█░█░█░█░▀▀█ -- `:help gitsigns.txt`
--- ░▀▀▀░▀▀▀░░▀░░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀▀ -- https://github.com/lewis6991/gitsigns.nvim
-
+-- https://github.com/lewis6991/gitsigns.nvim
 return {
   "lewis6991/gitsigns.nvim",
-  enabled = true,
   event = { "BufReadPre", "BufNewFile" },
   opts = {
     signs = {
@@ -80,9 +76,9 @@ return {
         map("n", "<leader>hq", gitsigns.setqflist)
 
         -- Toggles
-        map("n", "<leader>tb", gitsigns.toggle_current_line_blame)
-        map("n", "<leader>td", gitsigns.toggle_deleted)
-        map("n", "<leader>tw", gitsigns.toggle_word_diff)
+        map("n", "<leader>tgb", gitsigns.toggle_current_line_blame)
+        map("n", "<leader>tgd", gitsigns.toggle_deleted)
+        map("n", "<leader>tgw", gitsigns.toggle_word_diff)
 
         -- Text object
         map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
