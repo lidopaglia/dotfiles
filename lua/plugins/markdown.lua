@@ -22,22 +22,21 @@ return {
   {
     -- https://github.com/MeanderingProgrammer/render-markdown.nvim
     "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown" },
     opts = {
-      code = {
-        conceal = false,
-        sign = false,
-      },
+      code = { sign = false },
       heading = {
         -- enabled = true,
         -- border = true,
         -- border_virtual = true,
         -- width = { "full", "full", "block" },
-        -- left_pad = 1,
-        -- right_pad = 3,
+        left_pad = 1,
+        right_pad = 3,
         -- render_modes = true,
-        -- sign = false,
-        -- icons = { "󰎥  ", "󰎨  ", "󰎫  ", "󰎲  ", "󰎯  ", "󰎴  " },
-        -- position = "inline",
+        sign = false,
+        icons = { "󰎥  ", "󰎨  ", "󰎫  ", "󰎲  ", "󰎯  ", "󰎴  " },
+        -- icons = { "1 ", "2 ", "3 ", "4 ", "5 ", "6 " },
+        position = "inline",
       },
       html = {
         -- Turn on / off all HTML rendering
@@ -48,5 +47,8 @@ return {
         },
       },
     },
+    -- config = function()
+    --
+    -- end,
   },
 }
