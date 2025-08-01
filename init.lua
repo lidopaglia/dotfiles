@@ -6,6 +6,7 @@ vim.g.maplocalleader = " "
 vim.g.have_nerd_font = true
 
 vim.opt.termguicolors = true
+vim.cmd.colorscheme("habamax")
 
 -- make comments italic
 vim.api.nvim_set_hl(0, "Comment", { italic = true })
