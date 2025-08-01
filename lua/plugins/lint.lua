@@ -25,7 +25,8 @@ return {
       typescriptreact = { "eslint_d" },
 
       -- Lua
-      lua = { "luacheck" },
+      -- luacheck is warning on undefined 'vim' global
+      -- lua = { "luacheck" },
 
       -- Markdown
       markdown = { "markdownlint" },
