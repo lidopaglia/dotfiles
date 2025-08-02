@@ -64,6 +64,9 @@ return {
           "vimdoc",
           "yaml",
         },
+        markdown = {
+          enable = true,
+        },
         incremental_selection = {
           enable = true,
           keymaps = {
