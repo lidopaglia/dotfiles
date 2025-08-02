@@ -1,16 +1,16 @@
 return {
   -- Command and arguments to start the server.
-  cmd = { 'lua-language-server' },
+  cmd = { "lua-language-server" },
 
   -- Filetypes to automatically attach to.
-  filetypes = { 'lua' },
+  filetypes = { "lua" },
 
   -- Sets the "root directory" to the parent directory of the file in the
   -- current buffer that contains either a ".luarc.json" or a
   -- ".luarc.jsonc" file. Files that share a root directory will reuse
   -- the connection to the same LSP server.
   -- Nested lists indicate equal priority, see |vim.lsp.Config|.
-  root_markers = { { '.luarc.json', '.luarc.jsonc' }, '.git' },
+  root_markers = { ".luarc.json", ".luarc.jsonc", ".git" },
 
   -- Settings to send the server.
   -- For example the schema for lua-language-server:
@@ -18,12 +18,12 @@ return {
   settings = {
     Lua = {
       runtime = {
-        version = 'LuaJIT',
+        version = "LuaJIT",
       },
       diagnostics = {
         -- Get the language server to recognize the `vim` global
-        globals = { 'vim' },
+        globals = { "vim" },
       },
-    }
-  }
+    },
+  },
 }
