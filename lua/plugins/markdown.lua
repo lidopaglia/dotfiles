@@ -52,7 +52,7 @@ return {
     "MeanderingProgrammer/render-markdown.nvim",
     ft = { "markdown" },
     opts = {
-      enabled = true,
+      enabled = false,
       code = { sign = false },
       heading = {
         -- enabled = true,
