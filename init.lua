@@ -8,10 +8,7 @@ vim.g.have_nerd_font = true
 vim.opt.termguicolors = true
 vim.cmd.colorscheme("habamax")
 
--- make comments italic
-vim.api.nvim_set_hl(0, "Comment", { italic = true })
-
--- Make comments a dim gray instead of white
+-- Make comments a dim gray instead of white and italic
 vim.api.nvim_set_hl(0, "Comment", { fg = "#666666", italic = true })
 
 -- make backgrounds transparent
