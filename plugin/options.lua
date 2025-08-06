@@ -9,6 +9,7 @@ vim.opt.relativenumber = true
 vim.opt.mouse = "a"
 vim.opt.errorbells = false
 vim.opt.title = true
+vim.opt.winborder = "rounded"
 
 -- columns
 vim.opt.colorcolumn = "80"
@@ -53,4 +54,3 @@ vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 -- splits
 vim.opt.splitbelow = true
 vim.opt.splitright = true
-
