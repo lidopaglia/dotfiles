@@ -1,5 +1,5 @@
+-- https://github.com/stevearc/conform.nvim
 return {
-  -- https://github.com/stevearc/conform.nvim
   "stevearc/conform.nvim",
   event = { "BufWritePre" },
   cmd = { "ConformInfo" },
@@ -19,7 +19,6 @@ return {
   },
 
   opts = {
-
     formatters_by_ft = {
       sh = { "shfmt" },
       lua = { "stylua" },
@@ -30,17 +29,9 @@ return {
       markdown = { "prettier" },
     },
 
-    default_format_opts = {
-      lsp_format = "fallback",
-    },
-
     format_on_save = {
       timeout_ms = 500,
-      lsp_format = "fallback",
+      lsp_format = false,
     },
   },
-
-  init = function()
-    vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
-  end,
 }
