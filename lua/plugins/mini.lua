@@ -10,7 +10,10 @@ return {
 
     -- https://github.com/echasnovski/mini.indentscope
     require("mini.indentscope").setup({
-      draw = { delay = 100 },
+      draw = {
+        animation = require("mini.indentscope").gen_animation.none(),
+        delay = 50,
+      },
       symbol = "│",
       options = { try_as_border = true },
     })
