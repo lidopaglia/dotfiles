@@ -65,6 +65,9 @@ set colorcolumn=80 signcolumn=yes
 set mouse=a
 set fillchars+=vert:\▏
 
+set spelllang=en
+set spellfile=~/.vim/spell/en.utf-8.add
+
 if !isdirectory($HOME."/.cache/vim")
     call mkdir($HOME."/.cache/vim", 'p', 0700)
 endif
