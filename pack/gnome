@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+mod=Alt
+workspaces=9
+terminal="$(command -v ghostty)"
+
+# config workspaces
+gsettings set "org.gnome.shell.app-switcher" "current-workspace-only" "true"
+gsettings set "org.gnome.desktop.wm.preferences" "num-workspaces" "$workspaces"
+gsettings set "org.gnome.mutter" "dynamic-workspaces" "false"
+gsettings set "org.gnome.mutter" "edge-tiling" "false"
+gsettings set "org.gnome.mutter" "workspaces-only-on-primary" "true"
+
+# workspace keybinds
+for i in $(seq 1 "$workspaces"); do
+    gsettings set "org.gnome.desktop.wm.keybindings" "switch-to-workspace-$i" "['<$mod>$i']"
+    gsettings set "org.gnome.desktop.wm.keybindings" "move-to-workspace-$i" "['<Shift><$mod>$i']"
+done
+
+# close windows with `mod+shift+c`
+gsettings set "org.gnome.desktop.wm.keybindings" "close" "['<Shift><$mod>c']"
+
+# show the overview with `mod+space`
+gsettings set "org.gnome.shell.keybindings" "toggle-overview" "['<$mod>space']"
+
+# launch terminal with `mod+return`
+gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name "Terminal"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command "$terminal"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding "<$mod>Return"
+
+if grep -qi fedora /etc/os-release; then
+    # disable the built-in fedora background logo
+    gnome-extensions disable background-logo@fedorahosted.org
+fi
