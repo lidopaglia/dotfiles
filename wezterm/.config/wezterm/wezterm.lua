@@ -12,20 +12,20 @@ local wezterm = require("wezterm")
 function scheme_for_appearance(appearance)
   -- Available Colorschemes:
   -- https://wezterm.org/colorschemes/index.html
-  if appearance:find 'Dark' then
+  if appearance:find("Dark") then
     -- return 'Builtin Tango Dark'
     -- return 'Catppuccin Mocha'
     -- return 'Embers (dark) (terminal.sexy)'
     -- return 'GitHub Dark'
     -- return 'GruvboxDark'
-    return 'Classic Dark (base16)'
+    return "Classic Dark (base16)"
   else
     -- return 'Builtin Tango Light'
     -- return 'Catppuccin Latte'
     -- return 'Embers (light) (terminal.sexy)'
     -- return 'Github'
     -- return 'GruvboxLight'
-    return 'Classic Light (base16)'
+    return "Classic Light (base16)"
   end
 end
 
@@ -34,11 +34,11 @@ return {
   -- https://wezterm.org/config/appearance.html#color-scheme
   color_scheme = scheme_for_appearance(wezterm.gui.get_appearance()),
 
-  -- colors = { background = "black", },
+  colors = { cursor_bg = "#f5c2e7" },
 
   font = wezterm.font_with_fallback({
     "Ubuntu Mono",
-    "Symbols Nerd Font Mono"
+    "Symbols Nerd Font Mono",
   }),
 
   font_size = 18,
@@ -57,10 +57,4 @@ return {
     top = 10,
     bottom = 10,
   },
-
 }
-
-
-
-
-
