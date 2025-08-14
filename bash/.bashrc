@@ -8,8 +8,8 @@
 # -- If not running interactively, don't do anything --------------------------
 
 case $- in
-    *i*) ;;
-    *) return;;
+*i*) ;;
+*) return ;;
 esac
 
 # -- Source configs -----------------------------------------------------------
@@ -19,11 +19,11 @@ if [ -f /etc/bashrc ]; then
 fi
 
 if [ -d ~/.bashrc.d ]; then
-  for rc in ~/.bashrc.d/*; do
-    if [ -f "$rc" ]; then
-       source "$rc"
-    fi
-  done
+    for rc in ~/.bashrc.d/*; do
+        if [ -f "$rc" ]; then
+            source "$rc"
+        fi
+    done
 fi
 unset rc
 
@@ -51,14 +51,14 @@ export XDG_BIN_HOME="$HOME/.local/bin"
 
 # Create XDG Directories
 mkdir -p "$XDG_BIN_HOME" \
-         "$XDG_CACHE_HOME" \
-         "$XDG_CONFIG_HOME" \
-         "$XDG_DATA_HOME" \
-         "$XDG_STATE_HOME"
+    "$XDG_CACHE_HOME" \
+    "$XDG_CONFIG_HOME" \
+    "$XDG_DATA_HOME" \
+    "$XDG_STATE_HOME"
 
 # -- Update $PATH -------------------------------------------------------------
 
-if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
+if ! [[ "$PATH" =~ $HOME/.local/bin:$HOME/bin: ]]; then
     PATH="$HOME/.local/bin:$HOME/bin:$PATH"
     export PATH
 fi
@@ -67,13 +67,13 @@ fi
 #
 # https://www.gnu.org/software/bash/manual/html_node/The-Shopt-Builtin.html
 
-shopt -s autocd        # change to named directory automatically
-shopt -s cdspell       # correct misspelled cd dir names
-shopt -s checkwinsize  # default as of Bash 5.0 beta 2
-shopt -s cmdhist       # save multi-line commands in history as single line
-shopt -s direxpand     # expand dir names on completion
-shopt -s dirspell      # correct misspelled dir names
-shopt -s histappend    # append history, don't overwrite it
+shopt -s autocd       # change to named directory automatically
+shopt -s cdspell      # correct misspelled cd dir names
+shopt -s checkwinsize # default as of Bash 5.0 beta 2
+shopt -s cmdhist      # save multi-line commands in history as single line
+shopt -s direxpand    # expand dir names on completion
+shopt -s dirspell     # correct misspelled dir names
+shopt -s histappend   # append history, don't overwrite it
 
 # disable XON/XOFF flow control
 stty -ixon
@@ -86,7 +86,7 @@ fi
 # -- Exports ------------------------------------------------------------------
 
 export EDITOR="vim"
-export HISTCONTROL=ignoreboth  # exclude dupes or lines starting with space
+export HISTCONTROL=ignoreboth # exclude dupes or lines starting with space
 export HISTFILE="$XDG_STATE_HOME/bash/history"
 export HISTFILESIZE=5000
 export HISTSIZE=5000
@@ -102,13 +102,7 @@ export VISUAL="vim"
 export SYSTEMD_LESS="FRXMK"
 
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:'\
-'caret=01;32:locus=01:quote=01'
-
-# -- Enable starship ----------------------------------------------------------
-
-if exists starship; then
-    eval "$(starship init bash)"
-fi
+    'caret=01;32:locus=01:quote=01'
 
 # -- Enable zoxide ------------------------------------------------------------
 
@@ -116,7 +110,7 @@ if exists zoxide; then
     eval "$(zoxide init bash)" && alias cd='z'
 fi
 
-# -- Enable linux brew --------------------------------------------------------
+# -- Enable brew --------------------------------------------------------------
 
 if [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
 

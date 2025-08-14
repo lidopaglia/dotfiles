@@ -28,17 +28,17 @@ alias dn=dailynote
 # print lines over X columns (defaults to 80)
 # $ cat foo | over
 over() {
-	awk -v c="${1:-80}" 'length($0) > c {
-		printf("%4d %s\n", NR, $0);
-	}'
+    awk -v c="${1:-80}" 'length($0) > c {
+        printf("%4d %s\n", NR, $0);
+    }'
 }
 
 exists() {
-  for cmd in "$@"; do
-    if ! command -v "$cmd" >/dev/null 2>&1; then
-      return 1
-    fi
-  done
+    for cmd in "$@"; do
+        if ! command -v "$cmd" >/dev/null 2>&1; then
+            return 1
+        fi
+    done
 }
 
 underline() {
@@ -46,7 +46,7 @@ underline() {
     input=${input//$'\n'/}
     local len=${#input}
     printf '%s\n' "$input"
-    for ((i=0; i<len; i++)); do printf '-'; done
+    for ((i = 0; i < len; i++)); do printf '-'; done
 }
 
 banner() {
@@ -59,7 +59,8 @@ banner() {
 
 welcome() {
     local boot up
-    boot="$(uptime -s)"; up="$(uptime -p)"
+    boot="$(uptime -s)"
+    up="$(uptime -p)"
     printf "\n$%s\n" "$(banner)"
     printf "\nOnline at %s (%s)\n" "$boot" "$up"
 }
@@ -67,47 +68,47 @@ welcome() {
 # Add an "alert" alias for long running commands.
 # sleep 10; alert
 alert() {
-  notify-send \
-    "$([ $? = 0 ] && echo "command complete" || echo "command error")" \
-    "$(fc -l | tail -n1 | awk '{$1="";split($0,a,";");print substr(a[1],2)}')"
+    notify-send \
+        "$([ $? = 0 ] && echo "command complete" || echo "command error")" \
+        "$(fc -l | tail -n1 | awk '{$1="";split($0,a,";");print substr(a[1],2)}')"
 }
 
 # -- $PATH --------------------------------------------------------------------
 
 lspath() {
-  local pos=1
-  for p in $(echo "$PATH" | tr ':' '\n'); do
-    printf '%02d  %s\n' "$pos" "$p"
-    ((pos++))
-  done
+    local pos=1
+    for p in $(echo "$PATH" | tr ':' '\n'); do
+        printf '%02d  %s\n' "$pos" "$p"
+        ((pos++))
+    done
 }
 
 # -- Dates --------------------------------------------------------------------
 
 # Convert epoch to human readable (print current date if no args)
 epoch() {
-	local num=${1:--1}
-	printf '%(%B %d, %Y %-I:%M:%S %p %Z)T\n' "$num"
+    local num=${1:--1}
+    printf '%(%B %d, %Y %-I:%M:%S %p %Z)T\n' "$num"
 }
 
 # -- Flatpak ------------------------------------------------------------------
 
 # selectively remove flatpaks with fzf
 fpr() {
-  flatpak list --app --columns=application,name |
-    awk '{print $1 " ("substr($0, index($0, $2))")"}' |
-    fzf |
-    awk -F ' \\(|\\)' '{print $1}' |
-    xargs -r flatpak uninstall --noninteractive
+    flatpak list --app --columns=application,name |
+        awk '{print $1 " ("substr($0, index($0, $2))")"}' |
+        fzf |
+        awk -F ' \\(|\\)' '{print $1}' |
+        xargs -r flatpak uninstall --noninteractive
 }
 
 # search for and install flatpaks with fzf
 fps() {
-  flatpak search "$1" --columns=application,name |
-    awk '{print $1 " ("substr($0, index($0, $2))")"}' |
-    fzf |
-    awk -F ' \\(|\\)' '{print $1}' |
-    xargs -r flatpak install --noninteractive
+    flatpak search "$1" --columns=application,name |
+        awk '{print $1 " ("substr($0, index($0, $2))")"}' |
+        fzf |
+        awk -F ' \\(|\\)' '{print $1}' |
+        xargs -r flatpak install --noninteractive
 }
 
 # -- Git ----------------------------------------------------------------------
@@ -115,10 +116,10 @@ fps() {
 # git show log - git commit browser
 # https://gist.github.com/junegunn/f4fca918e937e6bf5bad
 gsl() {
-  git log --graph --color=always \
-    --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
-    fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
-    --bind "ctrl-m:execute:
+    git log --graph --color=always \
+        --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+        fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
+            --bind "ctrl-m:execute:
             (grep -o '[a-f0-9]\{7\}' | head -1 |
             xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
             {}
@@ -127,63 +128,63 @@ FZF-EOF"
 
 # Open the current path or file in GitHub
 gho() {
-	local file=$1
-	local remote=${2:-origin}
+    local file=$1
+    local remote=${2:-origin}
 
-	# get the git root dir, branch, and remote URL
+    # get the git root dir, branch, and remote URL
     local gr branch url
-	gr=$(git rev-parse --show-toplevel)
-	branch=$(git rev-parse --abbrev-ref HEAD)
-	url=$(git config --get "remote.$remote.url")
+    gr=$(git rev-parse --show-toplevel)
+    branch=$(git rev-parse --abbrev-ref HEAD)
+    url=$(git config --get "remote.$remote.url")
 
-	[[ -n $gr && -n $branch && -n $remote ]] || return 1
+    [[ -n $gr && -n $branch && -n $remote ]] || return 1
 
-	# construct the path
-	local path=${PWD/#$gr/}
-	[[ -n $file ]] && path+=/$file
+    # construct the path
+    local path=${PWD/#$gr/}
+    [[ -n $file ]] && path+=/$file
 
-	# extract the username and repo name
-	local a
-	IFS=:/ read -r -a a <<< "$url"
-	local len=${#a[@]}
-	local user=${a[len-2]}
-	local repo=${a[len-1]%.git}
+    # extract the username and repo name
+    local a
+    IFS=:/ read -r -a a <<<"$url"
+    local len=${#a[@]}
+    local user=${a[len - 2]}
+    local repo=${a[len - 1]%.git}
 
-	url="https://github.com/$user/$repo/tree/$branch$path"
+    url="https://github.com/$user/$repo/tree/$branch$path"
 
-	xdg-open "$url" > /dev/null 2>&1
+    xdg-open "$url" >/dev/null 2>&1
 }
 
 # -- Misc -----------------------------------------------------------------------
 
 # find-&-edit
 fe() {
-  exists fd fzf-tmux || return 1
-  IFS=$'\n'
-  files=$(fd -H . | fzf-tmux --query="$1" --multi --select-1 --exit-0)
-  [ -n "$files" ] && ${EDITOR:-nvim} "${files[@]}"
+    exists fd fzf-tmux || return 1
+    IFS=$'\n'
+    files=$(fd -H . | fzf-tmux --query="$1" --multi --select-1 --exit-0)
+    [ -n "$files" ] && ${EDITOR:-nvim} "${files[@]}"
 }
 
 # simple calculator
 # https://github.com/jessfraz/dotfiles
 calc() {
-  local result=""
-  result="$(printf "scale=10;%s\\n" "$*" | bc --mathlib | tr -d '\\\n')"
-  #						└─ default (when `--mathlib` is used) is 20
+    local result=""
+    result="$(printf "scale=10;%s\\n" "$*" | bc --mathlib | tr -d '\\\n')"
+    #                       └─ default (when `--mathlib` is used) is 20
 
-  if [[ "$result" == *.* ]]; then
-    # improve the output for decimal numbers
-    # add "0" for cases like ".5"
-    # add "0" for cases like "-.5"
-    # remove trailing zeros
-    printf "%s" "$result" |
-      sed -e 's/^\./0./' \
-        -e 's/^-\./-0./' \
-        -e 's/0*$//;s/\.$//'
-  else
-    printf "%s" "$result"
-  fi
-  printf "\\n"
+    if [[ "$result" == *.* ]]; then
+        # improve the output for decimal numbers
+        # add "0" for cases like ".5"
+        # add "0" for cases like "-.5"
+        # remove trailing zeros
+        printf "%s" "$result" |
+            sed -e 's/^\./0./' \
+                -e 's/^-\./-0./' \
+                -e 's/0*$//;s/\.$//'
+    else
+        printf "%s" "$result"
+    fi
+    printf "\\n"
 }
 
 # Truncate each line of the input to X characters
@@ -192,45 +193,45 @@ calc() {
 # param 1: (optional, default 70) length to truncate to
 # https://brettterpstra.com/2016/04/27/shell-tricks-shorten-every-line-of-output/
 shorten() {
-  local helpstring ellip
-  helpstring=$(
-    cat <<'EOF'
+    local helpstring ellip
+    helpstring=$(
+        cat <<'EOF'
 Truncate each line of the input to X characters
     -l          Shorten from left side
     -s STRING   Replace truncated characters with STRING
 
     $ ls | shorten -s ... 15
 EOF
-  )
-  ellip="" left=false
-  OPTIND=1
-  while getopts "hls:" opt; do
-    case $opt in
-    l) left=true ;;
-    s) ellip=$OPTARG ;;
-    h)
-      echo -e "$helpstring"
-      return
-      ;;
-    *) return 1 ;;
-    esac
-  done
-  shift $((OPTIND - 1))
+    )
+    ellip="" left=false
+    OPTIND=1
+    while getopts "hls:" opt; do
+        case $opt in
+        l) left=true ;;
+        s) ellip=$OPTARG ;;
+        h)
+            echo -e "$helpstring"
+            return
+            ;;
+        *) return 1 ;;
+        esac
+    done
+    shift $((OPTIND - 1))
 
-  if $left; then
-    cat | sed -E "s/.*(.{${1-70}})$/${ellip}\1/"
-  else
-    cat | sed -E "s/(.{${1-70}}).*$/\1${ellip}/"
-  fi
+    if $left; then
+        cat | sed -E "s/.*(.{${1-70}})$/${ellip}\1/"
+    else
+        cat | sed -E "s/(.{${1-70}}).*$/\1${ellip}/"
+    fi
 }
 
 showalias() {
-  alias | sed 's/alias //' | fzf | eval "$(cut -d'=' -f1)"
+    alias | sed 's/alias //' | fzf | eval "$(cut -d'=' -f1)"
 }
 
 which-term() {
-  # basename because of apps like gnome-terminal and console (kgx)
-  ps -o 'cmd=' -p "$(ps -o 'ppid=' -p $$ | tr -d ' ')" | cut -d' ' -f1
+    # basename because of apps like gnome-terminal and console (kgx)
+    ps -o 'cmd=' -p "$(ps -o 'ppid=' -p $$ | tr -d ' ')" | cut -d' ' -f1
 }
 
 # TODO remove?
@@ -283,116 +284,116 @@ which-term() {
 # ----------------------------------------------------
 # find and list processes matching a case-insensitive partial-match string
 find-process() {
-  ps -Ao pid,comm | awk '{match($0,/[^\/]+$/); print substr($0,RSTART,RLENGTH)": "$1}' |
-    grep -i "$1" |
-    grep -v grep
+    ps -Ao pid,comm | awk '{match($0,/[^\/]+$/); print substr($0,RSTART,RLENGTH)": "$1}' |
+        grep -i "$1" |
+        grep -v grep
 }
 
 # find and kill
 find-kill() {
-  IFS=$'\n'
-  PS3='Kill which process? (1 to cancel): '
-  select OPT in "Cancel" $(find-process "$1"); do
-    if [ "$OPT" != "Cancel" ]; then
-      kill "$(echo "$OPT" | awk '{print $NF}')"
-    fi
-    break
-  done
-  unset IFS
+    IFS=$'\n'
+    PS3='Kill which process? (1 to cancel): '
+    select OPT in "Cancel" $(find-process "$1"); do
+        if [ "$OPT" != "Cancel" ]; then
+            kill "$(echo "$OPT" | awk '{print $NF}')"
+        fi
+        break
+    done
+    unset IFS
 }
 
 # The version.bind TXT response is supported by a handful of common DNS
 # implementations, including ISC BIND, and returns the name and version number
 # of the service.
 vbind() {
-  check_progs dig || return 1
-  dig version.bind txt chaos @"$1" +short +timeout=1 |
-    tr -d '"'
+    check_progs dig || return 1
+    dig version.bind txt chaos @"$1" +short +timeout=1 |
+        tr -d '"'
 }
 
 # get wan address via cloudflare dns
 wan() {
-  check_progs dig || return 1
-  dig @1.1.1.1 whoami.cloudflare -c ch -t txt +short +timeout=1 |
-    tr -d '"'
+    check_progs dig || return 1
+    dig @1.1.1.1 whoami.cloudflare -c ch -t txt +short +timeout=1 |
+        tr -d '"'
 }
 
 # get ip things. omit loopback
 gip() {
-  case "$1" in
-  down)
-    ip -br -c -0 address | grep DOWN
-    ;;
-  mac)
-    ip -br -c -0 address | grep -v UNKNOWN
-    ;;
-  4)
-    ip -br -c -4 address | grep -v lo
-    ;;
-  6)
-    ip -br -c -6 address | grep -v lo
-    ;;
-  *)
-    ip -br -c address | grep -Ev 'lo|DOWN'
-    ;;
-  esac
+    case "$1" in
+    down)
+        ip -br -c -0 address | grep DOWN
+        ;;
+    mac)
+        ip -br -c -0 address | grep -v UNKNOWN
+        ;;
+    4)
+        ip -br -c -4 address | grep -v lo
+        ;;
+    6)
+        ip -br -c -6 address | grep -v lo
+        ;;
+    *)
+        ip -br -c address | grep -Ev 'lo|DOWN'
+        ;;
+    esac
 }
 
 # i think i wanted a list of all images specified in yaml currently broken.
 # needs work. and the version of column across distros is not guaranteed to
 # have the `-N` e.g. not available on Ubuntu 20.04
 docker_rg_images() {
-  check_progs rg || return 1
-  path=${1:-.}
-  #| cut -d':' -f1,3,4 --output-delimiter=" " \
-  rg -i --glob '**/docker-compose.yml' --max-depth 2 --sort path -e 'image:' "$path" |
-    sed 's/://;s/image:/\t/' |
-    column -t -N FILE_PATH,IMAGE
+    check_progs rg || return 1
+    path=${1:-.}
+    #| cut -d':' -f1,3,4 --output-delimiter=" " \
+    rg -i --glob '**/docker-compose.yml' --max-depth 2 --sort path -e 'image:' "$path" |
+        sed 's/://;s/image:/\t/' |
+        column -t -N FILE_PATH,IMAGE
 }
 
 docker_ps_format() {
-  # drops the command, created, and ports columns.
-  check_progs docker || return 1
-  docker ps -a --format 'table {{ .ID }}\t{{.Names}}\t{{ .Status }}\t{{ .Image }}' |
-    awk 'NR<2{print $0;next}{print $0 | "sort --key=2"}'
+    # drops the command, created, and ports columns.
+    check_progs docker || return 1
+    docker ps -a --format 'table {{ .ID }}\t{{.Names}}\t{{ .Status }}\t{{ .Image }}' |
+        awk 'NR<2{print $0;next}{print $0 | "sort --key=2"}'
 }
 
 docker_run_image() {
-  # run an ad-hoc container
-  docker run -dt -i "$1"
+    # run an ad-hoc container
+    docker run -dt -i "$1"
 }
 
 plist() {
-  # TODO support more package managers/patforms
-  dpkg -l |
-    awk '/^ii/ {a=$2;b=$5; for(i=6;i<=NF;i++){b=b" "$i};print a "\t" b}' |
-    column -ts $'\t' -N NAME,DESCRIPTION
+    # TODO support more package managers/patforms
+    dpkg -l |
+        awk '/^ii/ {a=$2;b=$5; for(i=6;i<=NF;i++){b=b" "$i};print a "\t" b}' |
+        column -ts $'\t' -N NAME,DESCRIPTION
 }
 
 clear-tree2() {
-  clear
-  tree -L 2
+    clear
+    tree -L 2
 }
 
 clear-tree3() {
-  clear
-  tree -L 3
+    clear
+    tree -L 3
 }
 
 clear-git-status() {
-  clear
-  git status
+    clear
+    git status
 }
 
 clear-fastfetch() {
-  clear
-  fastfetch
+    clear
+    fastfetch
 }
 
 print-current-date() {
-  printf '%s' "$(date -I)"
+    printf '%s' "$(date -I)"
 }
 
 print-unix-timestamp() {
-  printf '%s' "$(date +%s)"
+    printf '%s' "$(date +%s)"
 }
