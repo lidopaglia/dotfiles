@@ -234,47 +234,6 @@ which-term() {
     ps -o 'cmd=' -p "$(ps -o 'ppid=' -p $$ | tr -d ' ')" | cut -d' ' -f1
 }
 
-# TODO remove?
-#
-# tmux
-#ta() {
-#    if [ -z "$1" ]; then
-#        tmux attach
-#    else
-#        tmux attach -t "$1"
-#    fi
-#}
-#
-#tk() { tmux kill-session -t "$1"; }
-#tc() { tmux new -s "$1"; }
-
-# ----------------------
-# base16-shell colors
-# fav colors:
-#   - gruvbox-dark-pale
-#   - material-palenight
-#   - onedark
-# ----------------------
-
-# Set color scheme
-#function color () {
-#    export THEME=$1
-#    BASE16_SHELL="$HOME/.config/base16-shell/scripts/base16-$1.sh"
-#    source $BASE16_SHELL
-#}
-#
-## Set random color scheme
-#function rndcolor () {
-#    SELECTED=$(ls ~/.config/base16-shell/scripts/ | grep -v light | gshuf -n 1 | cut -d . -f 1 | awk -F "base16-" '{print $2}')
-#    color $SELECTED
-#    echo "Color scheme is $SELECTED"
-#}
-#
-## List available colors
-#function lscolor () {
-#    ls ~/.config/base16-shell/scripts/ | grep -v light
-#}
-
 # ----------------------------------------------------
 # Find and Kill
 # lets you do a quick search of your running processes
