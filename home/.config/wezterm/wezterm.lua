@@ -9,9 +9,9 @@
 local wezterm = require("wezterm")
 --local config = wezterm.config_builder()
 
-function scheme_for_appearance(appearance)
-  -- Available Colorschemes:
-  -- https://wezterm.org/colorschemes/index.html
+-- Available Colorschemes:
+-- https://wezterm.org/colorschemes/index.html
+function Scheme_for_appearance(appearance)
   if appearance:find("Dark") then
     -- return 'Builtin Tango Dark'
     -- return 'Catppuccin Mocha'
@@ -32,7 +32,7 @@ end
 return {
 
   -- https://wezterm.org/config/appearance.html#color-scheme
-  color_scheme = scheme_for_appearance(wezterm.gui.get_appearance()),
+  color_scheme = Scheme_for_appearance(wezterm.gui.get_appearance()),
 
   colors = { cursor_bg = "#f5c2e7" },
 
