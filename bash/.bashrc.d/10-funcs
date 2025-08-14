@@ -2,6 +2,29 @@
 
 # -- Functions ----------------------------------------------------------------
 
+dailynote() {
+
+    local file
+    local editor="${EDITOR:-nvim}"
+
+    file="$HOME/notes/daily/$(date +%Y)/$(date +%Y-%m-%d).md"
+
+    # create the file if it doesn't exist
+    if [ ! -f "$file" ]; then
+        echo "# $(date +%Y-%m-%d)" >"$file"
+    fi
+
+    if [ $# -gt 0 ]; then
+        # append args to file
+        printf "\n%s\n" "$*" >>"$file"
+    else
+        # open in editor, two lines below last
+        "$editor" -c "norm Go$(printf '\033')o" -c "startinsert" "$file"
+    fi
+}
+
+alias dn=dailynote
+
 # print lines over X columns (defaults to 80)
 # $ cat foo | over
 over() {
