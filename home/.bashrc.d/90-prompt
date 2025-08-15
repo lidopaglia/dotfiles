@@ -89,6 +89,8 @@ if [ "$color_prompt" = yes ]; then
       git_sym=\$(git_symbols); \
       if [[ \"\$git_sym\" == \" ✓\" ]]; then \
         echo \"${green}\$git_sym\"; \
+      elif [[ \"\$git_sym\" == \"↑\" ]]; then \
+        echo \"${yellow}\$git_sym\"; \
       else \
         echo \"${red}\$git_sym\"; \
       fi \
