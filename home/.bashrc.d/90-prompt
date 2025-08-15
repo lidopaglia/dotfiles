@@ -39,8 +39,8 @@ git_symbols() {
     git rev-parse --verify refs/stash &>/dev/null && stashed='$'
 
     local status_parts=
-    [[ $ahead -gt 0 ]] && status_parts+="↑"
-    [[ $behind -gt 0 ]] && status_parts+="↓"
+    [[ $ahead -gt 0 ]] && status_parts+="↓"
+    [[ $behind -gt 0 ]] && status_parts+="↑"
     [[ $staged ]] && status_parts+="$staged"
     [[ $conflict ]] && status_parts+="$conflict"
     [[ $changed ]] && status_parts+="$changed"
