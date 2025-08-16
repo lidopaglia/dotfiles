@@ -4,6 +4,9 @@ mod=Alt
 workspaces=9
 terminal="$(command -v ghostty)"
 
+# swap caps for esc
+gsettings set org.gnome.desktop.input-sources xkb-options "['caps:escape']"
+
 # config workspaces
 gsettings set "org.gnome.shell.app-switcher" "current-workspace-only" "true"
 gsettings set "org.gnome.desktop.wm.preferences" "num-workspaces" "$workspaces"
