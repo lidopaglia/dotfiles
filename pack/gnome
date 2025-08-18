@@ -4,8 +4,13 @@ mod=Alt
 workspaces=9
 terminal="$(command -v ghostty)"
 
+echo "Configuring GNOME Settings..."
+
 # swap caps for esc
 gsettings set org.gnome.desktop.input-sources xkb-options "['caps:escape']"
+
+# disable touchpad natural scroll
+gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
 
 # config workspaces
 gsettings set "org.gnome.shell.app-switcher" "current-workspace-only" "true"
@@ -26,13 +31,21 @@ gsettings set "org.gnome.desktop.wm.keybindings" "close" "['<Shift><$mod>c']"
 # show the overview with `mod+space`
 gsettings set "org.gnome.shell.keybindings" "toggle-overview" "['<$mod>space']"
 
+# disable the built-in background logo watermark on fedora
+if grep -qi fedora /etc/os-release; then
+    gnome-extensions disable background-logo@fedorahosted.org
+fi
+
+# configure custom launch shortcuts
+
 # launch terminal with `mod+return`
 gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name "Terminal"
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command "$terminal"
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding "<$mod>Return"
 
-if grep -qi fedora /etc/os-release; then
-    # disable the built-in fedora background logo
-    gnome-extensions disable background-logo@fedorahosted.org
-fi
+# launch mission-center with `ctrl+shift+esc`
+gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/']"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ name "Mission Center"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ command "flatpak run io.missioncenter.MissionCenter"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ binding "<Shift><Control>Escape"
