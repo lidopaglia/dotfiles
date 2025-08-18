@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+#  install flatpak
+
+# Note: Ubuntu distributes GNOME Software as a Snap in versions 20.04 to 23.04,
+# and replaced it with App Center in 23.10 and newer—neither of which support
+# installing Flatpak apps. Installing the Flatpak plugin will also install a
+# deb version of GNOME Software, resulting in two "Software" apps being
+# installed at the same time on Ubuntu 20.04 to 23.04, and a single new
+# \"Software\" app on Ubuntu 23.10 and newer.
+
+echo "Installing Flatpaks..."
+
+# debian / ubuntu
+sudo apt install flatpak
+sudo apt install gnome-software-plugin-flatpak
+
+# arch
+sudo pacman -S flatpak
+
+# Rocky / RHEL
+# Note: fedora, centos stream, and alma include flatpak by default
+sudo dnf install flatpak
+
+# ensure flathub repo is available
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+# install flatpaks
+
+# be.alexandervanhee.gradia
+# com.calibre_ebook.calibre
+# com.github.tchx84.Flatseal
+# com.transmissionbt.Transmission
+# io.github.dvlv.boxbuddyrs
+# io.github.flattool.Warehouse
+# io.github.josephmawa.Bella
+# io.missioncenter.MissionCenter
+# org.audacityteam.Audacity
+# org.audacityteam.Audacity.Codecs
+# org.chromium.Chromium.Codecs
+# org.gimp.GIMP.HEIC
+# org.gnome.Loupe.HEIC
+# org.gnome.NautilusPreviewer
+# org.gnome.Papers
+# org.libreoffice.LibreOffice
+# org.remmina.Remmina
+# org.wezfurlong.wezterm
