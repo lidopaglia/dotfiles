@@ -1,0 +1,107 @@
+#!/usr/bin/env bash
+
+# -- Git Prompt ---------------------------------------------------------------
+
+git_prefix() {
+    git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo -n "on "
+}
+
+git_branch() {
+    git branch 2>/dev/null |
+        sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'
+}
+
+git_symbols() {
+
+    git rev-parse --is-inside-work-tree &>/dev/null || return
+
+    local ahead behind staged conflict changed untracked stashed
+
+    # Git status summary
+    read -r ahead behind <<<"$(git rev-list --left-right \
+        --count "@{upstream}"...HEAD 2>/dev/null || echo "0 0")"
+
+    # Check for staged, modified, untracked, or conflicts
+    while IFS= read -r line; do
+        x=${line:0:1}
+        y=${line:1:1}
+
+        [[ "$line" == "??"* ]] && untracked="?" && continue
+        [[ "$x$y" == *U* ]] && conflict="=" && continue
+
+        [[ "$x" != " " && "$x" != "." ]] && staged="+"
+        [[ "$y" != " " && "$y" != "." ]] && changed="!"
+    done < <(git status --short)
+
+    # Stashed changes
+    git rev-parse --verify refs/stash &>/dev/null && stashed='$'
+
+    local status_parts=
+    [[ $ahead -gt 0 ]] && status_parts+="↓"
+    [[ $behind -gt 0 ]] && status_parts+="↑"
+    [[ $staged ]] && status_parts+="$staged"
+    [[ $conflict ]] && status_parts+="$conflict"
+    [[ $changed ]] && status_parts+="$changed"
+    [[ $untracked ]] && status_parts+="$untracked"
+    [[ $stashed ]] && status_parts+="$stashed"
+
+    if [[ -n $status_parts ]]; then
+        printf " [%s]" "${status_parts}"
+    else
+        printf " ✓"
+    fi
+}
+
+# -- Configure the prompt -----------------------------------------------------
+
+# Define colors
+white='\[\e[0;37m\]'
+blue='\[\e[0;34m\]'
+green='\[\e[0;32m\]'
+purple='\[\e[0;35m\]'
+yellow='\[\e[0;33m\]'
+red='\[\e[0;31m\]'
+reset='\[\e[0m\]'
+
+# Runs right before PS1 is displayed
+__last_status=0
+PROMPT_COMMAND='__last_status=$?'
+
+color_prompt=
+
+case "$TERM" in
+xterm-color | *-256color) color_prompt=yes ;;
+esac
+
+if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+    # We have color support; assume it's compliant with Ecma-48
+    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+    # a case would tend to support setf rather than setaf.)
+    color_prompt=yes
+fi
+
+if [ "$color_prompt" = yes ]; then
+    PS1="\n\[\e[32m\]\u@\h\[\e[0m\]: " # green user@host
+    PS1+="\[\e[1;34m\]\w "             # bold blue path
+    PS1+="\[\e[0m\]\$(git_prefix)"     # reset 'on '
+    PS1+="\[\e[35m\]\$(git_branch)"    # purple git branch
+    PS1+="\$( \
+      git_sym=\$(git_symbols); \
+      if [[ \"\$git_sym\" == \" ✓\" ]]; then \
+        echo \"${green}\$git_sym\"; \
+      elif [[ \"\$git_sym\" == \"↑\" ]]; then \
+        echo \"${yellow}\$git_sym\"; \
+      else \
+        echo \"${red}\$git_sym\"; \
+      fi \
+    )${reset}\n"
+    PS1+="\$(if [[ \$__last_status -eq 0 ]]; then \
+      echo '${white}\$'; \
+    else \
+      echo '${red}\$'; \
+    fi)${reset} "
+else
+    PS1="\n\u@\h: \w \$(git_prefix)\$(git_branch)\$(git_symbols)\n\$ "
+fi
+
+unset color_prompt white blue green purple red reset

@@ -8,6 +8,17 @@
 default:
     @just --list
 
+# init-ssh
+init-ssh:
+    mkdir -p ~/.ssh
+    chmod 700 ~/.ssh
+    touch -r ~/.ssh/known_hosts ~/.ssh/known_hosts \
+        && chmod 600 ~/.ssh/known_hosts
+
+# install base config
+base: init-ssh
+    stow -R base
+
 # Install all packages listed in Brewfile
 brew:
     command -v brew > /dev/null || (echo "Homebrew is not installed." && exit 1)

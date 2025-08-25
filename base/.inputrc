@@ -1,0 +1,80 @@
+# ~/.inputrc
+#
+# https://vim.fandom.com/wiki/Use_vi_shortcuts_in_terminal
+# https://www.topbug.net/blog/2017/07/31/inputrc-for-humans/
+
+# do not bell on tab-completion
+set bell-style none
+
+# Immediately list matches instead of ringing the bell upon completion
+set show-all-if-ambiguous on
+
+# Immediately list matches for words which have more than one possible
+# completion without any possible partial completion (the possible completions
+# don't share a common prefix)
+set show-all-if-unmodified on
+
+# Perform filename matching and completion in a case-insensitive fashion
+set completion-ignore-case on
+
+set print-completions-horizontally on
+
+set completion-prefix-display-length 3
+
+
+# Color files by types. Note that this may cause completion text blink in some
+# terminals (e.g. xterm)
+set colored-stats on
+
+# Append characater to indicate file type when listing possible completions
+set visible-stats on
+
+# Append a slash to completed directories
+set mark-directories on
+
+# Append a slash to symlinked directories as well
+set mark-symlinked-directories on
+
+# Color the common prefix
+set colored-completion-prefix on
+
+# Color the common prefix in menu-complete
+set menu-complete-display-prefix off
+
+# Treat each paste into the editing buffer as a single string of characters,
+# instead of treating each character as if it had been read from the keyboard.
+# Prevents pasted characters from being interpreted as editing commands.
+set enable-bracketed-paste on
+
+# tab lists completions & selects the first.
+# consecutive tabs cycles through available completions.
+TAB: menu-complete
+
+# shift+tab cycles completions backward.
+"\e[Z": menu-complete-backward
+
+# bind C-n to back up one dir
+'\C-n':'cd ..\n'
+
+"\e\C-f": dump-functions
+"\e\C-v": dump-variables
+
+# bind Alt+F to tmux-sessionizer
+'\C-f':'tmux-sessionizer\n'
+
+# new stuff
+# briefly move the cursor to the opening parenthesis
+# set blink-matching-paren on
+# set keyseq-timeout 0
+
+# Turn on vi line editing
+# set editing-mode vi
+#
+# # Set the cursor shape for different modes
+# $if term=linux
+#     set vi-ins-mode-string \1\e[?0c\2
+#     set vi-cmd-mode-string \1\e[?8c\2
+# $else
+#     set vi-ins-mode-string \1\e[6 q\2
+#     set vi-cmd-mode-string \1\e[2 q\2
+# $endif
