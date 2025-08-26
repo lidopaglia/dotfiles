@@ -45,12 +45,8 @@ gsettings set "org.gnome.desktop.wm.keybindings" "close" "['<Shift><$mod>c']"
 # show the overview with `mod+space`
 gsettings set "org.gnome.shell.keybindings" "toggle-overview" "['<$mod>space']"
 
-# disable the built-in background logo watermark on fedora
-if grep -qi fedora /etc/os-release; then
-    gnome-extensions disable background-logo@fedorahosted.org
-fi
-
-# configure custom launch shortcuts
+# lock the screen with `mod+l`
+gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver "['<$mod>l']"
 
 # launch terminal with `mod+return`
 gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
@@ -64,6 +60,11 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ command "flatpak run io.missioncenter.MissionCenter"
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ binding "<Shift><Control>Escape"
 
+# disable the built-in background logo watermark on fedora
+if grep -qi fedora /etc/os-release; then
+    gnome-extensions disable background-logo@fedorahosted.org
+fi
+
 # disable animations
 gsettings set org.gnome.desktop.interface enable-animations false
 
@@ -73,23 +74,33 @@ gsettings set org.gnome.mutter experimental-features "['variable-refresh-rate']"
 # disable hot corners
 gsettings set org.gnome.desktop.interface enable-hot-corners false
 
+# set automatic screen blank to 3min
+gsettings set org.gnome.desktop.session idle-delay 180
+
+# suspend when plugged in after 30min
+gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'suspend'
+gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 1800
+
+# suspend on battery after 5min
+gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type 'suspend'
+gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-timeout 300
+
+echo "Installing GNOME Extensions..."
+
 # install pop-shell (pop-shell@system76.com)
 if grep -qi fedora /etc/os-release; then
-    echo "Installing pop-shell extension"
     sudo dnf install -y gnome-shell-extension-pop-shell xprop
 else
-    echo "need to install pop-shell extension from source:"
-    echo "https://github.com/pop-os/shell"
+    echo "TODO: Install pop-shell extension from source:"
+    echo "      https://github.com/pop-os/shell"
     echo
-    echo "note: make (build-essential) and typescript (ts-node) are required."
-    echo "then run `make local-install`"
+    echo "make (build-essential) and typescript (ts-node) are required."
+    echo "Run: `make local-install`"
 fi
 
-# enable pop-shell
-if [[ gnome-extensions info pop-shell@system76.com >/dev/null 2>&1 ]]; then
-    echo "Enabling pop-shell extension"
-    gnome-settings enable pop-shell@system76.com
-
-    # disable stacking with mouse
-    gsettings set org.gnome.shell.extensions.pop-shell.stacking-with-mouse false
+# enable pop-shell extension & disable stacking with mouse
+if gnome-extensions info pop-shell@system76.com >/dev/null 2>&1; then
+    gnome-extensions enable pop-shell@system76.com
+    gsettings set org.gnome.shell.extensions.pop-shell stacking-with-mouse false
 fi
+
