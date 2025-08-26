@@ -1,10 +1,24 @@
 #!/usr/bin/env bash
 
-mod=Alt
+find_terminal() {
+  for t in ghostty wezterm:org.wezfurlong.wezterm ptyxis; do
+    local b f
+    b="${t%%:*}"; f="${t#*:}"
+    if [[ $b == $f ]]; then
+      command -v "$b" >/dev/null && { echo "$b"; return; }
+    else
+      flatpak info "$f" >/dev/null 2>&1 && { echo "flatpak run $f"; return; }
+    fi
+  done
+}
+
+terminal="$(find_terminal)"
 workspaces=9
-terminal="$(command -v ghostty)"
+mod=Alt
 
 echo "Configuring GNOME Settings..."
+
+sudo -v
 
 # swap caps for esc
 gsettings set org.gnome.desktop.input-sources xkb-options "['caps:escape']"
@@ -49,3 +63,33 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "[
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ name "Mission Center"
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ command "flatpak run io.missioncenter.MissionCenter"
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ binding "<Shift><Control>Escape"
+
+# disable animations
+gsettings set org.gnome.desktop.interface enable-animations false
+
+# enable vrr
+gsettings set org.gnome.mutter experimental-features "['variable-refresh-rate']"
+
+# disable hot corners
+gsettings set org.gnome.desktop.interface enable-hot-corners false
+
+# install pop-shell (pop-shell@system76.com)
+if grep -qi fedora /etc/os-release; then
+    echo "Installing pop-shell extension"
+    sudo dnf install -y gnome-shell-extension-pop-shell xprop
+else
+    echo "need to install pop-shell extension from source:"
+    echo "https://github.com/pop-os/shell"
+    echo
+    echo "note: make (build-essential) and typescript (ts-node) are required."
+    echo "then run `make local-install`"
+fi
+
+# enable pop-shell
+if [[ gnome-extensions info pop-shell@system76.com >/dev/null 2>&1 ]]; then
+    echo "Enabling pop-shell extension"
+    gnome-settings enable pop-shell@system76.com
+
+    # disable stacking with mouse
+    gsettings set org.gnome.shell.extensions.pop-shell.stacking-with-mouse false
+fi
