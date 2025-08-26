@@ -155,7 +155,7 @@ endif
 " vim-highlightedyank
 let g:highlightedyank_highlight_duration = 200
 
-# install fzf
+" install fzf
 if empty(glob('~/.vim/pack/plugins/start/fzf/bin/fzf'))
   silent !~/.vim/pack/plugins/start/fzf/install --bin
   set rtp+=~/.vim/pack/plugins/start/fzf
