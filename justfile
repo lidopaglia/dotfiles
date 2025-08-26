@@ -19,6 +19,10 @@ init-ssh:
 base: init-ssh
     stow -R base
 
+# install desktop config
+desktop: base
+    stow -R desk
+
 # Install all packages listed in Brewfile
 brew:
     command -v brew > /dev/null || (echo "Homebrew is not installed." && exit 1)
