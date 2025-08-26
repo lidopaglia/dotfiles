@@ -1,0 +1,15 @@
+[submodule "base/.vim/.vim/pack/plugins/start/vim-gitgutter"]
+	path = base/.vim/.vim/pack/plugins/start/vim-gitgutter
+	url = https://github.com/airblade/vim-gitgutter.git
+[submodule "base/.vim/.vim/pack/plugins/start/fzf"]
+	path = base/.vim/.vim/pack/plugins/start/fzf
+	url = https://github.com/junegunn/fzf.git
+[submodule "base/.vim/.vim/pack/plugins/start/fzf.vim"]
+	path = base/.vim/.vim/pack/plugins/start/fzf.vim
+	url = https://github.com/junegunn/fzf.vim.git
+[submodule "base/.vim/.vim/pack/plugins/start/vim-highlightedyank"]
+	path = base/.vim/.vim/pack/plugins/start/vim-highlightedyank
+	url = https://github.com/machakann/vim-highlightedyank.git
+[submodule "base/.vim/.vim/pack/plugins/start/vim-surround"]
+	path = base/.vim/.vim/pack/plugins/start/vim-surround
+	url = https://github.com/tpope/vim-surround.git
