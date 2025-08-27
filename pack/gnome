@@ -17,6 +17,7 @@ workspaces=9
 mod=Alt
 
 echo "Configuring GNOME Settings..."
+echo "terminal: $terminal"
 
 sudo -v
 
@@ -48,14 +49,18 @@ gsettings set "org.gnome.shell.keybindings" "toggle-overview" "['<$mod>space']"
 # lock the screen with `mod+l`
 gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver "['<$mod>l']"
 
+# setup custom shortcuts
+gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "[
+    '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/',
+    '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/'
+]"
+
 # launch terminal with `mod+return`
-gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name "Terminal"
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command "$terminal"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command "flatpak run org.wezfurlong.wezterm"
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding "<$mod>Return"
 
 # launch mission-center with `ctrl+shift+esc`
-gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/']"
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ name "Mission Center"
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ command "flatpak run io.missioncenter.MissionCenter"
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ binding "<Shift><Control>Escape"
