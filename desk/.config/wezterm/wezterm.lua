@@ -7,7 +7,12 @@
 -- https://wezfurlong.org/wezterm/config/files.html
 
 local wezterm = require("wezterm")
---local config = wezterm.config_builder()
+local mux = wezterm.mux
+
+wezterm.on('gui-startup', function(cmd)
+  local tab, pane, window = mux.spawn_window(cmd or {})
+  window:gui_window():maximize()
+end)
 
 -- Available Colorschemes:
 -- https://wezterm.org/colorschemes/index.html
@@ -57,6 +62,8 @@ return {
     top = 10,
     bottom = 10,
   },
+
+
 
   keys = {
     -- set F11 to toggle fullscreen
