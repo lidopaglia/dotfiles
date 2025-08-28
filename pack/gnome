@@ -52,9 +52,6 @@ sudo -v
 # swap caps for esc
 gsettings set org.gnome.desktop.input-sources xkb-options "['caps:escape']"
 
-# disable touchpad natural scroll
-gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
-
 # config workspaces
 gsettings set "org.gnome.shell.app-switcher" "current-workspace-only" "true"
 gsettings set "org.gnome.desktop.wm.preferences" "num-workspaces" "$workspaces"
@@ -110,9 +107,18 @@ gsettings set org.gnome.desktop.interface enable-hot-corners false
 # set automatic screen blank to 3min
 gsettings set org.gnome.desktop.session idle-delay 180
 
+# disable lock screen notifications
+gsettings set org.gnome.desktop.notifications show-in-lock-screen false
+
+# disable app search
+gsettings set org.gnome.desktop.search-providers disable-external true
+
 # --- laptop specifics --------------------------------------------------------
 
 if [[ $(hostnamectl chassis) == "laptop" ]]; then
+
+    # disable touchpad natural scroll
+    gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
 
     # suspend when plugged in after 30min
     gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'suspend'
