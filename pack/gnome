@@ -110,13 +110,25 @@ gsettings set org.gnome.desktop.interface enable-hot-corners false
 # set automatic screen blank to 3min
 gsettings set org.gnome.desktop.session idle-delay 180
 
-# suspend when plugged in after 30min
-gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'suspend'
-gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 1800
+# --- laptop specifics --------------------------------------------------------
 
-# suspend on battery after 5min
-gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type 'suspend'
-gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-timeout 300
+if [[ $(hostnamectl chassis) == "laptop" ]]; then
+
+    # suspend when plugged in after 30min
+    gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'suspend'
+    gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 1800
+
+    # suspend on battery after 5min
+    gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type 'suspend'
+    gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-timeout 300
+
+    # enable and configure night light feature
+    gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
+    gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 4000
+    gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic false
+    gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from 20.0
+    gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to 6.0
+fi
 
 # -----------------------------------------------------------------------------
 
