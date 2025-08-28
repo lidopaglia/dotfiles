@@ -87,7 +87,7 @@ fi
 
 export EDITOR="vim"
 export HISTCONTROL=ignoreboth # exclude dupes or lines starting with space
-export HISTFILE="$XDG_STATE_HOME/bash/history"
+export HISTFILE=~/.cache/bash_history
 export HISTFILESIZE=5000
 export HISTSIZE=5000
 export HISTTIMEFORMAT="%F %T "
