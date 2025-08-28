@@ -113,6 +113,11 @@ gsettings set org.gnome.desktop.notifications show-in-lock-screen false
 # disable app search
 gsettings set org.gnome.desktop.search-providers disable-external true
 
+# faster key repeat / delay
+gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 10
+gsettings set org.gnome.desktop.peripherals.keyboard delay 300
+
+
 # --- laptop specifics --------------------------------------------------------
 
 if [[ $(hostnamectl chassis) == "laptop" ]]; then
