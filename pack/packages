@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+packages=(
+    "at"
+    "curl"
+    "fastfetch"
+    "fzf"
+    "git"
+    "jq"
+    "just"
+    "ripgrep"
+    "rsync"
+    "stow"
+    "tree"
+    "unzip"
+    "vim-enhanced"
+)
+
+echo "Installing Packages..."
+sudo -v
+
+# Detect distro
+distro=$(awk -F= '/^ID=/{print $2}' /etc/os-release | tr -d '"')
+
+case "$distro" in
+    debian|ubuntu)
+        sudo apt update && sudo apt install -y "${packages[@]}"
+        ;;
+    fedora)
+        sudo dnf install -y "${packages[@]}"
+        ;;
+    *)
+        echo "Unsupported distro: $distro"
+        return 1
+        ;;
+esac
