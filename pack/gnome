@@ -193,6 +193,7 @@ install_extension 'drive-menu@gnome-shell-extensions.gcampax.github.com'
 install_extension 'just-perfection-desktop@just-perfection'
 install_extension 'space-bar@luchrioh'
 install_extension 'auto-move-windows@gnome-shell-extensions.gcampax.github.com'
+install_extension 'tailscale@joaophi.github.com'
 
 echo -e "Installation complete\n"
 echo "Login again or reboot to enable installed extensions"
