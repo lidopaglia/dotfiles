@@ -6,6 +6,12 @@ install_extension() {
     local version
     local tmpfile
 
+    # Check if already installed
+    if gnome-extensions list | grep -qx "$uuid"; then
+        echo "Extension $uuid is already installed, skipping."
+        return 0
+    fi
+
     major=$(gnome-shell --version | awk '{print $3}' | cut -d. -f1)
     # tmpfile=$(mktemp /tmp/$uuid.zip)
     tmpfile=$(mktemp /tmp/gnome-ext.XXXXXX.zip)
