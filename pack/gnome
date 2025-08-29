@@ -13,7 +13,6 @@ install_extension() {
     fi
 
     major=$(gnome-shell --version | awk '{print $3}' | cut -d. -f1)
-    # tmpfile=$(mktemp /tmp/$uuid.zip)
     tmpfile=$(mktemp /tmp/gnome-ext.XXXXXX.zip)
 
     version=$(wget -qO- "https://extensions.gnome.org/api/v1/extensions/${uuid}/versions?page=1&page_size=100" \
@@ -54,6 +53,14 @@ mod=Alt
 echo "Configuring GNOME Settings..."
 
 sudo -v
+
+# set background
+gsettings set org.gnome.desktop.background picture-uri 'file:///usr/share/backgrounds/gnome/drool-l.svg'
+gsettings set org.gnome.desktop.background picture-uri-dark 'file:///usr/share/backgrounds/gnome/drool-d.svg'
+gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+gsettings set org.gnome.desktop.background primary-color '#000000'
+gsettings set org.gnome.desktop.background picture-options 'zoom'
+gsettings set org.gnome.desktop.background draw-background true
 
 # swap caps for esc
 gsettings set org.gnome.desktop.input-sources xkb-options "['caps:escape']"
