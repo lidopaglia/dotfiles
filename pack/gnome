@@ -144,6 +144,9 @@ if [[ $(hostnamectl chassis) == "laptop" ]]; then
     # disable touchpad natural scroll
     gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
 
+    # preserve battery health when charging
+    gsettings set org.gnome.settings-daemon.plugins.power laptop-battery-preserve true
+
     # suspend when plugged in after 30min
     gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'suspend'
     gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 1800
