@@ -60,7 +60,6 @@ gsettings set org.gnome.desktop.background picture-uri-dark 'file:///usr/share/b
 gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 gsettings set org.gnome.desktop.background primary-color '#000000'
 gsettings set org.gnome.desktop.background picture-options 'zoom'
-gsettings set org.gnome.desktop.background draw-background true
 
 # swap caps for esc
 gsettings set org.gnome.desktop.input-sources xkb-options "['caps:escape']"
@@ -136,9 +135,8 @@ gsettings set org.gnome.desktop.privacy remove-old-trash-files true
 gsettings set org.gnome.desktop.privacy remove-old-temp-files true
 gsettings set org.gnome.desktop.privacy old-files-age 7
 
-# disable location / problem reporting
+# disable location
 gsettings set org.gnome.system.location enabled false
-gsettings set org.gnome.desktop.problem-reporting report-crashes false
 
 # show week day in top bar
 gsettings set org.gnome.desktop.interface clock-show-weekday true
@@ -150,9 +148,6 @@ if [[ $(hostnamectl chassis) == "laptop" ]]; then
 
     # disable touchpad natural scroll
     gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
-
-    # preserve battery health when charging
-    gsettings set org.gnome.settings-daemon.plugins.power laptop-battery-preserve true
 
     # suspend when plugged in after 30min
     gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'suspend'
