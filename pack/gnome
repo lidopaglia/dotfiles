@@ -123,6 +123,19 @@ gsettings set org.gnome.desktop.search-providers disable-external true
 gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 10
 gsettings set org.gnome.desktop.peripherals.keyboard delay 300
 
+# recents / trash
+gsettings set org.gnome.desktop.privacy recent-files-max-age 30
+gsettings set org.gnome.desktop.privacy remove-old-trash-files true
+gsettings set org.gnome.desktop.privacy remove-old-temp-files true
+gsettings set org.gnome.desktop.privacy old-files-age 7
+
+# disable location / problem reporting
+gsettings set org.gnome.system.location enabled false
+gsettings set org.gnome.desktop.problem-reporting report-crashes false
+
+# show week day in top bar
+gsettings set org.gnome.desktop.interface clock-show-weekday true
+
 
 # --- laptop specifics --------------------------------------------------------
 
