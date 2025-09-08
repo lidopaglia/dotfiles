@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-packages=(
+pkg_common=(
     "at"
     "curl"
     "fastfetch"
@@ -13,24 +13,44 @@ packages=(
     "stow"
     "tree"
     "unzip"
-    "vim-enhanced"
-)
+    "wget"
+    "zoxide"
+    )
 
-echo "Installing Packages..."
+pkg_debian=(
+    "ldnsutils"
+    )
+
+pkg_fedora=(
+    "ldns-utils"
+    "vim-enhanced"
+    )
+
 sudo -v
 
-# Detect distro
-distro=$(awk -F= '/^ID=/{print $2}' /etc/os-release | tr -d '"')
+echo "Installing Packages..."
+
+distro=$(
+  awk -F= '/^ID=/{print $2}' /etc/os-release | tr -d '"'
+)
+
+if [ -z "$distro" ]; then
+  echo "Error: could not detect distro" >&2
+  exit 1
+fi
 
 case "$distro" in
     debian|ubuntu)
-        sudo apt update && sudo apt install -y "${packages[@]}"
+        sudo apt update
+        sudo apt install -y "${pkg_common[@]}"
+        sudo apt install -y "${pkg_debian[@]}"
         ;;
     fedora)
-        sudo dnf install -y "${packages[@]}"
+        sudo dnf install -y "${pkg_common[@]}"
+        sudo dnf install -y "${pkg_fedora[@]}"
         ;;
     *)
-        echo "Unsupported distro: $distro"
+        echo "Error: detected distro \"$distro\" is unsupported"
         return 1
         ;;
 esac
