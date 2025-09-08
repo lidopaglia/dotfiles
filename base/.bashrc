@@ -18,6 +18,7 @@ if [ -f /etc/bashrc ]; then
     source /etc/bashrc
 fi
 
+# shellcheck disable=SC1099
 if [ -d ~/.config/bash ]; then
     for rc in ~/.config/bash/*; do
         if [ -f "$rc" ]; then
