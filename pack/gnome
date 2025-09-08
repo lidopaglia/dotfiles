@@ -163,6 +163,13 @@ if [[ $(hostnamectl chassis) == "laptop" ]]; then
     gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic false
     gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from 20.0
     gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to 6.0
+
+else
+
+    # disable suspend
+    gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'nothing'
+    gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type 'nothing'
+
 fi
 
 # -----------------------------------------------------------------------------
