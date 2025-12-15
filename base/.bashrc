@@ -132,4 +132,10 @@ if [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
     fi
 fi
 
+# -- Rustup shell setup -------------------------------------------------------
+
+if [ -f "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env"
+fi
+
 # -- End ----------------------------------------------------------------------
