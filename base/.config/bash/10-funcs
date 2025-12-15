@@ -1,5 +1,50 @@
 #!/usr/bin/env bash
 
+cdf() {
+    local choice
+    choice=$(for d in */; do
+        [ -d "$d" ] ||
+            continue
+        printf '%s\n' "${d%/}"
+    done | fzf --exit-0) || return 1
+    cd -- "$choice"
+}
+
+qurl() {
+    local url="$1"
+
+    [[ "$url" =~ ^https?://.+ ]] || {
+        echo "error: not a valid URL" >&2
+        return 1
+    }
+
+    printf '%s\n' "$url" >>"./queue"
+}
+
+lssh() {
+    awk '
+      /^[Hh]ost[[:space:]]+/ {
+        for (i = 2; i <= NF; i++)
+          if ($i !~ /[*?]/) print $i
+      }
+    ' ~/.ssh/config.d/*.conf | sort -u
+}
+
+fssh() {
+    host=$(
+        awk '
+    /^[Hh]ost[[:space:]]+/ {
+      for (i = 2; i <= NF; i++)
+        if ($i !~ /[*?]/) print $i
+    }
+  ' ~/.ssh/config.d/*.conf |
+            sort -u |
+            fzf --prompt="ssh> "
+    ) || exit 1
+
+    ssh "$host"
+}
+
 # -- Functions ----------------------------------------------------------------
 
 dailynote() {
