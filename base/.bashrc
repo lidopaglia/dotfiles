@@ -138,4 +138,11 @@ if [ -f "$HOME/.cargo/env" ]; then
     . "$HOME/.cargo/env"
 fi
 
+# -- Mise ---------------------------------------------------------------------
+
+if [[ -x "/home/lido/.local/bin/mise" ]]; then
+    eval "$(/home/lido/.local/bin/mise activate bash)"
+fi
+
 # -- End ----------------------------------------------------------------------
+
