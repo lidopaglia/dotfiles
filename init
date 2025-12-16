@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DOTFILES=(
+    .bash_history
+    .bash_logout
+    .bash_profile
+    .bashrc
+    .gitconfig
+    .gitignore
+    .inputrc
+    .profile
+)
+
+HOME_DIR="$HOME"
+STOW_DIR="$HOME/dotfiles"        # adjust if needed
+STOW_PACKAGE="base"              # directory inside dotfiles/
+BACKUP_DIR="$HOME/.dotfiles.bak" # backup location
+DELETE=false
+
+# parse options
+while getopts "dp:" opt; do
+    case $opt in
+    d) DELETE=true ;;
+    p) BACKUP_DIR="$OPTARG" ;;
+    *)
+        echo "Usage: $0 [-d] [-p backup_path]" >&2
+        exit 1
+        ;;
+    esac
+done
+
+# check if stow is installed
+if ! command -v stow >/dev/null 2>&1; then
+    echo "Error: GNU Stow is not installed." >&2
+    exit 1
+fi
+
+mkdir -p "$BACKUP_DIR"
+
+for f in "${DOTFILES[@]}"; do
+    target="$HOME_DIR/$f"
+    if [[ -e "$target" || -L "$target" ]]; then
+        if [[ "$DELETE" = true ]]; then
+            rm -fv "$target"
+        else
+            mv -v "$target" "$BACKUP_DIR/"
+        fi
+    fi
+done
+
+cd "$STOW_DIR"
+stow "$STOW_PACKAGE"
+
+# source new bashrc if running in bash
+if [[ -n "${BASH_VERSION:-}" && -f "$HOME/.bashrc" ]]; then
+    source "$HOME/.bashrc"
+fi
