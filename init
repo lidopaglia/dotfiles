@@ -13,9 +13,9 @@ DOTFILES=(
 )
 
 HOME_DIR="$HOME"
-STOW_DIR="$HOME/dotfiles"        # adjust if needed
-STOW_PACKAGE="base"              # directory inside dotfiles/
-BACKUP_DIR="$HOME/.dotfiles.bak" # backup location
+STOW_DIR="$HOME/.dotfiles"
+STOW_PACKAGE="base"
+BACKUP_DIR="$HOME/.dotfiles.bak"
 DELETE=false
 
 # parse options
@@ -36,7 +36,9 @@ if ! command -v stow >/dev/null 2>&1; then
     exit 1
 fi
 
-mkdir -p "$BACKUP_DIR"
+if [[ "$DELETE" = false ]]; then
+    mkdir -p "$BACKUP_DIR"
+fi
 
 for f in "${DOTFILES[@]}"; do
     target="$HOME_DIR/$f"
