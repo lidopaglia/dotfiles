@@ -45,6 +45,20 @@ fssh() {
     ssh "$host"
 }
 
+fs_reset() {
+    # default to current directory if no argument
+    local target="${1:-.}"
+    echo "Resetting permissions in: $target"
+
+    # Directories to 755
+    find "$target" -type d -exec chmod 755 {} +
+
+    # Files to 644
+    find "$target" -type f -exec chmod 644 {} +
+
+    echo "Permissions reset complete."
+}
+
 # -- Functions ----------------------------------------------------------------
 
 dailynote() {
@@ -171,31 +185,35 @@ gsl() {
 FZF-EOF"
 }
 
-# Open the current path or file in GitHub
+# Open repo/path in browser based on ~/src/<forge>/<user>/<repo>
 gho() {
     local file=$1
-    local remote=${2:-origin}
+    local branch rel forge user repo subpath url
 
-    # get the git root dir, branch, and remote URL
-    local gr branch url
-    gr=$(git rev-parse --show-toplevel)
-    branch=$(git rev-parse --abbrev-ref HEAD)
-    url=$(git config --get "remote.$remote.url")
+    branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null) || return 1
 
-    [[ -n $gr && -n $branch && -n $remote ]] || return 1
+    rel=${PWD/#$HOME\/src\//}
+    IFS=/ read -r forge user repo subpath <<<"$rel"
+    [[ -n $forge && -n $user && -n $repo ]] || return 1
 
-    # construct the path
-    local path=${PWD/#$gr/}
-    [[ -n $file ]] && path+=/$file
+    case "$forge" in
+    codeberg.org)
+        url="https://$forge/$user/$repo/src/branch/$branch"
+        ;;
+    forgejo.lido.cloud)
+        url="https://$forge/$user/$repo/src/branch/$branch"
+        ;;
+    github.com)
+        url="https://$forge/$user/$repo/tree/$branch"
+        ;;
+    *)
+        # gitlab
+        url="https://$forge/$user/$repo/-/tree/$branch"
+        ;;
+    esac
 
-    # extract the username and repo name
-    local a
-    IFS=:/ read -r -a a <<<"$url"
-    local len=${#a[@]}
-    local user=${a[len - 2]}
-    local repo=${a[len - 1]%.git}
-
-    url="https://github.com/$user/$repo/tree/$branch$path"
+    [[ -n $subpath ]] && url+="/$subpath"
+    [[ -n $file ]] && url+="/$file"
 
     xdg-open "$url" >/dev/null 2>&1
 }
