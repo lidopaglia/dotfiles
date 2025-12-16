@@ -54,6 +54,11 @@ done
 cd "$STOW_DIR"
 stow "$STOW_PACKAGE"
 
+# initialize and update git submodules
+if [[ -s .gitmodules ]]; then
+    git submodule update --init --recursive
+fi
+
 # source new bashrc if running in bash
 if [[ -n "${BASH_VERSION:-}" && -f "$HOME/.bashrc" ]]; then
     source "$HOME/.bashrc"
