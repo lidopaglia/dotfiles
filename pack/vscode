@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+install_vscode() {
+
+    # Fedora / RHEL
+    if [ -f /etc/fedora-release ]; then
+        [ -f /etc/yum.repos.d/vscode.repo ] || sudo tee /etc/yum.repos.d/vscode.repo >/dev/null <<'EOF'
+[code]
+name=Visual Studio Code
+baseurl=https://packages.microsoft.com/yumrepos/vscode
+enabled=1
+gpgcheck=1
+gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+EOF
+
+        sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc || true
+
+        if ! rpm -q code >/dev/null 2>&1; then
+            sudo dnf check-update || true
+            sudo dnf install -y code
+        fi
+
+    # Debian / Ubuntu
+    elif [ -f /etc/debian_version ]; then
+        sudo apt install -y wget gpg software-properties-common apt-transport-https
+
+        [ -f /usr/share/keyrings/microsoft.gpg ] || wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /usr/share/keyrings/microsoft.gpg >/dev/null
+
+        [ -f /etc/apt/sources.list.d/vscode.list ] || echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list
+
+        sudo apt update
+
+        if ! dpkg -l | grep -qw code; then
+            sudo apt install -y code
+        fi
+
+    else
+        echo "Unsupported distro"
+        exit 1
+    fi
+
+    if command -v code >/dev/null 2>&1; then
+        echo "VS Code installed at: $(command -v code)"
+    else
+        echo "VS Code installation failed or 'code' not in PATH"
+    fi
+}
+
+install_vscode
