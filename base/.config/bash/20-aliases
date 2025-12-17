@@ -49,6 +49,8 @@ alias ccat='highlight --out-format=ansi'
 alias cava="TERM=rxvt-unicode-256color cava"
 alias lsblk='lsblk -o name,fstype,size,type,uuid'
 
+alias gac='git_autocommit'
+
 alias t1='tree -L 1'
 alias t2='tree -L 2'
 alias t3='tree -L 3'

@@ -1,5 +1,21 @@
 #!/usr/bin/env bash
 
+git_autocommit() {
+    if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+        echo "Not a git repository"
+        return 1
+    fi
+    git pull
+    # Only stage changes if there are any
+    if [ -n "$(git status --porcelain)" ]; then
+        git add .
+        git commit -m "autocommit from ${HOSTNAME}" || true
+        git push
+    else
+        echo "No changes to commit"
+    fi
+}
+
 cdf() {
     local choice
     choice=$(for d in */; do
@@ -7,7 +23,8 @@ cdf() {
             continue
         printf '%s\n' "${d%/}"
     done | fzf --exit-0) || return 1
-    cd -- "$choice"
+
+    cd -- "$choice" || return 1
 }
 
 qurl() {
