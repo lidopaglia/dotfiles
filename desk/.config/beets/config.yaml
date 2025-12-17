@@ -1,4 +1,4 @@
-plugins: fetchart embedart fromfilename chroma check
+plugins: fetchart embedart fromfilename chroma check musicbrainz info zero
 directory: "/home/lido/media/music/beets/media"
 library: "/home/lido/media/music/beets/beets.db"
 threaded: yes
@@ -21,11 +21,15 @@ import:
 embedart:
   auto: yes
 
+zero:
+  fields: comments
+  update_database: true
+
 paths:
   default: Albums/$albumartist/$original_year - $album%aunique{}/$track - $title
-  singleton: Non-Album/$artist/$title
-  comp: Various Artists/$original_year - $album%aunique{}/$track $title
-  albumtype:soundtrack: Soundtracks/$original_year - $album%aunique{}/$track $title
+  singleton: Albums/Singles/$artist - $title
+  comp: Albums/Various Artists/$original_year - $album%aunique{}/$track - $title
+  albumtype:soundtrack: Albums/Various Artists/$original_year - $album%aunique{}/$track - $title
 
 convert:
   auto: no
