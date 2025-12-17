@@ -81,21 +81,21 @@ fs_reset() {
 dailynote() {
 
     local file
-    local editor="${EDITOR:-nvim}"
-
     file="$HOME/notes/daily/$(date +%Y)/$(date +%Y-%m-%d).md"
+    mkdir -p "$(dirname "$file")"
 
-    # create the file if it doesn't exist
     if [ ! -f "$file" ]; then
-        echo "# $(date +%Y-%m-%d)" >"$file"
+        printf "# %s\n\n" "$(date +%Y-%m-%d)" >"$file"
     fi
 
     if [ $# -gt 0 ]; then
         # append args to file
         printf "\n%s\n" "$*" >>"$file"
     else
-        # open in editor, two lines below last
-        "$editor" -c "norm Go$(printf '\033')o" -c "startinsert" "$file"
+        nvim -c "normal G" \
+            -c "if getline('$') != '' | put = '' | endif" \
+            -c "normal o" \
+            -c "startinsert" "$file"
     fi
 }
 
