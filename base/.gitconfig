@@ -13,3 +13,6 @@
   s = status
   ss = status -s
   unstage = reset HEAD --
+[url "git@github.com:"]
+  insteadOf = https://github.com/
+
