@@ -16,3 +16,6 @@
 [submodule "base/.vim/pack/plugins/start/vim-commentary"]
 	path = base/.vim/pack/plugins/start/vim-commentary
 	url = https://github.com/tpope/vim-commentary.git
+[submodule "base/.ssh"]
+	path = base/.ssh
+	url = ssh://git@forgejo.lido.cloud:222/lido/ssh-config.git
